@@ -1,6 +1,10 @@
-SRC = ${wildcard ft_*.c}
+SRC = ${filter-out ${wildcard ft_lst*.c}, ${wildcard ft_*.c}}
+
+BSRC = ${wildcard ft_lst*.c}
 
 OBJ = ${SRC:.c=.o}
+
+BOBJ = ${BSRC:.c=.o}
 
 INCLUDES = libft.h
 
@@ -16,8 +20,11 @@ ${NAME}: ${OBJ}
 
 all: ${NAME}
 
+bonus: ${OBJ} ${BOBJ}
+	ar rc ${NAME} *.o
+
 clean:
-	rm -f ${OBJ}
+	rm -f ${OBJ} ${BOBJ}
 
 fclean: clean
 	rm -f ${NAME}
