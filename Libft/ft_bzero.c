@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:17:46 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/16 16:21:38 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/18 18:52:49 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_bzero(void *s, size_t n)
 {
 	unsigned char	*x;
 
-	x = s;
+	x = (unsigned char *)s;
 	while (n--)
 		*x++ = '\0';
 }
