@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:54:16 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/17 18:31:40 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/18 11:10:17 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static size_t	count_words(char const *str, char c)
 char	**ft_split(char const *s, char c)
 {
 	char			**splitted;
-	int				wcount;
 	size_t			current_word;
 	unsigned int	i;
 	size_t			j;

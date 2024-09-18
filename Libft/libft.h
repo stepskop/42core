@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:09:30 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/17 18:36:27 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/18 11:18:28 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);
+int		ft_isascii(int c);
 void	ft_bzero(void *s, size_t n);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
