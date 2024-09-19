@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:54:16 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/19 18:47:06 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/19 20:40:59 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static size_t	count_words(char const *str, char c)
 
 static void	*error_free(size_t current_word, char **splitted)
 {
-	while (current_word > 0)
+	while (current_word >= 0)
 		free(splitted[current_word--]);
+	free(splitted);
 	return ((void *)0);
 }
 
