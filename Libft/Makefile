@@ -34,7 +34,7 @@ ${NAME}: ${OBJ}
 all: ${NAME}
 
 bonus: ${OBJ} ${BOBJ}
-	ar rc ${NAME} ${OBJ}
+	ar rc ${NAME} ${OBJ} ${BOBJ}
 
 clean:
 	rm -f ${OBJ} ${BOBJ}

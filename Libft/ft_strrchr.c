@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:54:25 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/17 12:00:32 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/19 18:28:04 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strrchr(const char *s, int c)
 
 	mut = (char *)s;
 	s_len = ft_strlen(s);
-	while (mut[s_len] != c)
+	while (mut[s_len] != (char)c)
 	{
 		if (s_len-- == 0)
 			return (0);
