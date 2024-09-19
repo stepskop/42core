@@ -15,9 +15,9 @@ BSRC = 	ft_lstnew.c		ft_lstadd_front.c	ft_lstsize.c\
 		ft_lstlast.c	ft_lstadd_back.c	ft_lstdelone.c\
 		ft_lstclear.c	ft_lstiter.c		ft_lstmap.c
 
-OBJ = ${SRC:.c=.o}
+OBJ = ${SRC:%c=%o}
 
-BOBJ = ${BSRC:.c=.o}
+BOBJ = ${BSRC:%c=%o}
 
 INCLUDES = libft.h
 
@@ -25,16 +25,16 @@ CCLAGS = cc -Wall -Werror -Wextra
 
 NAME = libft.a
 
-.c.o:
-	${CCLAGS} -c -I ${INCLUDES} $< -o ${<:.c=.o}
-
 ${NAME}: ${OBJ}
-	ar rc ${NAME} *.o
+	ar rc ${NAME} ${OBJ}
+
+%.o: %.c
+	${CCLAGS} -c -I ${INCLUDES} $< -o ${<:%c=%o}
 
 all: ${NAME}
 
 bonus: ${OBJ} ${BOBJ}
-	ar rc ${NAME} *.o
+	ar rc ${NAME} ${OBJ}
 
 clean:
 	rm -f ${OBJ} ${BOBJ}
