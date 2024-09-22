@@ -30,8 +30,9 @@ static size_t	count_words(char const *str, char c)
 
 static void	*error_free(size_t current_word, char **splitted)
 {
-	while (current_word >= 0)
+	while (current_word > 0)
 		free(splitted[current_word--]);
+	free(splitted[current_word]);
 	free(splitted);
 	return ((void *)0);
 }
