@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:02:49 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/21 21:09:13 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/23 21:02:59 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,23 @@ static void	print_pointer(void *ptr, int *count)
 	}
 }
 
-static t_flags	parse_flags(const char *format)
+static int	process_format(int *count, t_flags flags, va_list args)
 {
-	t_flags	flags;
-	size_t	i;
-
-	i = 0;
-	while (format[i])
-	{
-		i++;
-	}
-	return (flags);
-}
-
-static int	process_format(char conv, int *count, va_list args)
-{
-	if (conv == 'c')
-		(*count) += ft_putcount_chr(va_arg(args, int));
-	else if (conv == 's')
-		(*count) += ft_putcount_str(va_arg(args, char *));
-	else if (conv == 'p')
+	if (flags.conv == 'c')
+		(*count) += ft_putcount_chr(va_arg(args, int), flags);
+	else if (flags.conv == 's')
+		(*count) += ft_putcount_str(va_arg(args, char *), flags);
+	else if (flags.conv == 'p')
 		print_pointer(va_arg(args, void *), count);
-	else if (conv == 'd' || conv == 'i')
+	else if (flags.conv == 'd' || flags.conv == 'i')
 		(*count) += ft_putcount_nbr(va_arg(args, int));
-	else if (conv == 'x' || conv == 'X')
-		ft_putcount_hex(va_arg(args, unsigned int), (conv == 'X'), count);
-	else if (conv == '%')
-		(*count) += ft_putcount_chr('%');
-	else if (conv == 'u')
+	else if (flags.conv == 'x' || flags.conv == 'X')
+		ft_putcount_hex(va_arg(args, unsigned int), (flags.conv == 'X'), count);
+	else if (flags.conv == '%')
+		(*count) += ft_putcount_chr('%', flags);
+	else if (flags.conv == 'u')
 		ft_putcount_dec((unsigned long)va_arg(args, unsigned int), count);
-	return (1);
+	return (flags.format_len);
 }
 
 int	ft_printf(const char *format, ...)
@@ -64,6 +51,7 @@ int	ft_printf(const char *format, ...)
 	va_list	args;
 	size_t	i;
 	int		count;
+	t_flags	flags;
 
 	va_start(args, format);
 	i = 0;
@@ -71,7 +59,10 @@ int	ft_printf(const char *format, ...)
 	while (format[i] && i < ft_strlen(format))
 	{
 		if (format[i] == '%')
-			i += (process_format(format[i + 1], &count, args) + 1);
+		{
+			flags = parse_flags(&(format[i + 1]), "cspdixXu%", args);
+			i += (process_format(&count, flags, args) + 1);
+		}
 		else
 		{
 			ft_putchar_fd(format[i], 1);
