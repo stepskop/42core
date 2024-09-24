@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:00:58 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/24 11:26:03 by username         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:26:29 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <stdarg.h>
-# include <stdio.h>
 
 typedef struct s_flags
 {
