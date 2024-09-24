@@ -12,37 +12,24 @@
 
 #include "../includes_bonus/ft_printf_bonus.h"
 
-static void	print_pointer(void *ptr, int *count)
-{
-	if (ptr)
-	{
-		write(1, "0x", 2);
-		(*count) += 2;
-		ft_putcount_hex((unsigned long)ptr, 0, count);
-	}
-	else
-	{
-		write(1, "(nil)", 5);
-		(*count) += 5;
-	}
-}
-
 static int	process_format(int *count, t_flags flags, va_list args)
 {
 	if (flags.conv == 'c')
-		(*count) += ft_putcount_chr(va_arg(args, int), flags);
+		(*count) += print_chr(va_arg(args, int), flags);
 	else if (flags.conv == 's')
-		(*count) += ft_putcount_str(va_arg(args, char *), flags);
+		(*count) += print_str(va_arg(args, char *), flags);
 	else if (flags.conv == 'p')
-		print_pointer(va_arg(args, void *), count);
+		(*count) += print_ptr(va_arg(args, void *), flags);
 	else if (flags.conv == 'd' || flags.conv == 'i')
-		(*count) += ft_putcount_nbr(va_arg(args, int));
-	else if (flags.conv == 'x' || flags.conv == 'X')
-		ft_putcount_hex(va_arg(args, unsigned int), (flags.conv == 'X'), count);
+		(*count) += print_nbr(va_arg(args, int), flags);
+	else if (flags.conv == 'x')
+		(*count) += print_hex(va_arg(args, unsigned int), 0, flags);
+	else if (flags.conv == 'X')
+		(*count) += print_hex(va_arg(args, unsigned int), 1, flags);
 	else if (flags.conv == '%')
-		(*count) += ft_putcount_chr('%', flags);
+		(*count) += print_chr('%', flags);
 	else if (flags.conv == 'u')
-		ft_putcount_dec((unsigned long)va_arg(args, unsigned int), count);
+		(*count) += print_udc((unsigned long)va_arg(args, unsigned int), flags);
 	return (flags.format_len);
 }
 

@@ -23,12 +23,12 @@ int	print_pre(char *s, int precision)
 			ft_putchar_fd(s[count++], 1);
 		return (count);
 	}
-	while (s[count] && count <= precision)
+	while (s[count] && count < precision)
 		ft_putchar_fd(s[count++], 1);
 	return (count);
 }
 
-int	ft_putcount_str(char *s, t_flags flags)
+int	print_str(char *s, t_flags flags)
 {
 	int	count;
 

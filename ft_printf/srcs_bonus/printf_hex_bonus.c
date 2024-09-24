@@ -6,13 +6,13 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 10:51:25 by username          #+#    #+#             */
-/*   Updated: 2024/09/24 11:33:02 by username         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:00:10 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/ft_printf_bonus.h"
 
-void	ft_putcount_hex(unsigned long ulong, unsigned int toupper, int *count)
+static void	ft_puthex(unsigned long ulong, unsigned int toupper)
 {
 	char			*base;
 
@@ -23,26 +23,61 @@ void	ft_putcount_hex(unsigned long ulong, unsigned int toupper, int *count)
 			ft_putchar_fd(base[ulong] - 32, 1);
 		else
 			ft_putchar_fd(base[ulong], 1);
-		(*count)++;
 	}
 	if (ulong >= (unsigned long)16)
 	{
-		ft_putcount_hex(ulong / 16, toupper, count);
-		ft_putcount_hex(ulong % 16, toupper, count);
+		ft_puthex(ulong / 16, toupper);
+		ft_puthex(ulong % 16, toupper);
 	}
 }
 
-void	ft_print_pointer(void *ptr, int *count)
+int	print_hex(unsigned long ulong, unsigned int tppr, t_flags flags)
 {
+	int	count;
+
+	count = get_digits(ulong, 16);
+	if (flags.h_tag && ulong != 0)
+	{
+		if (tppr)
+			write(1, "0X", 2);
+		else
+			write(1, "0x", 2);
+		count += 2;
+	}
+	if (flags.precision >= 0)
+		count += pad((flags.precision - 1) - (count - 1), 1);
+	if (flags.minus)
+		ft_puthex(ulong, tppr);
+	count += pad(flags.width - count, flags.zero);
+	if (!flags.minus)
+		ft_puthex(ulong, tppr);
+	return (count);
+}
+
+int	print_ptr(void *ptr, t_flags flags)
+{
+	int	count;
+
+	count = 0;
 	if (ptr)
 	{
-		write(1, "0x", 2);
-		(*count) += 2;
-		ft_putcount_hex((unsigned long)ptr, 0, count);
+		count = get_digits((unsigned long)ptr, 16) + 2;
+		if (flags.minus)
+		{
+			write(1, "0x", 2);
+			ft_puthex((unsigned long)ptr, 0);
+		}
+		count += pad(flags.width - count, 0);
+		if (!flags.minus)
+		{
+			write(1, "0x", 2);
+			ft_puthex((unsigned long)ptr, 0);
+		}
 	}
 	else
 	{
 		write(1, "(nil)", 5);
-		(*count) += 5;
+		count = 5;
 	}
+	return (count);
 }

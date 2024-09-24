@@ -31,12 +31,12 @@ typedef struct s_flags
 }	t_flags;
 
 int		ft_printf(const char *format, ...);
-int		ft_putcount_str(char *s, t_flags flags);
-int		ft_putcount_nbr(int n);
-int		ft_putcount_chr(char c, t_flags flags);
-void	ft_putcount_hex(unsigned long ulong, unsigned int toupper, int *count);
-void	ft_putcount_dec(unsigned long ulong, int *count);
-void	ft_print_pointer(void *ptr, int *count);
+int		print_str(char *s, t_flags flags);
+int		print_nbr(int n, t_flags flags);
+int		print_chr(char c, t_flags flags);
+int		print_udc(unsigned long ulong, t_flags flags);
+int		print_ptr(void *ptr, t_flags flags);
+int		print_hex(unsigned long ulong, unsigned int tppr, t_flags flags);
 
 t_flags	parse_flags(const char *format, const char *convs, va_list args);
 t_flags	init_flags(void);
