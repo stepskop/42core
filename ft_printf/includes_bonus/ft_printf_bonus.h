@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:00:58 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/24 11:00:57 by username         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:26:03 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int		is_flag(char c);
 void	set_option(char c, t_flags *flags);
 size_t	set_modifs(const char *format, va_list args, t_flags *flags);
 
-int		get_digits(unsigned int n);
+int		get_digits(unsigned long n, unsigned int base);
 int		pad(int size, int zero);
 #endif

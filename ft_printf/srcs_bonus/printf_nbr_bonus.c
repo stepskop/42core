@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 10:51:37 by username          #+#    #+#             */
-/*   Updated: 2024/09/24 10:54:08 by username         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:26:16 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int	ft_putcount_nbr(int n)
 		unb = n * -1;
 	else
 		unb = (unsigned int)n;
-	return (get_digits(unb) + (n < 0));
+	return (get_digits((unsigned long)unb, 10) + (n < 0));
 }
