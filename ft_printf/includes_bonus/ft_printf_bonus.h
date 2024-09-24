@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:00:58 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/23 21:48:58 by username         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:00:57 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@ typedef struct s_flags
 	int		format_len;
 }	t_flags;
 
+int		ft_printf(const char *format, ...);
 int		ft_putcount_str(char *s, t_flags flags);
 int		ft_putcount_nbr(int n);
 int		ft_putcount_chr(char c, t_flags flags);
 void	ft_putcount_hex(unsigned long ulong, unsigned int toupper, int *count);
 void	ft_putcount_dec(unsigned long ulong, int *count);
-int		ft_printf(const char *format, ...);
 void	ft_print_pointer(void *ptr, int *count);
-t_flags	parse_flags(const char *format, const char *convs, va_list args);
-int		pad(int size, int zero);
 
+t_flags	parse_flags(const char *format, const char *convs, va_list args);
+t_flags	init_flags(void);
+int		is_flag(char c);
+void	set_option(char c, t_flags *flags);
+size_t	set_modifs(const char *format, va_list args, t_flags *flags);
+
+int		get_digits(unsigned int n);
+int		pad(int size, int zero);
 #endif

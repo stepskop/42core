@@ -1,7 +1,9 @@
 SRCS = srcs/ft_printf.c srcs/ft_print_base.c srcs/ft_print_utils.c
 
-BSRCS = srcs_bonus/ft_printf_bonus.c srcs_bonus/ft_print_base_bonus.c srcs_bonus/ft_print_utils_bonus.c srcs_bonus/ft_flags_bonus.c srcs_bonus/ft_flags_utils_bonus.c
-
+BSRCS = srcs_bonus/ft_printf_bonus.c srcs_bonus/printf_hex_bonus.c \
+	srcs_bonus/print_utils_bonus.c srcs_bonus/parse_flags_bonus.c \
+	srcs_bonus/flags_utils_bonus.c srcs_bonus/printf_chr_bonus.c \
+	srcs_bonus/printf_str_bonus.c srcs_bonus/printf_nbr_bonus.c
 OBJ = ${SRCS:%c=%o}
 
 BOBJ = ${BSRCS:%c=%o} 

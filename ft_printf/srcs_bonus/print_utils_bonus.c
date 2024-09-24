@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags_utils_bonus.c                             :+:      :+:    :+:   */
+/*   print_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <your@email.com>                  +#+  +:+       +#+        */
+/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 19:30:41 by username          #+#    #+#             */
-/*   Updated: 2024/09/23 21:36:19 by username         ###   ########.fr       */
+/*   Created: 2024/09/21 16:02:07 by sskopek           #+#    #+#             */
+/*   Updated: 2024/09/24 10:53:20 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/ft_printf_bonus.h"
+
+int	get_digits(unsigned int n)
+{
+	size_t	digits;
+
+	digits = 1;
+	while (n / 10 > 0)
+	{
+		digits++;
+		n /= 10;
+	}
+	return (digits);
+}
 
 int	pad(int size, int zero)
 {
