@@ -29,24 +29,32 @@ static void	ft_putdec(unsigned long ulong)
 int	print_udc(unsigned long ulong, t_flags flags)
 {
 	int	count;
+	int	base_count;
 
 	count = get_digits(ulong, 10);
-	if (flags.precision >= 0)
-		count += pad((flags.precision - 1) - (count - 1), 1);
+	base_count = count;
 	if (flags.minus)
+	{
+		if (flags.precision >= 0)
+			count += pad(flags.precision - base_count, 1);
 		ft_putdec(ulong);
+	}
 	if (flags.precision >= 0 && flags.precision < count)
 		flags.precision = count;
 	if (flags.precision >= 0)
-		count += pad((flags.width - flags.precision), 0);
+		count += pad((flags.width - flags.precision), flags.zero);
 	else
 		count += pad(flags.width - count, flags.zero);
 	if (!flags.minus)
+	{
+		if (flags.precision >= 0)
+			count += pad(flags.precision - base_count, 1);
 		ft_putdec(ulong);
+	}
 	return (count);
 }
 
-static int	ft_put_nbr_flags(int n, t_flags flags)
+static int	print_nbr_flags(int n, t_flags flags)
 {
 	int	count;
 
@@ -70,11 +78,19 @@ static int	ft_put_nbr_flags(int n, t_flags flags)
 }
 
 static int	print_nbr_pad(int n, t_flags flags, int count)
-{
-	if (n < 0 || ((n >= 0) && (flags.plus || flags.space)))
-		count += pad((flags.precision - 1) - (count - 2), 1);
+{	
+	unsigned int	unb;
+	int				ds;	
+
+	if (n < 0)
+		unb = n * -1;
 	else
-		count += pad((flags.precision - 1) - (count - 1), 1);
+		unb = (unsigned int)n;
+	ds = get_digits((unsigned long)unb, 10);
+	if (n < 0 || ((n >= 0) && (flags.plus || flags.space)))
+		count += pad((flags.precision) - ds, 1);
+	else
+		count += pad((flags.precision) - ds, 1);
 	return (count);
 }
 
@@ -88,18 +104,22 @@ int	print_nbr(int n, t_flags flags)
 	else
 		unb = (unsigned int)n;
 	count = get_digits((unsigned long)unb, 10);
-	count += ft_put_nbr_flags(n, flags);
-	if (flags.precision >= 0)
-		count = print_nbr_pad(n, flags, count);
+	count += print_nbr_flags(n, flags);
 	if (flags.minus)
+	{
+		if (flags.precision >= 0)
+			count = print_nbr_pad(n, flags, count);
 		ft_putdec(unb);
-	if (flags.precision >= 0 && flags.precision < count)
-		flags.precision = count;
+	}
 	if (flags.precision >= 0)
-		count += pad((flags.width - flags.precision), 0);
+		count += pad(flags.width - flags.precision, flags.zero);
 	else
 		count += pad(flags.width - count, flags.zero);
 	if (!flags.minus)
+	{
+		if (flags.precision >= 0)
+			count = print_nbr_pad(n, flags, count);
 		ft_putdec(unb);
+	}
 	return (count);
 }

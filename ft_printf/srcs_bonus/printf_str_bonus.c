@@ -33,7 +33,7 @@ int	print_str(char *s, t_flags flags)
 	int	count;
 
 	count = 0;
-	if (!s && flags.precision < 6)
+	if (!s && flags.precision < 6 && flags.precision >= 0)
 		return (pad(flags.width, 0));
 	if (!s)
 		s = "(null)";

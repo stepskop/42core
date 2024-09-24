@@ -39,7 +39,9 @@ int	ft_printf(const char *format, ...)
 	size_t	i;
 	int		count;
 	t_flags	flags;
-
+	
+	if (!format)
+		return (0);
 	va_start(args, format);
 	i = 0;
 	count = 0;

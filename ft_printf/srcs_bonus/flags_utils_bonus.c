@@ -65,7 +65,7 @@ size_t	set_modifs(const char *format, va_list args, t_flags *flags)
 
 	i = 0;
 	if (format[i] == '*')
-		flags->width = ft_atoi(va_arg(args, char *));
+		flags->width = va_arg(args, int);
 	if (format[i] == '*')
 		i++;
 	else if (ft_isdigit(format[i]))
@@ -77,7 +77,7 @@ size_t	set_modifs(const char *format, va_list args, t_flags *flags)
 		i++;
 		if (format[i] == '*')
 		{
-			flags->precision = ft_atoi(va_arg(args, char *));
+			flags->precision = va_arg(args, int);
 			i++;
 		}
 		else
