@@ -33,13 +33,33 @@ static int	process_format(int *count, t_flags flags, va_list args)
 	return (flags.format_len);
 }
 
+static int	is_validopt(const char *str)
+{
+	char	*convs;
+	char	*flags;
+	char	*rest;
+	int		i;
+
+	convs = "cspdixXu%";
+	flags = "-+ #0*";
+	rest = ".*0123456789";
+	i = 0;
+	while (ft_strchr(flags, str[i]))
+		i++;
+	while (ft_strchr(rest, str[i]))
+		i++;
+	if (ft_strchr(convs, str[i]))
+		return (1);
+	return (0);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	size_t	i;
 	int		count;
 	t_flags	flags;
-	
+
 	if (!format)
 		return (0);
 	va_start(args, format);
@@ -47,16 +67,15 @@ int	ft_printf(const char *format, ...)
 	count = 0;
 	while (format[i] && i < ft_strlen(format))
 	{
-		if (format[i] == '%')
+		if (format[i] == '%' && is_validopt(&(format[i + 1])))
 		{
 			flags = parse_flags(&(format[i + 1]), "cspdixXu%", args);
 			i += (process_format(&count, flags, args) + 1);
 		}
 		else
 		{
-			ft_putchar_fd(format[i], 1);
+			ft_putchar_fd(format[i++], 1);
 			count++;
-			i++;
 		}
 	}
 	va_end(args);

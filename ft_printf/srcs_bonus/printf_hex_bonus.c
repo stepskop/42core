@@ -31,11 +31,11 @@ static void	ft_puthex(unsigned long ulong, unsigned int toupper)
 	}
 }
 
-int	print_hex(unsigned long ulong, unsigned int tppr, t_flags flags)
+static int	print_pre(unsigned long ulong, unsigned int tppr, t_flags flags)
 {
 	int	count;
 
-	count = get_digits(ulong, 16);
+	count = 0;
 	if (flags.h_tag && ulong != 0)
 	{
 		if (tppr)
@@ -45,12 +45,21 @@ int	print_hex(unsigned long ulong, unsigned int tppr, t_flags flags)
 		count += 2;
 	}
 	if (flags.precision >= 0)
-		count += pad((flags.precision - 1) - (count - 1), 1);
+		count += hex_pad(ulong, flags);
+	ft_puthex(ulong, tppr);
+	return (count);
+}
+
+int	print_hex(unsigned long ulong, unsigned int tppr, t_flags flags)
+{
+	int	count;
+
+	count = get_digits(ulong, 16);
 	if (flags.minus)
-		ft_puthex(ulong, tppr);
+		count += print_pre(ulong, tppr, flags);
 	count += pad(flags.width - count, flags.zero);
 	if (!flags.minus)
-		ft_puthex(ulong, tppr);
+		count += print_pre(ulong, tppr, flags);
 	return (count);
 }
 

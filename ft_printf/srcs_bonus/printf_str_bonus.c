@@ -12,7 +12,7 @@
 
 #include "../includes_bonus/ft_printf_bonus.h"
 
-int	print_pre(char *s, int precision)
+static int	print_pre(char *s, int precision)
 {
 	int	count;
 

@@ -41,3 +41,24 @@ int	pad(int size, int zero)
 		return (0);
 	return (size);
 }
+
+int	nbr_pad(int n, t_flags flags)
+{
+	unsigned int	unb;
+	int				ds;
+	int				count;
+
+	count = 0;
+	if (n < 0)
+		unb = n * -1;
+	else
+		unb = (unsigned int)n;
+	ds = get_digits((unsigned long)unb, 10);
+	count += pad((flags.precision) - ds, 1);
+	return (count);
+}
+
+int	hex_pad(unsigned long ulong, t_flags flags)
+{
+	return (pad(flags.precision - get_digits(ulong, 16), 1));
+}

@@ -77,20 +77,16 @@ static int	print_nbr_flags(int n, t_flags flags)
 	return (count);
 }
 
-static int	print_nbr_pad(int n, t_flags flags, int count)
-{	
-	unsigned int	unb;
-	int				ds;	
+static int	print_pre(int n, unsigned int unb, t_flags flags)
+{
+	int	count;
 
-	if (n < 0)
-		unb = n * -1;
-	else
-		unb = (unsigned int)n;
-	ds = get_digits((unsigned long)unb, 10);
-	if (n < 0 || ((n >= 0) && (flags.plus || flags.space)))
-		count += pad((flags.precision) - ds, 1);
-	else
-		count += pad((flags.precision) - ds, 1);
+	count = 0;
+	if (!flags.zero)
+		count += print_nbr_flags(n, flags);
+	if (flags.precision >= 0)
+		count += nbr_pad(n, flags);
+	ft_putdec(unb);
 	return (count);
 }
 
@@ -104,22 +100,20 @@ int	print_nbr(int n, t_flags flags)
 	else
 		unb = (unsigned int)n;
 	count = get_digits((unsigned long)unb, 10);
-	count += print_nbr_flags(n, flags);
+	if (flags.zero)
+		count += print_nbr_flags(n, flags);
 	if (flags.minus)
-	{
-		if (flags.precision >= 0)
-			count = print_nbr_pad(n, flags, count);
-		ft_putdec(unb);
-	}
+		count += print_pre(n, unb, flags);
 	if (flags.precision >= 0)
 		count += pad(flags.width - flags.precision, flags.zero);
 	else
-		count += pad(flags.width - count, flags.zero);
-	if (!flags.minus)
 	{
-		if (flags.precision >= 0)
-			count = print_nbr_pad(n, flags, count);
-		ft_putdec(unb);
+		if ((n < 0 || ((n >= 0) && (flags.plus || flags.space))) && \
+		!flags.zero && !flags.minus)
+			count += pad(flags.width - (count + 1), flags.zero);
+		count += pad(flags.width - count, flags.zero);
 	}
+	if (!flags.minus)
+		count += print_pre(n, unb, flags);
 	return (count);
 }
