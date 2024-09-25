@@ -297,5 +297,78 @@ int main(void) {
     ret_ft_printf = ft_printf("Custom ft_printf  : [%5 d (Positive)]\n", num);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
 
+
+    char *null_str = NULL;
+    ret_printf = printf("Standard printf   : [%s (NULL)]\n", null_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%s (NULL)]\n", null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: Empty string
+    char *empty_str = "";
+    ret_printf = printf("Standard printf   : [%s (Empty)]\n", empty_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%s (Empty)]\n", empty_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: NULL pointer (%p)
+    void *null_ptr = NULL;
+    ret_printf = printf("Standard printf   : [%p (NULL Pointer)]\n", null_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%p (NULL Pointer)]\n", null_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: Empty pointer (%p) - pointer to something but zero value
+    int *empty_ptr = (int *)0;
+    ret_printf = printf("Standard printf   : [%p (Empty Pointer)]\n", empty_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%p (Empty Pointer)]\n", empty_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: NULL pointer in hex (%x)
+    ret_printf = printf("Standard printf   : [%x (NULL Pointer as int)]\n", (unsigned int)null_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%x (NULL Pointer as int)]\n", (unsigned int)null_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: Empty character
+    ret_printf = printf("Standard printf   : [%c (Empty Char)]\n", '\0');
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%c (Empty Char)]\n", '\0');
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: Empty format string
+    ret_printf = printf("Standard printf   : [(Empty Format String)]\n");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [(Empty Format String)]\n");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    printf("\n---- NULL and Empty String with Flags ----\n");
+
+    // Edge case: NULL string with width
+    ret_printf = printf("Standard printf   : [%10s (NULL with width)]\n", null_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10s (NULL with width)]\n", null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: NULL string with precision
+    ret_printf = printf("Standard printf   : [%.5s (NULL with precision)]\n", null_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5s (NULL with precision)]\n", null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: Empty string with width
+    ret_printf = printf("Standard printf   : [%10s (Empty with width)]\n", empty_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10s (Empty with width)]\n", empty_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: Empty string with precision
+    ret_printf = printf("Standard printf   : [%.5s (Empty with precision)]\n", empty_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5s (Empty with precision)]\n", empty_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    printf("\n---- NULL Pointer with Flags ----\n");
+
+    // Edge case: NULL pointer with width
+    ret_printf = printf("Standard printf   : [%10p (NULL Pointer with width)]\n", null_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10p (NULL Pointer with width)]\n", null_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Edge case: NULL pointer with precision (pointer doesn't use precision but testing edge case)
+    ret_printf = printf("Standard printf   : [%.5p (NULL Pointer with precision)]\n", null_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5p (NULL Pointer with precision)]\n", null_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
     return 0;
 }

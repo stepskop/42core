@@ -63,6 +63,19 @@ int	print_hex(unsigned long ulong, unsigned int tppr, t_flags flags)
 	return (count);
 }
 
+static int	print_nullptr(t_flags flags)
+{
+	int	count;
+
+	count = 0;
+	if (flags.minus)
+		ft_putstr_fd("(nil)", 1);
+	count += pad(flags.width - 5, 0);
+	if (!flags.minus)
+		ft_putstr_fd("(nil)", 1);
+	return (count + 5);
+}
+
 int	print_ptr(void *ptr, t_flags flags)
 {
 	int	count;
@@ -84,9 +97,6 @@ int	print_ptr(void *ptr, t_flags flags)
 		}
 	}
 	else
-	{
-		write(1, "(nil)", 5);
-		count = 5;
-	}
+		count = print_nullptr(flags);
 	return (count);
 }
