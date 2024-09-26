@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 16:02:07 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/24 11:25:53 by username         ###   ########.fr       */
+/*   Updated: 2024/09/26 21:15:49 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,6 @@ int	pad(int size, int zero)
 	return (size);
 }
 
-int	nbr_pad(int n, t_flags flags)
-{
-	unsigned int	unb;
-	int				ds;
-	int				count;
-
-	count = 0;
-	if (n < 0)
-		unb = n * -1;
-	else
-		unb = (unsigned int)n;
-	ds = get_digits((unsigned long)unb, 10);
-	count += pad((flags.precision) - ds, 1);
-	return (count);
-}
-
 int	hex_pad(unsigned long ulong, t_flags flags)
 {
 	return (pad(flags.precision - get_digits(ulong, 16), 1));
@@ -69,4 +53,18 @@ unsigned int	to_uint(int n)
 		return (-n);
 	else
 		return ((unsigned int)n);
+}
+
+void	putdec(unsigned long ulong)
+{
+	char			*base;
+
+	base = "0123456789";
+	if (ulong < (unsigned long)10)
+		ft_putchar_fd(base[ulong], 1);
+	if (ulong >= (unsigned long)10)
+	{
+		putdec(ulong / 10);
+		putdec(ulong % 10);
+	}
 }

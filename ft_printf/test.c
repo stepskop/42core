@@ -20,6 +20,11 @@ int main(void) {
 
 
     printf("\n---- Some basic shi ----\n");
+
+    ret_printf = printf(NULL);
+    ret_ft_printf = ft_printf(NULL);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
     ret_printf = printf("Standard printf   : [%d, %d, %i, %i, %u]\n", 123, -456, 789, -1011, 4294967295u);
     ret_ft_printf = ft_printf("Custom ft_printf  : [%d, %d, %i, %i, %u]\n", 123, -456, 789, -1011, 4294967295u);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
@@ -79,8 +84,8 @@ int main(void) {
 
 
     printf("\n---- String (%%s) ----\n");
-    ret_printf = printf("Standard printf   : [%s]\n", str);
-    ret_ft_printf = ft_printf("Custom ft_printf  : [%s]\n", str);
+    ret_printf = printf("Standard printf   : [%.s]\n", str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.s]\n", str);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
 
     ret_printf = printf("Standard printf   : [%.5s]\n", str);           
@@ -158,6 +163,10 @@ int main(void) {
     ret_printf = printf("Standard printf   : [%-+10.5d]\n", num);       
     ret_ft_printf = ft_printf("Custom ft_printf  : [%-+10.5d]\n", num);  
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+    
+    ret_printf = printf("Standard printf   : [%010.1d]\n", 874);       
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%010.1d]\n", 874);  
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
 
     ret_printf = printf("Standard printf   : [%d (negative): [%d]\n", neg_num);
     ret_ft_printf = ft_printf("Custom ft_printf  : [%d (negative): [%d]\n", neg_num);
@@ -175,8 +184,8 @@ int main(void) {
     ret_ft_printf = ft_printf("Custom ft_printf  : [%05d (negative): [%05d]\n", neg_num);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
 
-    ret_printf = printf("Standard printf   : [%6.5d]\n", 16.89845465f);
-    ret_ft_printf = ft_printf("Custom ft_printf  : [%6.5d]\n", 16.89845465f);
+    ret_printf = printf("Standard printf   : [%6.5d]\n", 1689845465);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%6.5d]\n", 1689845465);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
     
 
@@ -453,6 +462,189 @@ int main(void) {
 
     ret_printf = printf("Standard printf   : [%1000s (NULL with Large Width)]\n", null_str);
     ret_ft_printf = ft_printf("Custom ft_printf  : [%1000s (NULL with Large Width)]\n", null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+
+
+    printf("\n---- Precision Flag Tests ----\n");
+
+    // %c - Precision has no effect
+    ret_printf = printf("Standard printf   : [%.2c, %.0c, %.10c]\n", 'A', 'B', 'C');
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.2c, %.0c, %.10c]\n", 'A', 'B', 'C');
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %s - Precision limits the number of characters printed
+    char *test_str = "Hello, World!";
+    ret_printf = printf("Standard printf   : [%.5s, %.0s, %.10s]\n", test_str, test_str, test_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5s, %.0s, %.10s]\n", test_str, test_str, test_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %p - Precision generally has no effect on pointer
+    void *test_ptr = &test_str;
+    ret_printf = printf("Standard printf   : [%.5p, %.0p, %.10p]\n", test_ptr, test_ptr, test_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5p, %.0p, %.10p]\n", test_ptr, test_ptr, test_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %d - Precision specifies the minimum number of digits
+    ret_printf = printf("Standard printf   : [%.5d, %.0d, %.10d, %.2d]\n", 123, 0, -456, 789);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5d, %.0d, %.10d, %.2d]\n", 123, 0, -456, 789);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %i - Precision works similarly to %d
+    ret_printf = printf("Standard printf   : [%.5i, %.0i, %.10i, %.2i]\n", 123, 0, -456, 789);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5i, %.0i, %.10i, %.2i]\n", 123, 0, -456, 789);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %u - Precision specifies the minimum number of digits
+    ret_printf = printf("Standard printf   : [%.0u, %.0u, %.10u, %.2u]\n", 123, 0, 4294967295u, 42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.0u, %.0u, %.10u, %.2u]\n", 123, 0, 4294967295u, 42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %x - Precision specifies the minimum number of digits
+    ret_printf = printf("Standard printf   : [%.5x, %.0x, %.10x, %.2x]\n", 0x123, 0, 0xABCDEF, 0x42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5x, %.0x, %.10x, %.2x]\n", 0x123, 0, 0xABCDEF, 0x42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+	
+    ret_printf = printf("Standard printf   : [%#.5x, %#.0x, %#.10x, %#.2x]\n", 0x123, 0, 0xABCDEF, 0x42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#.5x, %#.0x, %#.10x, %#.2x]\n", 0x123, 0, 0xABCDEF, 0x42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+
+    // %X - Precision specifies the minimum number of digits (uppercase hexadecimal)
+    ret_printf = printf("Standard printf   : [%.5X, %.0X, %.10X, %.2X]\n", 0x123, 0, 0xABCDEF, 0x42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5X, %.0X, %.10X, %.2X]\n", 0x123, 0, 0xABCDEF, 0x42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+	
+    ret_printf = printf("Standard printf   : [%#.5X, %#.0X, %#.10X, %#.2X]\n", 0x123, 0, 0xABCDEF, 0x42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#.5X, %#.0X, %#.10X, %#.2X]\n", 0x123, 0, 0xABCDEF, 0x42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %% - Precision has no effect
+    ret_printf = printf("Standard printf   : [%.2%, %.0%, %.10%]\n");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.2%, %.0%, %.10%]\n");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+
+
+    printf("\n---- Precision Flag with Width and Alignment Tests ----\n");
+
+    // %c - Width with and without left alignment
+    ret_printf = printf("Standard printf   : [%5c], [%-5c]\n", 'A', 'B');
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5c], [%-5c]\n", 'A', 'B');
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %s - Precision higher and lower than string length, with width adjustments
+    test_str = "Hello";
+    ret_printf = printf("Standard printf   : [%10.3s], [%-10.3s], [%10.10s], [%-10.10s]\n", test_str, test_str, test_str, test_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.3s], [%-10.3s], [%10.10s], [%-10.10s]\n", test_str, test_str, test_str, test_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %p - Width with pointer (precision generally has no effect here)
+    test_ptr = &test_str;
+    ret_printf = printf("Standard printf   : [%20p], [%-20p]\n", test_ptr, test_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%20p], [%-20p]\n", test_ptr, test_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %d - Precision higher and lower than the number of digits, with width adjustments
+    ret_printf = printf("Standard printf   : [%10.5d], [%-10.5d], [%10.2d], [%-10.2d]\n", 123, 123, 4567, 4567);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5d], [%-10.5d], [%10.2d], [%-10.2d]\n", 123, 123, 4567, 4567);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %i - Same as %d (signed integer) but with different precision
+    ret_printf = printf("Standard printf   : [%8.3i], [%-8.3i], [%8.1i], [%-8.9i]\n", 987, 987, -654, -654);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%8.3i], [%-8.3i], [%8.1i], [%-8.9i]\n", 987, 987, -654, -654);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %u - Precision and width applied to unsigned integers
+    ret_printf = printf("Standard printf   : [%10.5u], [%-10.5u], [%10.2u], [%-10.2u]\n", 987654321, 987654321, 42, 42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5u], [%-10.5u], [%10.2u], [%-10.2u]\n", 987654321, 987654321, 42, 42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %x - Precision and width for hexadecimal values
+    ret_printf = printf("Standard printf   : [%10.5x], [%-10.5x], [%10.2x], [%-10.2x]\n", 0xABC, 0xABC, 0x42, 0x42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5x], [%-10.5x], [%10.2x], [%-10.2x]\n", 0xABC, 0xABC, 0x42, 0x42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %X - Same as %x but with uppercase hex
+    ret_printf = printf("Standard printf   : [%10.5X], [%-10.5X], [%10.2X], [%-10.2X]\n", 0xABC, 0xABC, 0x42, 0x42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5X], [%-10.5X], [%10.2X], [%-10.2X]\n", 0xABC, 0xABC, 0x42, 0x42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // %% - Precision has no effect, but width can apply
+    ret_printf = printf("Standard printf   : [%5%], [%-5%]\n");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5%], [%-5%]\n");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+
+
+
+    printf("\n---- Precision with Various Flags, Widths, and Values Tests ----\n");
+
+    // --- Tests with %d (Signed Integers) ---
+    
+    // Width smaller than value, precision larger than value
+    ret_printf = printf("Standard printf   : [%5.7d], [%-5.7d], [%05.7d], [%#5.7d], [% 5.7d]\n", 123, 123, 123, 123, 123);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5.7d], [%-5.7d], [%05.7d], [%#5.7d], [% 5.7d]\n", 123, 123, 123, 123, 123);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Width larger than value, precision smaller than value
+    ret_printf = printf("Standard printf   : [%10.3d], [%-10.3d], [%010.3d], [%#10.3d], [% 10.3d]\n", 123, 123, 123, 123, 123);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.3d], [%-10.3d], [%010.3d], [%#10.3d], [% 10.3d]\n", 123, 123, 123, 123, 123);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Width smaller than value, precision smaller than value
+    ret_printf = printf("Standard printf   : [%5.2d], [%-5.2d], [%05.2d], [%#5.2d], [% 5.2d]\n", 9876, 9876, 9876, 9876, 9876);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5.2d], [%-5.2d], [%05.2d], [%#5.2d], [% 5.2d]\n", 9876, 9876, 9876, 9876, 9876);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Precision zero with non-zero value
+    ret_printf = printf("Standard printf   : [%.0d], [%.0d]\n", 12345, 0);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.0d], [%.0d]\n", 12345, 0);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Width larger than value, precision zero
+    ret_printf = printf("Standard printf   : [%10.0d], [%-10.0d], [%010.0d], [%#10.0d], [% 10.0d]\n", 42, 42, 42, 42, 42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.0d], [%-10.0d], [%010.0d], [%#10.0d], [% 10.0d]\n", 42, 42, 42, 42, 42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Zero value with precision
+    ret_printf = printf("Standard printf   : [%.5d], [%-10.5d], [%010.5d]\n", 0, 0, 0);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5d], [%-10.5d], [%010.5d]\n", 0, 0, 0);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Null value and precision with %s
+    null_str = NULL;
+    ret_printf = printf("Standard printf   : [%.5s], [%-10.5s], [%.0s]\n", null_str, null_str, null_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.5s], [%-10.5s], [%.0s]\n", null_str, null_str, null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %x and %X (Hexadecimal) ---
+    
+    // Precision larger than the hex value, width larger and smaller than precision
+    ret_printf = printf("Standard printf   : [%#10.5x], [%-#10.5x], [%#010.5x], [%#5.3x]\n", 0x1a3, 0x1a3, 0x1a3, 0x1a3);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#10.5x], [%-#10.5x], [%#010.5x], [%#5.3x]\n", 0x1a3, 0x1a3, 0x1a3, 0x1a3);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Precision smaller than hex value, width smaller than value
+    ret_printf = printf("Standard printf   : [%#5.2x], [%-#5.2x], [%#05.2x]\n", 0xabcdef, 0xabcdef, 0xabcdef);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#5.2x], [%-#5.2x], [%#05.2x]\n", 0xabcdef, 0xabcdef, 0xabcdef);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Testing %X (uppercase hex) with various combinations
+    ret_printf = printf("Standard printf   : [%#10.5X], [%-#10.5X], [%#010.5X], [%#5.3X]\n", 0xF0A, 0xF0A, 0xF0A, 0xF0A);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#10.5X], [%-#10.5X], [%#010.5X], [%#5.3X]\n", 0xF0A, 0xF0A, 0xF0A, 0xF0A);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %u (Unsigned Integer) ---
+
+    // Precision larger than value, width smaller than value
+    ret_printf = printf("Standard printf   : [%10.5u], [%-10.5u], [%05.5u], [%.0u]\n", 987, 987, 987, 987);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5u], [%-10.5u], [%05.5u], [%.0u]\n", 987, 987, 987, 987);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Zero value with precision, width larger and smaller than value
+    ret_printf = printf("Standard printf   : [%10.5u], [%-10.5u], [%05.5u], [%.0u]\n", 0, 0, 0, 0);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5u], [%-10.5u], [%05.5u], [%.0u]\n", 0, 0, 0, 0);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
 
    }

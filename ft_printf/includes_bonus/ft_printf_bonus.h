@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:00:58 by sskopek           #+#    #+#             */
-/*   Updated: 2024/09/26 11:46:24 by sskopek          ###   ########.fr       */
+/*   Updated: 2024/09/26 21:10:53 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ size_t			set_modifs(const char *format, va_list args, t_flags *flags);
 
 int				get_digits(unsigned long n, unsigned int base);
 int				pad(int size, int zero);
-int				nbr_pad(int n, t_flags flags);
 int				hex_pad(unsigned long ulong, t_flags flags);
+void			putdec(unsigned long ulong);
+
 unsigned int	to_uint(int n);
 
 #endif

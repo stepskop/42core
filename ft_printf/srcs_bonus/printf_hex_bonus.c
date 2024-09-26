@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 10:51:25 by username          #+#    #+#             */
-/*   Updated: 2024/09/24 17:00:10 by username         ###   ########.fr       */
+/*   Updated: 2024/09/26 21:44:16 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	print_pre(unsigned long ulong, unsigned int tppr, t_flags flags)
 	int	count;
 
 	count = 0;
+	if (flags.precision == 0 && ulong == 0)
+		return (0);
 	if (flags.h_tag && ulong != 0)
 	{
 		if (tppr)
@@ -53,11 +55,23 @@ static int	print_pre(unsigned long ulong, unsigned int tppr, t_flags flags)
 int	print_hex(unsigned long u, unsigned int t, t_flags f)
 {
 	int	count;
+	int	p;
 
+	p = 2 * (!f.minus && (f.h_tag && u != 0));
 	count = get_digits(u, 16);
+	if (f.precision == 0 && u == 0)
+		count--;
 	if (f.minus)
 		count += print_pre(u, t, f);
-	count += pad(f.width - count, f.zero);
+	if (f.precision >= 0)
+	{
+		if (f.precision < count)
+			count += pad(f.width - (count + p), 0);
+		else
+			count += pad(f.width - (f.precision + p), 0);
+	}
+	else
+		count += pad(f.width - (count + p), f.zero);
 	if (!f.minus)
 		count += print_pre(u, t, f);
 	return (count);
