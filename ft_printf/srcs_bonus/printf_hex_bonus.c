@@ -50,16 +50,16 @@ static int	print_pre(unsigned long ulong, unsigned int tppr, t_flags flags)
 	return (count);
 }
 
-int	print_hex(unsigned long ulong, unsigned int tppr, t_flags flags)
+int	print_hex(unsigned long u, unsigned int t, t_flags f)
 {
 	int	count;
 
-	count = get_digits(ulong, 16);
-	if (flags.minus)
-		count += print_pre(ulong, tppr, flags);
-	count += pad(flags.width - count, flags.zero);
-	if (!flags.minus)
-		count += print_pre(ulong, tppr, flags);
+	count = get_digits(u, 16);
+	if (f.minus)
+		count += print_pre(u, t, f);
+	count += pad(f.width - count, f.zero);
+	if (!f.minus)
+		count += print_pre(u, t, f);
 	return (count);
 }
 

@@ -95,15 +95,14 @@ int	print_nbr(int n, t_flags flags)
 	unsigned int	unb;
 	int				count;
 
-	if (n < 0)
-		unb = n * -1;
-	else
-		unb = (unsigned int)n;
+	unb = to_uint(n);
 	count = get_digits((unsigned long)unb, 10);
 	if (flags.zero)
 		count += print_nbr_flags(n, flags);
 	if (flags.minus)
 		count += print_pre(n, unb, flags);
+	if (flags.precision >= 0 && flags.precision < count)
+		flags.precision = count;
 	if (flags.precision >= 0)
 		count += pad(flags.width - flags.precision, flags.zero);
 	else

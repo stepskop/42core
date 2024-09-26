@@ -12,7 +12,7 @@
 
 #include "../includes_bonus/ft_printf_bonus.h"
 
-t_flags	parse_flags(const char *format, const char *convs, va_list args)
+t_flags	parse_flags(const char *format, const char *ops, va_list args)
 {
 	t_flags	flags;
 	size_t	i;
@@ -24,10 +24,10 @@ t_flags	parse_flags(const char *format, const char *convs, va_list args)
 		set_option(format[i++], &flags);
 	i += set_modifs(&(format[i]), args, &flags);
 	j = -1;
-	while (convs[++j])
+	while (ops[++j])
 	{
-		if (format[i] == convs[j])
-			flags.conv = convs[j];
+		if (format[i] == ops[j])
+			flags.conv = ops[j];
 	}
 	flags.format_len = i + 1;
 	return (flags);

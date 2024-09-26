@@ -62,3 +62,11 @@ int	hex_pad(unsigned long ulong, t_flags flags)
 {
 	return (pad(flags.precision - get_digits(ulong, 16), 1));
 }
+
+unsigned int	to_uint(int n)
+{
+	if (n < 0)
+		return (-n);
+	else
+		return ((unsigned int)n);
+}
