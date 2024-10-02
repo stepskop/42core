@@ -23,7 +23,7 @@ static char	*ft_strdup(const char *s)
 	str_len = ft_strlen(s);
 	ptr = malloc((str_len * sizeof(char)) + 1);
 	if (!ptr)
-		return (ptr);
+		return (NULL);
 	ptr[str_len] = '\0';
 	while (str_len-- > 0)
 		ptr[str_len] = s[str_len];
@@ -34,24 +34,27 @@ static char	*get_line(char *str)
 {
 	size_t	i;
 	char	*line;
-	char	*line_text;
-	size_t	line_len;
+	char	*l_txt;
 
 	i = 0;
 	if (!str || !str[i])
 		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
-	if (str[i] == '\n')
-		i++;
-	line_text = ft_substr(str, 0, i);
-	line_len = ft_strlen(line_text);
-	line = malloc((line_len + 1 + (str[i - 1] == '\n')) * sizeof(char));
+	l_txt = ft_substr(str, 0, i + (str[i] == '\n'));
+	line = NULL;
+	if (l_txt)
+		line = malloc((ft_strlen(l_txt) + 1 + (str[i] == '\n')) * sizeof(char));
+	if (!line)
+	{
+		free(l_txt);
+		return (NULL);
+	}
 	i = -1;
-	while (line_text[++i])
-		line[i] = line_text[i];
+	while (l_txt[++i])
+		line[i] = l_txt[i];
 	line[i] = '\0';
-	free(line_text);
+	free(l_txt);
 	return (line);
 }
 
@@ -71,7 +74,7 @@ static char	*read_next(char *vault, char *buf, int fd)
 	char	*tmp;
 
 	rd = 1;
-	while (rd > 0)
+	while (rd > 0 && vault)
 	{
 		rd = read(fd, buf, BUFFER_SIZE);
 		if (rd == -1)
@@ -81,8 +84,6 @@ static char	*read_next(char *vault, char *buf, int fd)
 			break ;
 		}
 		buf[rd] = '\0';
-		if (!vault)
-			vault = ft_strdup("");
 		tmp = vault;
 		vault = ft_strjoin(tmp, buf);
 		free(tmp);
@@ -107,6 +108,8 @@ char	*get_next_line(int fd)
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return (NULL);
+	if (!vault[fd])
+		vault[fd] = ft_strdup("");
 	vault[fd] = read_next(vault[fd], buf, fd);
 	line = get_line(vault[fd]);
 	if (line && vault[fd])
