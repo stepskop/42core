@@ -12,18 +12,17 @@
 
 #include "get_next_line.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+char	*ft_strchr(const char *s, int c)
 {
-	unsigned char	*mut;
+	char	*mut;
 
-	mut = (unsigned char *)s;
-	while (n-- > 0)
+	mut = (char *)s;
+	while (*mut != (char)c)
 	{
-		if (*mut == (unsigned char)c)
-			return (mut);
-		mut++;
+		if (!*mut++)
+			return (0);
 	}
-	return (0);
+	return (mut);
 }
 
 size_t	ft_strlen(const char *s)
