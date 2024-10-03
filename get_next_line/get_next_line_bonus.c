@@ -44,12 +44,9 @@ static char	*get_line(char *str)
 	l_txt = ft_substr(str, 0, i + (str[i] == '\n'));
 	line = NULL;
 	if (l_txt)
-		line = malloc((ft_strlen(l_txt) + 1 + (str[i] == '\n')) * sizeof(char));
+		line = malloc((ft_strlen(l_txt) + 1) * sizeof(char));
 	if (!line)
-	{
-		free(l_txt);
-		return (NULL);
-	}
+		return (free(l_txt), NULL);
 	i = -1;
 	while (l_txt[++i])
 		line[i] = l_txt[i];
