@@ -100,19 +100,18 @@ char	*get_next_line(int fd)
 	char		*buf;
 
 	line = NULL;
+	new_vault = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
-		return (NULL);
+		return (free(vault[fd]), vault[fd] = NULL, NULL);
 	if (!vault[fd])
 		vault[fd] = ft_strdup("");
 	vault[fd] = read_next(vault[fd], buf, fd);
 	line = get_line(vault[fd]);
 	if (line && vault[fd])
 		new_vault = shift_vault(vault[fd], ft_strlen(line));
-	else
-		new_vault = NULL;
 	free(vault[fd]);
 	vault[fd] = new_vault;
 	return (line);
