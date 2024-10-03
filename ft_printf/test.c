@@ -647,4 +647,197 @@ int main(void) {
     ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5u], [%-10.5u], [%05.5u], [%.0u]\n", 0, 0, 0, 0);
     printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
 
-   }
+
+
+    printf("\n---- Shuffled Flag, Precision, and Width Order Tests ----\n");
+
+    // --- Tests with %d (Signed Integers) ---
+    
+    // Test 1: Changing the order of flags, width, and precision
+    ret_printf = printf("Standard printf   : [%7.5d], [%5-7.5d], [%05.7d], [% #5.7d]\n", 123, 123, 123, 123);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%7.5d], [%5-7.5d], [%05.7d], [% #5.7d]\n", 123, 123, 123, 123);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Test 2: Using flags in different order (- 0, #) and precision before width
+    ret_printf = printf("Standard printf   : [%-.5d], [%#-5.7d], [%07.5d], [%7. #5d]\n", -456, -456, -456, -456);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%-.5d], [%#-5.7d], [%07.5d], [%7. #5d]\n", -456, -456, -456, -456);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Test 3: Width smaller than value, precision larger than value with flag reordering
+    ret_printf = printf("Standard printf   : [%7.10d], [%-7.10d], [%#7.10d], [%07.10d]\n", 987654, 987654, 987654, 987654);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%7.10d], [%-7.10d], [%#7.10d], [%07.10d]\n", 987654, 987654, 987654, 987654);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %x (Hexadecimal) ---
+    
+    // Test 4: Shuffle flags and use different order of width and precision
+    ret_printf = printf("Standard printf   : [%0#7.5x], [%5.7#-x], [%7#0x], [%#7x]\n", 0x1A3, 0x1A3, 0x1A3, 0x1A3);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%0#7.5x], [%5.7#-x], [%7#0x], [%#7x]\n", 0x1A3, 0x1A3, 0x1A3, 0x1A3);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Test 5: More shuffling of precision, width, and flags for hex values
+    ret_printf = printf("Standard printf   : [%5-#.7x], [%0#7x], [%-5#7.3x]\n", 0xABC, 0xABC, 0xABC);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5-#.7x], [%0#7x], [%-5#7.3x]\n", 0xABC, 0xABC, 0xABC);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %u (Unsigned Integers) ---
+    
+    // Test 6: Reordered flags with unsigned integers
+    ret_printf = printf("Standard printf   : [%7.5u], [%7-.5u], [%05.7u], [% #5.7u]\n", 123, 123, 123, 123);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%7.5u], [%7-.5u], [%05.7u], [% #5.7u]\n", 123, 123, 123, 123);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Test 7: Width, precision, and flags in random orders for zero value
+    ret_printf = printf("Standard printf   : [%-.5u], [%05.5u], [% #7.0u]\n", 0, 0, 0);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%-.5u], [%05.5u], [% #7.0u]\n", 0, 0, 0);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %i (Integers) ---
+    
+    // Test 8: Reordered flags and modifiers for integers
+    ret_printf = printf("Standard printf   : [%7.5i], [%5.7i], [% 05.5i], [%# 7i]\n", -42, -42, -42, -42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%7.5i], [%5.7i], [% 05.5i], [%# 7i]\n", -42, -42, -42, -42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %p (Pointer) ---
+    
+    // Test 9: Shuffling flags and width for pointer values (precision does not apply to pointers)
+    test_ptr = &ret_printf;
+    ret_printf = printf("Standard printf   : [%#20p], [%20-#p], [%#020p]\n", test_ptr, test_ptr, test_ptr);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#20p], [%20-#p], [%#020p]\n", test_ptr, test_ptr, test_ptr);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %s (Strings) ---
+    
+    // Test 10: String with shuffled flags, precision, and width
+    test_str = "Hello";
+    ret_printf = printf("Standard printf   : [%10.5s], [%-.7s], [%10.0s], [%5-10s]\n", test_str, test_str, test_str, test_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5s], [%-.7s], [%10.0s], [%5-10s]\n", test_str, test_str, test_str, test_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Test 11: Null string with shuffled order
+    null_str = NULL;
+    ret_printf = printf("Standard printf   : [%-.5s], [%7.0s], [% 10s]\n", null_str, null_str, null_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%-.5s], [%7.0s], [% 10s]\n", null_str, null_str, null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Tests with %% (Percent Sign) ---
+    
+    // Test 12: Percent sign with reordered width and flags
+    ret_printf = printf("Standard printf   : [%5%], [%-7%], [%05%], [% 7%]\n");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5%], [%-7%], [%05%], [% 7%]\n");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+   
+
+
+
+    printf("\n---- Valid Format: Width Before Precision ----\n");
+
+    // --- Valid Test Cases (Width before Precision) ---
+    
+    // Width before precision (expected behavior)
+    ret_printf = printf("Standard printf   : [%7.5d], [%10.3d], [%-7.5d], [%07.5d]\n", 123, 4567, 123, 456);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%7.5d], [%10.3d], [%-7.5d], [%07.5d]\n", 123, 4567, 123, 456);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Hexadecimal with valid width and precision
+    ret_printf = printf("Standard printf   : [%#7.5x], [%#10.3x], [%#-7.5x], [%#07.5x]\n", 0x1A3, 0xABC, 0x1A3, 0xABC);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#7.5x], [%#10.3x], [%#-7.5x], [%#07.5x]\n", 0x1A3, 0xABC, 0x1A3, 0xABC);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Strings with valid width and precision
+    ret_printf = printf("Standard printf   : [%10.5s], [%-10.5s]\n", "HelloWorld", "Hi");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5s], [%-10.5s]\n", "HelloWorld", "Hi");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Unsigned integer with valid width and precision
+    ret_printf = printf("Standard printf   : [%10.5u], [%05.7u], [%-7.5u]\n", 1234, 56789, 42);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%10.5u], [%05.7u], [%-7.5u]\n", 1234, 56789, 42);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+
+    printf("\n---- Invalid Format: Precision Before Width ----\n");
+
+    // --- Invalid Test Cases (Precision before Width) ---
+    
+    // Invalid: Precision before width
+    ret_printf = printf("Standard printf   : [%5.7d], [%3.10d], [%5-.7d], [%5.07d] (Precision before Width)\n", 123, 4567, 123, 456);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5.7d], [%3.10d], [%5-.7d], [%5.07d] (Precision before Width)\n", 123, 4567, 123, 456);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Invalid: Precision before width for hexadecimal
+    ret_printf = printf("Standard printf   : [%5.7x], [%3.10x], [%5-#.7x], [%5.07x] (Precision before Width)\n", 0x1A3, 0xABC, 0x1A3, 0xABC);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5.7x], [%3.10x], [%5-#.7x], [%5.07x] (Precision before Width)\n", 0x1A3, 0xABC, 0x1A3, 0xABC);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // Invalid: Precision before width for strings
+    // TODO: invalid format
+    ret_printf = printf("Standard printf   : [%.10.5s], [%.5.10s] (Precision before Width)\n", "Hello", "Hi");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.10.5s], [%.5.10s] (Precision before Width)\n", "Hello", "Hi");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+
+    
+    printf("\n---- Invalid Format String Tests ----\n");
+
+    // --- Invalid Test 1: Multiple Precision Specifiers ---
+    printf("Test 1: Multiple Precision Specifiers\n");
+    ret_printf = printf("Standard printf   : [%7.5.3d], [%10..3d]\n", 123, 456);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%7.5.3d], [%10..3d]\n", 123, 456);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 2: Precision without Width ---
+    printf("Test 2: Precision Without Width\n");
+    ret_printf = printf("Standard printf   : [%.d], [%.0x], [%.s]\n", 123, 0xABCD, "hello");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%.d], [%.0x], [%.s]\n", 123, 0xABCD, "hello");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 3: Misplaced Flags ---
+    printf("Test 3: Misplaced Flags\n");
+    ret_printf = printf("Standard printf   : [%0-5d], [%0-#x], [% -5d]\n", 123, 0x12F, 456);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%0-5d], [%0-#x], [% -5d]\n", 123, 0x12F, 456);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 4: Flags with Incompatible Types ---
+    printf("Test 4: Incompatible Types with Flags\n");
+    ret_printf = printf("Standard printf   : [%#d], [%#u], [%+s]\n", 123, 456, "test");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%#d], [%#u], [%+s]\n", 123, 456, "test");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 5: Width or Precision Too Large ---
+    // printf("Test 5: Width or Precision Too Large\n");
+    // ret_printf = printf("Standard printf   : [%10000d], [%1000.5000d], [%1000.10000x]\n", 123, 456, 0xABCD);
+    // ret_ft_printf = ft_printf("Custom ft_printf  : [%10000d], [%1000.5000d], [%1000.10000x]\n", 123, 456, 0xABCD);
+    // printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 6: Incomplete Format Specifier ---
+    printf("Test 6: Incomplete Format Specifier\n");
+    ret_printf = printf("Standard printf   : [%5], [%#], [%.], [%+]\n");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5], [%#], [%.], [%+]\n");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 7: Mixing Multiple Format Specifiers ---
+    printf("Test 7: Mixing Multiple Format Specifiers\n");
+    // ret_printf = printf("Standard printf   : [%d %s %x]\n", "hello", 123, 0xABC);  // Wrong argument order
+    // ret_ft_printf = ft_printf("Custom ft_printf  : [%d %s %x]\n", "hello", 123, 0xABC);  // Wrong argument order
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 8: Unsupported Format Specifier ---
+    printf("Test 8: Unsupported Format Specifier\n");
+    ret_printf = printf("Standard printf   : [%q], [%k], [%z]\n", 123, 456, 789);  // Invalid specifiers
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%q], [%k], [%z]\n", 123, 456, 789);  // Invalid specifiers
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 9: Overlapping Width and Precision ---
+    printf("Test 9: Overlapping Width and Precision\n");
+    ret_printf = printf("Standard printf   : [%5.5.5d], [%10..3x], [%7.0.3s]\n", 123, 0xABCD, "test");
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%5.5.5d], [%10..3x], [%7.0.3s]\n", 123, 0xABCD, "test");
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+
+    // --- Invalid Test 10: Null Pointer with %s ---
+    printf("Test 10: Null Pointer with %%s\n");
+    null_str = NULL;
+    ret_printf = printf("Standard printf   : [%s]\n", null_str);
+    ret_ft_printf = ft_printf("Custom ft_printf  : [%s]\n", null_str);
+    printf("Return values      : printf=%d, ft_printf=%d\n\n", ret_printf, ret_ft_printf);
+}

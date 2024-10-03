@@ -17,8 +17,10 @@ t_flags	parse_flags(const char *format, const char *ops, va_list args)
 	t_flags	flags;
 	size_t	i;
 	size_t	j;
+	char	*num_opts;
 
 	i = 0;
+	num_opts = "uidxX";
 	flags = init_flags();
 	while (is_flag(format[i]))
 		set_option(format[i++], &flags);
@@ -29,6 +31,8 @@ t_flags	parse_flags(const char *format, const char *ops, va_list args)
 		if (format[i] == ops[j])
 			flags.conv = ops[j];
 	}
+	if (ft_strchr(num_opts, flags.conv) && flags.zero && flags.precision != -1)
+		flags.zero = 0;
 	flags.format_len = i + 1;
 	return (flags);
 }

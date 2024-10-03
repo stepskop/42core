@@ -88,7 +88,7 @@ int	print_nbr(int n, t_flags flags)
 		if (flags.precision < count)
 			count += pad(flags.width - (count + p), 0);
 		else
-			count += pad(flags.width - flags.precision, 0);
+			count += pad(flags.width - (flags.precision + p), 0);
 	}
 	else
 		count += pad(flags.width - (count + (p && !flags.zero)), flags.zero);

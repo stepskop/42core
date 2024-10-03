@@ -39,7 +39,9 @@ static int	is_validopt(const char *str)
 	char	*flags;
 	char	*rest;
 	int		i;
+	int		is_prec;
 
+	is_prec = 0;
 	convs = "cspdixXu%";
 	flags = "-+ #0*";
 	rest = ".*0123456789";
@@ -47,7 +49,13 @@ static int	is_validopt(const char *str)
 	while (ft_strchr(flags, str[i]))
 		i++;
 	while (ft_strchr(rest, str[i]))
+	{
+		if (str[i] == '.')
+			is_prec++;
+		if (is_prec > 1)
+			return (0);
 		i++;
+	}
 	if (ft_strchr(convs, str[i]))
 		return (1);
 	return (0);

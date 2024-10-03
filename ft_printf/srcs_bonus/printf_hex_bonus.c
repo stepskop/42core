@@ -101,12 +101,14 @@ int	print_ptr(void *ptr, t_flags flags)
 		if (flags.minus)
 		{
 			write(1, "0x", 2);
+			count += pad((flags.width - count) * flags.zero, 1);
 			ft_puthex((unsigned long)ptr, 0);
 		}
-		count += pad(flags.width - count, 0);
+		count += pad((flags.width - count) * (!flags.zero), 0);
 		if (!flags.minus)
 		{
 			write(1, "0x", 2);
+			count += pad((flags.width - count) * flags.zero, 1);
 			ft_puthex((unsigned long)ptr, 0);
 		}
 	}
