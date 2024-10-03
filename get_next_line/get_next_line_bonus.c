@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <string.h>
-#include <stdio.h>
-#include <fcntl.h>
 
 static char	*ft_strdup(const char *s)
 {
