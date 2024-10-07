@@ -29,7 +29,7 @@ ${NAME}: ${OBJ}
 	ar rc ${NAME} ${OBJ}
 
 %.o: %.c
-	${CCLAGS} -c -I ${INCLUDES} $< -o ${<:%c=%o}
+	${CCLAGS} -c $< -o ${<:%c=%o}
 
 all: ${NAME}
 
