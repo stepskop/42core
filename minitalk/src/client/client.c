@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:58:47 by username          #+#    #+#             */
-/*   Updated: 2024/10/09 14:18:41 by username         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:21:25 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	int		pid;
 
 	if (argc != 3)
-		return (1);
+		return (ft_printf("Usage ./client <pid> <message>"), 1);
 	pid = ft_atoi(argv[1]);
 	if (pid <= 0 || pid > MAX_PID)
 		return (ft_printf("Invalid PID\n"), 1);
