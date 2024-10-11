@@ -6,22 +6,16 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:10:18 by username          #+#    #+#             */
-/*   Updated: 2024/10/10 20:40:40 by username         ###   ########.fr       */
+/*   Updated: 2024/10/12 00:45:00 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	opti_ops(t_ops **ops)
-{
-
-}
-
 int	add_op(t_ops **ops, enum e_moves move)
 {
 	t_ops	*new;
 	t_ops	*i;
-	int		index;
 
 	new = malloc(1 * sizeof(t_stack));
 	if (!new)

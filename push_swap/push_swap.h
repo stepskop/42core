@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:04:57 by username          #+#    #+#             */
-/*   Updated: 2024/10/10 22:41:23 by username         ###   ########.fr       */
+/*   Updated: 2024/10/11 23:49:33 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ enum e_moves
 	RROTATE_AB,
 };
 
+enum e_stacks
+{
+	A,
+	B
+};
+
 typedef struct s_ops
 {
 	enum e_moves	op;
@@ -51,17 +57,26 @@ typedef struct s_stack
 	struct s_stack	*prev;
 }	t_stack;
 
+typedef struct s_push
+{
+	enum e_stacks	from_e;
+	enum e_stacks	to_e;
+	struct s_stack	**from;
+	struct s_stack	**to;
+}	t_push;
+
 // Parse
 void	parse_mul(t_stack **a, int argc, char **argv);
 void	parse_one(t_stack **a, char *str);
 int		add_new(t_stack **a, int value);
-int		is_valid(char *str, int *value, int *all_nums, int num_count);
-size_t	count_words(char *str);
+int		is_valid(char *str, int *value);
 
 // Sort
 int		sort(t_stack **a, t_stack **b, t_ops **ops);
 int		is_sorted(t_stack *a);
-void	set_props(t_stack **a, t_stack **b);
+t_stack	*set_cost(t_stack **a, t_stack **b);
+int		push_node(t_push push_data, t_stack *node, t_ops **ops);
+int		top_price(t_stack *node, int stack_size);
 
 // Operations
 int		opti_ops(t_ops **ops);
@@ -74,5 +89,16 @@ void	free_all(t_stack **a, t_stack **b, t_ops **ops);
 
 // Print
 void	print_ops(t_ops *ops);
+
+// Stack utils
+int		set_index(t_stack **stk);
+void	set_props(t_stack **a, t_stack **b, enum e_stacks for_e);
+
+// Moves
+int		rotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e);
+int		rrotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e);
+int		swap(t_stack **stk, t_ops **ops, enum e_stacks stk_e);
+int		push(t_push push_data, t_ops **ops);
+int		s_rot(t_stack **stk, t_stack *node, t_ops **ops, enum e_stacks stk_e);
 
 #endif

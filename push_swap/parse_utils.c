@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:27:57 by username          #+#    #+#             */
-/*   Updated: 2024/10/10 21:08:00 by username         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:16:25 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,11 @@ static int	get_num(char *str, int *value)
 		*value = (*value * 10) + str[i] - 48;
 		i++;
 	}
+	*value *= sign;
 	return (1);
 }
 
-size_t	count_words(char *str)
-{
-	int		i;
-	size_t	wcount;
-
-	i = 0;
-	wcount = 0;
-	while (str[i])
-	{
-		if (!ft_isspace(str[i]) && (ft_isspace(str[i + 1]) || !str[i + 1]))
-			wcount++;
-		i++;
-	}
-	return (wcount);
-}
-
-int	is_valid(char *str, int *value, int *all_nums, int num_count)
+int	is_valid(char *str, int *value)
 {
 	int	i;
 
@@ -71,24 +56,33 @@ int	is_valid(char *str, int *value, int *all_nums, int num_count)
 			return (0);
 		i++;
 	}
-	i = 0;
+	i = -1;
 	if (!get_num(str, value))
 		return (0);
-	while (i < num_count)
-	{
-		if (all_nums[i++] == *value)
-			return (0);
-	}
-	all_nums[i] = *value;
 	return (1);
+}
+
+static int	is_duplicate(t_stack **stk, int value)
+{
+	t_stack	*curr;
+
+	curr = *stk;
+	while (curr)
+	{
+		if (curr->value == value)
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
 }
 
 int	add_new(t_stack **stk, int value)
 {
 	t_stack	*new;
 	t_stack	*i;
-	int		index;
 
+	if (is_duplicate(stk, value))
+		return (0);
 	new = malloc(1 * sizeof(t_stack));
 	if (!new)
 		return (0);

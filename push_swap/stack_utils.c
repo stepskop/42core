@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:51:31 by username          #+#    #+#             */
-/*   Updated: 2024/10/10 22:42:57 by username         ###   ########.fr       */
+/*   Updated: 2024/10/12 01:02:43 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,63 +23,116 @@ int	set_index(t_stack **stk)
 	while (curr)
 	{
 		curr->index = i++;
-		curr->upper = 1;
-		curr->price = 0;
-		curr->cheap = 0;
+		curr->upper = 0;
 		curr = curr->next;
 	}
 	size = i;
+	curr = *stk;
 	while (i > (size / 2))
 	{
-		curr->upper = 0;
-		curr = curr->prev;
+		curr->upper = 1;
+		curr = curr->next;
 		i--;
 	}
 	return (size);
 }
 
-t_stack	*find_target(int value, t_stack *stk)
+static t_stack	*find_target_a(int value, t_stack *stk)
 {
 	t_stack	*target;
 	t_stack	*curr;
 
 	curr = stk;
-	target = stk;
+	target = NULL;
 	if (!stk)
 		return (NULL);
 	while (curr)
 	{
-		if (curr->value < value && \
-		(value - curr->value) < (value - target->value))
+		if (curr->value < value && (!target || curr->value > target->value))
 			target = curr;
 		curr = curr->next;
 	}
-	if (target->value < value)
-		return (target);
-	curr = stk;
-	while (curr)
+	if (!target)
 	{
-		if (curr->value > target->value)
-			target = curr;
-		curr = curr->next;
+		curr = stk;
+		target = stk;
+		while (curr)
+		{
+			if (curr->value > target->value)
+				target = curr;
+			curr = curr->next;
+		}
 	}
 	return (target);
 }
 
-void	set_props(t_stack **a, t_stack **b)
+static t_stack	*find_target_b(int value, t_stack *stk)
 {
+	t_stack	*target;
 	t_stack	*curr;
-	int		a_len;
-	int		b_len;
-	int		i;
 
-	a_len = set_index(a);
-	b_len = set_index(b);
-	curr = *a;
-	i = 0;
+	if (!stk)
+		return (NULL);
+	curr = stk;
+	target = NULL;
 	while (curr)
 	{
-		curr->target = find_target(curr->value, *b);
+		if (curr->value > value && (!target || curr->value < target->value))
+			target = curr;
 		curr = curr->next;
 	}
+	if (!target)
+	{
+		curr = stk;
+		target = stk;
+		while (curr)
+		{
+			if (curr->value < target->value)
+				target = curr;
+			curr = curr->next;
+		}
+	}
+	return (target);
+}
+
+void	set_props(t_stack **a, t_stack **b, enum e_stacks for_e)
+{
+	t_stack	*curr;	
+
+	set_index(a);
+	set_index(b);
+	curr = *a;
+	while (curr)
+	{
+		if (for_e == A)
+			curr->target = find_target_a(curr->value, *b);
+		else if (for_e == B)
+			curr->target = find_target_b(curr->value, *b);
+		curr = curr->next;
+	}
+}
+
+int	push_node(t_push push_d, t_stack *node, t_ops **ops)
+{
+	int		node_moves;
+	int		target_moves;
+	int		i;
+	int		success;
+
+	i = 0;
+	success = 0;
+	node_moves = top_price(node, set_index(push_d.from));
+	target_moves = top_price(node->target, set_index(push_d.to));
+	while (i < node_moves && i < target_moves)
+	{
+		success += !s_rot(push_d.from, node, ops, push_d.from_e);
+		success += !s_rot(push_d.to, node->target, ops, push_d.to_e);
+		i++;
+	}
+	while (i < node_moves--)
+		success += !s_rot(push_d.from, node, ops, push_d.from_e);
+	while (i < target_moves--)
+		success += !s_rot(push_d.to, node->target, ops, push_d.to_e);
+	push(push_d, ops);
+	return (success == 0);
 }
