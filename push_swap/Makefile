@@ -1,4 +1,4 @@
-SRC =	memory.c moves.c	operations.c	parse.c \
+SRC =	memory.c moves.c	ops_list.c	parse.c \
 		push_swap.c			sort.c			sort_utils.c \
 		parse_utils.c		stack_utils.c
 
@@ -36,3 +36,5 @@ fclean: clean
 	make fclean -C ${LIBFT_DIR}
 
 re: fclean all
+
+PHONY: all clean fclean re push_swap libft.a

@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:04:57 by username          #+#    #+#             */
-/*   Updated: 2024/10/11 23:49:33 by username         ###   ########.fr       */
+/*   Updated: 2024/10/12 02:36:59 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include <stdlib.h>
+# include <unistd.h>
 # include <limits.h>
 # include "libft/libft.h"
 

@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:11:15 by username          #+#    #+#             */
-/*   Updated: 2024/10/12 01:25:09 by username         ###   ########.fr       */
+/*   Updated: 2024/10/12 02:39:23 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	sort_n(t_stack **a, t_stack **b, t_ops **ops)
 	while (curr && curr->next && (curr->value < curr->next->value))
 		curr = curr->next;
 	while (curr->next)
-		s_rot(a, curr->next, ops, A);
+		success += !s_rot(a, curr->next, ops, A);
 	return (success == 0);
 }
 

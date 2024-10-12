@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:27:57 by username          #+#    #+#             */
-/*   Updated: 2024/10/11 19:16:25 by username         ###   ########.fr       */
+/*   Updated: 2024/10/12 02:30:23 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static int	get_num(char *str, int *value)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
-		if (str[i] == '-')
+		if (str[i++] == '-')
 			sign = -1;
-		i++;
 	}
+	if (!ft_isdigit(str[i]))
+		return (0);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		digit = str[i] - 48;
 		if (*value > (INT_MAX - digit) / 10)
 			return (0);
-		*value = (*value * 10) + str[i] - 48;
-		i++;
+		*value = (*value * 10) + str[i++] - 48;
 	}
 	*value *= sign;
 	return (1);

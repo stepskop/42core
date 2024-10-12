@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:51:31 by username          #+#    #+#             */
-/*   Updated: 2024/10/12 01:02:43 by username         ###   ########.fr       */
+/*   Updated: 2024/10/12 02:40:10 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,6 @@ int	push_node(t_push push_d, t_stack *node, t_ops **ops)
 		success += !s_rot(push_d.from, node, ops, push_d.from_e);
 	while (i < target_moves--)
 		success += !s_rot(push_d.to, node->target, ops, push_d.to_e);
-	push(push_d, ops);
+	success += !push(push_d, ops);
 	return (success == 0);
 }
