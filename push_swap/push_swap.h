@@ -93,7 +93,8 @@ void	print_ops(t_ops *ops);
 
 // Stack utils
 int		set_index(t_stack **stk);
-void	set_props(t_stack **a, t_stack **b, enum e_stacks for_e);
+void	set_props(t_stack **a, t_stack **b);
+int		get_avg(t_stack **stk);
 
 // Moves
 int		rotate(t_stack **stk, t_ops **ops);

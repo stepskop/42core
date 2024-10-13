@@ -87,9 +87,9 @@ int	push(t_push push_d, t_ops **ops)
 		*(push_d.to) = new;
 	}
 	if ((*(push_d.to))->stk_e == A)
-		return (set_props(push_d.to, push_d.from, A), add_op(ops, PUSH_A));
+		return (set_props(push_d.to, push_d.from), add_op(ops, PUSH_A));
 	else
-		return (set_props(push_d.from, push_d.to, A), add_op(ops, PUSH_B));
+		return (set_props(push_d.from, push_d.to), add_op(ops, PUSH_B));
 }
 
 int	s_rot(t_stack **stk, t_stack *node, t_ops **ops)

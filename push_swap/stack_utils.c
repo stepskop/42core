@@ -37,36 +37,7 @@ int	set_index(t_stack **stk)
 	return (size);
 }
 
-static t_stack	*find_target_a(int value, t_stack *stk)
-{
-	t_stack	*target;
-	t_stack	*curr;
-
-	curr = stk;
-	target = NULL;
-	if (!stk)
-		return (NULL);
-	while (curr)
-	{
-		if (curr->value < value && (!target || curr->value > target->value))
-			target = curr;
-		curr = curr->next;
-	}
-	if (!target)
-	{
-		curr = stk;
-		target = stk;
-		while (curr)
-		{
-			if (curr->value > target->value)
-				target = curr;
-			curr = curr->next;
-		}
-	}
-	return (target);
-}
-
-static t_stack	*find_target_b(int value, t_stack *stk)
+static t_stack	*find_target(int value, t_stack *stk)
 {
 	t_stack	*target;
 	t_stack	*curr;
@@ -95,7 +66,7 @@ static t_stack	*find_target_b(int value, t_stack *stk)
 	return (target);
 }
 
-void	set_props(t_stack **a, t_stack **b, enum e_stacks for_e)
+void	set_props(t_stack **a, t_stack **b)
 {
 	t_stack	*curr;	
 
@@ -104,10 +75,7 @@ void	set_props(t_stack **a, t_stack **b, enum e_stacks for_e)
 	curr = *a;
 	while (curr)
 	{
-		if (for_e == A)
-			curr->target = find_target_a(curr->value, *b);
-		else if (for_e == B)
-			curr->target = find_target_b(curr->value, *b);
+		curr->target = find_target(curr->value, *b);
 		curr = curr->next;
 	}
 }
@@ -135,4 +103,24 @@ int	push_node(t_push push_d, t_stack *node, t_ops **ops)
 		success += !s_rot(push_d.to, node->target, ops);
 	success += !push(push_d, ops);
 	return (success == 0);
+}
+
+int	get_avg(t_stack **stk)
+{
+	long long	sum;
+	int			average;
+	int			size;
+	t_stack		*curr;
+
+	sum = 0;
+	size = 0;
+	curr = *stk;
+	while (curr)
+	{
+		sum += curr->value;
+		size++;
+		curr = curr->next;
+	}
+	average = sum / size;
+	return (average);
 }
