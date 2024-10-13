@@ -45,30 +45,32 @@ static int	push_back(t_stack **a, t_stack **b, t_ops **ops)
 	return (success == 0);
 }
 
-static int sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
+static int	sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
 {
-    t_stack *min;
-    t_stack *curr;
+	t_stack	*min;
+	t_stack	*curr;
+	int		success;
 
-    if (size == 3)
-    {
-        sort_three(stk, ops);
-        return (1);
-    }
-    curr = *stk;
-    min = *stk;
-    while (curr)
-    {
-        if (curr->value < min->value)
-            min = curr;
-        curr = curr->next;
-    }
-    while (min->index)
-        s_rot(stk, min, ops);
-    push((t_push){stk, swp}, ops);
-    sort_base(stk, swp, ops, size - 1);
-    push((t_push){swp, stk}, ops);
-    return (1);
+	success = 0;
+	if (size == 3)
+	{
+		sort_three(stk, ops);
+		return (1);
+	}
+	curr = *stk;
+	min = *stk;
+	while (curr)
+	{
+		if (curr->value < min->value)
+			min = curr;
+		curr = curr->next;
+	}
+	while (min->index)
+		s_rot(stk, min, ops);
+	success += !push((t_push){stk, swp}, ops);
+	success += !sort_base(stk, swp, ops, size - 1);
+	success += !push((t_push){swp, stk}, ops);
+	return (success == 0);
 }
 
 int	sort_n(t_stack **a, t_stack **b, t_ops **ops)
