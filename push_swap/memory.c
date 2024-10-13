@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:13:35 by username          #+#    #+#             */
-/*   Updated: 2024/10/11 17:46:56 by username         ###   ########.fr       */
+/*   Updated: 2024/10/14 01:46:48 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_stack(t_stack **stk)
 	t_stack	*curr;
 	t_stack	*tmp;
 
+	if (!stk)
+		return ;
 	curr = *stk;
 	while (curr)
 	{
@@ -32,6 +34,8 @@ void	free_ops(t_ops **ops)
 	t_ops	*curr;
 	t_ops	*tmp;
 
+	if (!ops)
+		return ;
 	curr = *ops;
 	while (curr)
 	{

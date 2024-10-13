@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:11:15 by username          #+#    #+#             */
-/*   Updated: 2024/10/12 02:39:23 by username         ###   ########.fr       */
+/*   Updated: 2024/10/14 01:31:52 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ static int	sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
 	success = 0;
 	if (size == 3)
 	{
-		sort_three(stk, ops);
-		return (1);
+		return (!sort_three(stk, ops));
 	}
 	curr = *stk;
 	min = *stk;

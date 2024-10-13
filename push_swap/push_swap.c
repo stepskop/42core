@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:35:32 by username          #+#    #+#             */
-/*   Updated: 2024/10/12 02:37:01 by username         ###   ########.fr       */
+/*   Updated: 2024/10/14 01:46:35 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int argc, char **argv)
 	else
 		parse_one(&a, argv[1]);
 	if (!a)
-		return (write(2, "Error\n", 6), 1);
+		return (write(2, "Error\n", 6), free_all(&a, &b, &ops), 1);
 	if (sort(&a, &b, &ops))
 		return (print_ops(ops), free_all(&a, &b, &ops), 0);
-	return (write(2, "Error\n", 6), 1);
+	return (write(2, "Error\n", 6), free_all(&a, &b, &ops), 1);
 }

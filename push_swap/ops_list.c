@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:10:18 by username          #+#    #+#             */
-/*   Updated: 2024/10/12 02:36:49 by username         ###   ########.fr       */
+/*   Updated: 2024/10/14 01:40:40 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ int	add_op(t_ops **ops, enum e_moves move)
 	t_ops	*new;
 	t_ops	*i;
 
-	new = malloc(1 * sizeof(t_stack));
-	if (!new)
+	if (!ops)
 		return (0);
+	new = malloc(1 * sizeof(t_stack));
+	free(new);
+	new = NULL;
+	if (!new)
+		return (free_ops(ops), *ops = NULL, 0);
 	new->op = move;
 	new->next = NULL;
 	new->prev = NULL;
