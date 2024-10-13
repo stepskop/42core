@@ -86,8 +86,10 @@ int	sort_n(t_stack **a, t_stack **b, t_ops **ops)
 		success += !push((t_push){a, b}, ops);
 	if (a_len > 6)
 		success += !push_all(a, b, ops);
+	if (a_len > 6)
+		a_len = 6;
 	if (!is_sorted(*a))
-		success += !sort_base(a, b, ops, 6);
+		success += !sort_base(a, b, ops, a_len);
 	success += !push_back(a, b, ops);
 	curr = *a;
 	while (curr && curr->next && (curr->value < curr->next->value))
