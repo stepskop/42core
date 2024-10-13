@@ -41,7 +41,7 @@ bonus: ${LIBFT} ${OBJ} ${CHECKER_OBJ}
 	${CC} ${CCFLAGS} ${OBJ} ${CHECKER_OBJ} ${LIBFT} -o ${CHECKER}
 
 clean:
-	rm -rf ${OBJ}
+	rm -rf ${OBJ} ${PUSH_SWAP_OBJ} ${CHECKER_OBJ}
 	make clean -C ${LIBFT_DIR}
 
 fclean: clean
