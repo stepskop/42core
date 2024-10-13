@@ -125,14 +125,14 @@ int	push_node(t_push push_d, t_stack *node, t_ops **ops)
 	target_moves = top_price(node->target, set_index(push_d.to));
 	while (i < node_moves && i < target_moves)
 	{
-		success += !s_rot(push_d.from, node, ops, push_d.from_e);
-		success += !s_rot(push_d.to, node->target, ops, push_d.to_e);
+		success += !s_rot(push_d.from, node, ops);
+		success += !s_rot(push_d.to, node->target, ops);
 		i++;
 	}
 	while (i < node_moves--)
-		success += !s_rot(push_d.from, node, ops, push_d.from_e);
+		success += !s_rot(push_d.from, node, ops);
 	while (i < target_moves--)
-		success += !s_rot(push_d.to, node->target, ops, push_d.to_e);
+		success += !s_rot(push_d.to, node->target, ops);
 	success += !push(push_d, ops);
 	return (success == 0);
 }

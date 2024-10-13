@@ -73,3 +73,27 @@ t_stack	*set_cost(t_stack **a, t_stack **b)
 	cheap->cheap = 1;
 	return (cheap);
 }
+
+int	sort_three(t_stack **stk, t_ops **ops)
+{
+	t_stack	*max;
+	t_stack	*curr;
+	int		success;
+
+	success = 0;
+	curr = *stk;
+	max = *stk;
+	while (curr)
+	{
+		if (curr->value > max->value)
+			max = curr;
+		curr = curr->next;
+	}
+	if (max->index == 0)
+		success += !rotate(stk, ops);
+	else if (max->index == 1)
+		success += !rrotate(stk, ops);
+	if ((*stk)->value > (*stk)->next->value)
+		success += !swap(stk, ops);
+	return (success == 0);
+}

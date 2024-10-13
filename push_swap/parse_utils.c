@@ -76,7 +76,7 @@ static int	is_duplicate(t_stack **stk, int value)
 	return (0);
 }
 
-int	add_new(t_stack **stk, int value)
+int	add_new(t_stack **stk, int value, enum e_stacks stk_e)
 {
 	t_stack	*new;
 	t_stack	*i;
@@ -88,19 +88,17 @@ int	add_new(t_stack **stk, int value)
 		return (0);
 	new->index = 0;
 	new->cheap = 0;
+	new->stk_e = stk_e;
 	new->value = value;
 	new->next = NULL;
 	new->prev = NULL;
 	if (!*stk)
-		*stk = new;
-	else
-	{
-		i = *stk;
-		while (i->next)
-			i = i->next;
-		new->index = i->index + 1;
-		i->next = new;
-		new->prev = i;
-	}
+		return (*stk = new, 1);
+	i = *stk;
+	while (i->next)
+		i = i->next;
+	new->index = i->index + 1;
+	i->next = new;
+	new->prev = i;
 	return (1);
 }

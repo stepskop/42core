@@ -6,7 +6,7 @@ OBJ = ${SRC:.c=.o}
 
 CC = cc
 
-CCFLAGS = -Wall -Werror -Wextra
+CCFLAGS = -Wall -Wextra
 
 NAME = push_swap
 

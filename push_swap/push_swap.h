@@ -53,6 +53,7 @@ typedef struct s_stack
 	int				upper;
 	int				price;
 	int				cheap;
+	enum e_stacks	stk_e;
 	struct s_stack	*target;
 	struct s_stack	*next;
 	struct s_stack	*prev;
@@ -60,8 +61,6 @@ typedef struct s_stack
 
 typedef struct s_push
 {
-	enum e_stacks	from_e;
-	enum e_stacks	to_e;
 	struct s_stack	**from;
 	struct s_stack	**to;
 }	t_push;
@@ -69,7 +68,7 @@ typedef struct s_push
 // Parse
 void	parse_mul(t_stack **a, int argc, char **argv);
 void	parse_one(t_stack **a, char *str);
-int		add_new(t_stack **a, int value);
+int		add_new(t_stack **a, int value, enum e_stacks stk_e);
 int		is_valid(char *str, int *value);
 
 // Sort
@@ -78,6 +77,7 @@ int		is_sorted(t_stack *a);
 t_stack	*set_cost(t_stack **a, t_stack **b);
 int		push_node(t_push push_data, t_stack *node, t_ops **ops);
 int		top_price(t_stack *node, int stack_size);
+int		sort_three(t_stack **stk, t_ops **ops);
 
 // Operations
 int		opti_ops(t_ops **ops);
@@ -96,10 +96,10 @@ int		set_index(t_stack **stk);
 void	set_props(t_stack **a, t_stack **b, enum e_stacks for_e);
 
 // Moves
-int		rotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e);
-int		rrotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e);
-int		swap(t_stack **stk, t_ops **ops, enum e_stacks stk_e);
+int		rotate(t_stack **stk, t_ops **ops);
+int		rrotate(t_stack **stk, t_ops **ops);
+int		swap(t_stack **stk, t_ops **ops);
 int		push(t_push push_data, t_ops **ops);
-int		s_rot(t_stack **stk, t_stack *node, t_ops **ops, enum e_stacks stk_e);
+int		s_rot(t_stack **stk, t_stack *node, t_ops **ops);
 
 #endif

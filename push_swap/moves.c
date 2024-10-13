@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	swap(t_stack **stk, t_ops **ops, enum e_stacks stk_e)
+int	swap(t_stack **stk, t_ops **ops)
 {
 	*stk = (*stk)->next;
 	(*stk)->prev->prev = (*stk);
@@ -21,13 +21,13 @@ int	swap(t_stack **stk, t_ops **ops, enum e_stacks stk_e)
 		(*stk)->next->prev = (*stk)->prev;
 	(*stk)->next = (*stk)->prev;
 	(*stk)->prev = NULL;
-	if (stk_e == A)
+	if ((*stk)->stk_e == A)
 		return (set_index(stk), add_op(ops, SWAP_A));
 	else
 		return (set_index(stk), add_op(ops, SWAP_B));
 }
 
-int	rotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e)
+int	rotate(t_stack **stk, t_ops **ops)
 {
 	t_stack	*last;
 
@@ -39,13 +39,13 @@ int	rotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e)
 	last->next->prev = last;
 	(*stk)->prev = NULL;
 	last->next->next = NULL;
-	if (stk_e == A)
+	if ((*stk)->stk_e == A)
 		return (set_index(stk), add_op(ops, ROTATE_A));
 	else
 		return (set_index(stk), add_op(ops, ROTATE_B));
 }
 
-int	rrotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e)
+int	rrotate(t_stack **stk, t_ops **ops)
 {
 	t_stack	*last;
 
@@ -57,7 +57,7 @@ int	rrotate(t_stack **stk, t_ops **ops, enum e_stacks stk_e)
 	last->prev = NULL;
 	*stk = last;
 	last->next->prev = last;
-	if (stk_e == A)
+	if ((*stk)->stk_e == A)
 		return (set_index(stk), add_op(ops, RROTATE_A));
 	else
 		return (set_index(stk), add_op(ops, RROTATE_B));
@@ -74,6 +74,7 @@ int	push(t_push push_d, t_ops **ops)
 	if (*(push_d.from))
 		(*(push_d.from))->prev = NULL;
 	new->prev = NULL;
+	new->stk_e = !((int)(new->stk_e));
 	if (!*(push_d.to))
 	{
 		*(push_d.to) = new;
@@ -85,20 +86,20 @@ int	push(t_push push_d, t_ops **ops)
 		new->next->prev = new;
 		*(push_d.to) = new;
 	}
-	if (push_d.to_e == A)
+	if ((*(push_d.to))->stk_e == A)
 		return (set_props(push_d.to, push_d.from, A), add_op(ops, PUSH_A));
 	else
 		return (set_props(push_d.from, push_d.to, A), add_op(ops, PUSH_B));
 }
 
-int	s_rot(t_stack **stk, t_stack *node, t_ops **ops, enum e_stacks stk_e)
+int	s_rot(t_stack **stk, t_stack *node, t_ops **ops)
 {
 	int	success;
 
 	success = 0;
 	if (node->upper)
-		success += !rotate(stk, ops, stk_e);
+		success += !rotate(stk, ops);
 	else
-		success += !rrotate(stk, ops, stk_e);
+		success += !rrotate(stk, ops);
 	return (success == 0);
 }
