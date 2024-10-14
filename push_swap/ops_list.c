@@ -18,7 +18,7 @@ int	add_op(t_ops **ops, enum e_moves move)
 	t_ops	*i;
 
 	if (!ops)
-		return (0);
+		return (1);
 	new = malloc(1 * sizeof(t_stack));
 	if (!new)
 		return (free_ops(ops), *ops = NULL, 0);

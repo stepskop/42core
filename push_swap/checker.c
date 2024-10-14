@@ -16,7 +16,7 @@ static int	check_format(char *str)
 {
 	int			i;
 	const char	*moves[] = {
-		"pa", "pb", "sa", "sb", "ra", "rb", "rra", "rrb", "ss", "rr", "rrr"};
+		"pa", "pb", "sa", "sb", "ra", "rb", "rra", "rrb", "ss", "rrr", "rr"};
 
 	i = -1;
 	while (++i < 11)
@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 		parse_one(&a, argv[1]);
 	if (!a || !check(&a, &b))
 		return (write(2, "Error\n", 6), free_all(&a, &b, NULL), 1);
-	if (is_sorted(a) && !b)
+	if (is_sorted(a))
 		return (write(1, "OK\n", 3), free_all(&a, &b, NULL), 0);
 	return (write(1, "KO\n", 3), free_all(&a, &b, NULL), 1);
 }

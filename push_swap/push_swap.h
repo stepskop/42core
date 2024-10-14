@@ -29,8 +29,8 @@ enum e_moves
 	RROTATE_A,
 	RROTATE_B,
 	SWAP_AB,
-	ROTATE_AB,
 	RROTATE_AB,
+	ROTATE_AB,
 };
 
 enum e_stacks
