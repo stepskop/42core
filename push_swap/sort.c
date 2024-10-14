@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:11:15 by username          #+#    #+#             */
-/*   Updated: 2024/10/14 01:31:52 by username         ###   ########.fr       */
+/*   Updated: 2024/10/14 02:13:03 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ static int	sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
 
 	success = 0;
 	if (size == 3)
-	{
-		return (!sort_three(stk, ops));
-	}
+		return (sort_three(stk, ops));
 	curr = *stk;
 	min = *stk;
 	while (curr)
@@ -68,7 +66,7 @@ static int	sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
 		curr = curr->next;
 	}
 	while (min->index)
-		s_rot(stk, min, ops);
+		success += !s_rot(stk, min, ops);
 	success += !push((t_push){stk, swp}, ops);
 	success += !sort_base(stk, swp, ops, size - 1);
 	success += !push((t_push){swp, stk}, ops);
@@ -113,5 +111,5 @@ int	sort(t_stack **a, t_stack **b, t_ops **ops)
 		return (sort_three(a, ops));
 	else if (stk_len > 3)
 		return (sort_n(a, b, ops));
-	return (1);
+	return (0);
 }
