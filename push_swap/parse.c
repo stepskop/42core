@@ -21,9 +21,12 @@ void	parse_mul(t_stack **a, int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (!is_valid(argv[i], &value) \
+		if (!is_valid(argv[i], &value, 0) \
 		|| !add_new(a, value, A))
-			return (free_stack(a));
+		{
+			free_stack(a);
+			return ;
+		}
 		i++;
 	}
 }
@@ -33,15 +36,18 @@ void	parse_one(t_stack **a, char *str)
 	int		i;
 	int		value;
 
-	value = 1;
+	value = 0;
 	i = -1;
 	while (str[++i])
 	{
 		if (!ft_isspace(str[i]))
 		{
-			if (!is_valid(&(str[i]), &value) \
+			if (!is_valid(&(str[i]), &value, 1) \
 			|| !add_new(a, value, A))
-				return (free_stack(a));
+			{
+				free_stack(a);
+				return ;
+			}
 			while (!ft_isspace(str[i]) && str[i])
 				i++;
 			if (str[i])

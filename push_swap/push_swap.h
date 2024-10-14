@@ -69,7 +69,7 @@ typedef struct s_push
 void	parse_mul(t_stack **a, int argc, char **argv);
 void	parse_one(t_stack **a, char *str);
 int		add_new(t_stack **a, int value, enum e_stacks stk_e);
-int		is_valid(char *str, int *value);
+int		is_valid(char *str, int *value, int parse_one);
 
 // Sort
 int		sort(t_stack **a, t_stack **b, t_ops **ops);
