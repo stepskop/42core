@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 23:06:53 by username          #+#    #+#             */
-/*   Updated: 2024/10/14 00:54:20 by username         ###   ########.fr       */
+/*   Updated: 2024/10/14 02:23:19 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ int	main(int argc, char **argv)
 		return (write(2, "Error\n", 6), free_all(&a, &b, NULL), 1);
 	if (is_sorted(a) && !b)
 		return (write(1, "OK\n", 3), free_all(&a, &b, NULL), 0);
-	return (write(1, "KO\n", 2), free_all(&a, &b, NULL), 1);
+	return (write(1, "KO\n", 3), free_all(&a, &b, NULL), 1);
 }
