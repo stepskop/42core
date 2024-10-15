@@ -41,7 +41,7 @@ static int	get_num(char *str, int *value)
 	return (1);
 }
 
-int	is_valid(char *str, int *value, int parse_one)
+int	is_valid(char *str, int *value)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ int	is_valid(char *str, int *value, int parse_one)
 		i++;
 	while (str[i])
 	{
-		if (parse_one && ft_isspace(str[i]))
+		if (ft_isspace(str[i]))
 			break ;
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
