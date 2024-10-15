@@ -12,19 +12,7 @@
 
 #include "push_swap.h"
 
-void	parse_mul(t_stack **a, int argc, char **argv)
-{
-	int		i;
-	int		value;
-
-	value = 0;
-	i = 1;
-	while (i < argc)
-		if (!parse_one(a, argv[i++]))
-			return ;
-}
-
-int	parse_one(t_stack **a, char *str)
+static int	parse_one(t_stack **a, char *str)
 {
 	int		i;
 	int		value;
@@ -47,4 +35,14 @@ int	parse_one(t_stack **a, char *str)
 		}
 	}
 	return (1);
+}
+
+void	parse_mul(t_stack **a, int argc, char **argv)
+{
+	int		i;
+
+	i = 1;
+	while (i < argc)
+		if (!parse_one(a, argv[i++]))
+			return ;
 }

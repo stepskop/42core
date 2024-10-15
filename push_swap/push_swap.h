@@ -67,7 +67,6 @@ typedef struct s_push
 
 // Parse
 void	parse_mul(t_stack **a, int argc, char **argv);
-int		parse_one(t_stack **a, char *str);
 int		add_new(t_stack **a, int value, enum e_stacks stk_e);
 int		is_valid(char *str, int *value);
 

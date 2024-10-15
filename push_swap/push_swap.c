@@ -22,14 +22,11 @@ int	main(int argc, char **argv)
 	b = NULL;
 	ops = NULL;
 	if (argc < 2)
-		return (write(2, "Error\n", 6), 1);
-	if (argc > 2)
-		parse_mul(&a, argc, argv);
-	else
-		parse_one(&a, argv[1]);
+		return (ft_putstr_fd("Error\n", 2), 1);
+	parse_mul(&a, argc, argv);
 	if (!a)
-		return (write(2, "Error\n", 6), free_all(&a, &b, &ops), 1);
+		return (ft_putstr_fd("Error\n", 2), free_all(&a, &b, &ops), 1);
 	if (!sort(&a, &b, &ops))
-		return (write(2, "Error\n", 6), free_all(&a, &b, &ops), 1);
+		return (ft_putstr_fd("Error\n", 2), free_all(&a, &b, &ops), 1);
 	return (print_ops(ops), free_all(&a, &b, &ops), 0);
 }
