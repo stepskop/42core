@@ -78,6 +78,6 @@ int	main(int argc, char **argv)
 	if (!a || !check(&a, &b))
 		return (ft_putstr_fd("Error\n", 2), free_all(&a, &b, NULL), 1);
 	if (is_sorted(a) && !set_index(&b))
-		return (write(1, "OK\n", 3), free_all(&a, &b, NULL), 0);
-	return (write(1, "KO\n", 3), free_all(&a, &b, NULL), 1);
+		return (ft_putstr_fd("OK\n", 1), free_all(&a, &b, NULL), 0);
+	return (ft_putstr_fd("KO\n", 1), free_all(&a, &b, NULL), 0);
 }
