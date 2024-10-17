@@ -14,6 +14,8 @@
 
 int	swap(t_stack **stk, t_ops **ops)
 {
+	if (!(*stk) || !(*stk)->next)
+		return (1);
 	*stk = (*stk)->next;
 	(*stk)->prev->prev = (*stk);
 	(*stk)->prev->next = (*stk)->next;
@@ -21,10 +23,11 @@ int	swap(t_stack **stk, t_ops **ops)
 		(*stk)->next->prev = (*stk)->prev;
 	(*stk)->next = (*stk)->prev;
 	(*stk)->prev = NULL;
+	set_index(stk);
 	if ((*stk)->stk_e == A)
-		return (set_index(stk), add_op(ops, SWAP_A));
+		return (add_op(ops, SWAP_A));
 	else
-		return (set_index(stk), add_op(ops, SWAP_B));
+		return (add_op(ops, SWAP_B));
 }
 
 int	rotate(t_stack **stk, t_ops **ops)
@@ -32,6 +35,8 @@ int	rotate(t_stack **stk, t_ops **ops)
 	t_stack	*last;
 
 	last = *stk;
+	if (!last || !last->next)
+		return (1);
 	while (last->next)
 		last = last->next;
 	last->next = *stk;
@@ -39,10 +44,11 @@ int	rotate(t_stack **stk, t_ops **ops)
 	last->next->prev = last;
 	(*stk)->prev = NULL;
 	last->next->next = NULL;
+	set_index(stk);
 	if ((*stk)->stk_e == A)
-		return (set_index(stk), add_op(ops, ROTATE_A));
+		return (add_op(ops, ROTATE_A));
 	else
-		return (set_index(stk), add_op(ops, ROTATE_B));
+		return (add_op(ops, ROTATE_B));
 }
 
 int	rrotate(t_stack **stk, t_ops **ops)
@@ -50,6 +56,8 @@ int	rrotate(t_stack **stk, t_ops **ops)
 	t_stack	*last;
 
 	last = *stk;
+	if (!last || !last->next)
+		return (1);
 	while (last->next)
 		last = last->next;
 	last->next = *stk;
@@ -57,10 +65,11 @@ int	rrotate(t_stack **stk, t_ops **ops)
 	last->prev = NULL;
 	*stk = last;
 	last->next->prev = last;
+	set_index(stk);
 	if ((*stk)->stk_e == A)
-		return (set_index(stk), add_op(ops, RROTATE_A));
+		return (add_op(ops, RROTATE_A));
 	else
-		return (set_index(stk), add_op(ops, RROTATE_B));
+		return (add_op(ops, RROTATE_B));
 }
 
 int	push(t_push push_d, t_ops **ops)
@@ -94,12 +103,12 @@ int	push(t_push push_d, t_ops **ops)
 
 int	s_rot(t_stack **stk, t_stack *node, t_ops **ops)
 {
-	int	success;
-
-	success = 0;
 	if (node->upper)
-		success += !rotate(stk, ops);
-	else
-		success += !rrotate(stk, ops);
-	return (success == 0);
+	{
+		if (!rotate(stk, ops))
+			return (0);
+	}
+	else if (!rrotate(stk, ops))
+		return (0);
+	return (1);
 }

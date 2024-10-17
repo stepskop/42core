@@ -5,9 +5,13 @@ SRC =	memory.c 	moves.c \
 
 PUSH_SWAP_SRC = push_swap.c
 
-OBJ = ${SRC:.c=.o}
+CHECKER_SRC = checker.c
 
-PUSH_SWAP_OBJ = ${PUSH_SWAP_SRC:.c=.o}
+OBJ_DIR = dist
+
+OBJ = ${addprefix ${OBJ_DIR}/, ${SRC:.c=.o}}
+PUSH_SWAP_OBJ = ${addprefix ${OBJ_DIR}/, ${PUSH_SWAP_SRC:.c=.o}}
+CHECKER_OBJ = ${addprefix ${OBJ_DIR}/, ${CHECKER_SRC:.c=.o}}
 
 CC = cc
 
@@ -15,21 +19,20 @@ CCFLAGS = -Wall -Wextra -Werror
 
 NAME = push_swap
 
+CHECKER = checker
+
 LIBFT_DIR = ./libft/
 
 LIBFT = libft.a
 
-CHECKER_SRC = checker.c
-
-CHECKER_OBJ = ${CHECKER_SRC:.c=.o}
-
-CHECKER = checker
-
-%.o: %.c
+${OBJ_DIR}/%.o: %.c
 	${CC} ${CCFLAGS} -c $< -o $@
 
-${NAME}: ${LIBFT} ${OBJ} ${PUSH_SWAP_OBJ}
+${NAME}: ${LIBFT} ${OBJ_DIR} ${OBJ} ${PUSH_SWAP_OBJ}
 	${CC} ${CCFLAGS} ${OBJ} ${PUSH_SWAP_OBJ} ${LIBFT} -o ${NAME}
+
+${OBJ_DIR}:
+	mkdir ${OBJ_DIR}
 
 ${LIBFT}:
 	make -C ${LIBFT_DIR}
@@ -37,11 +40,11 @@ ${LIBFT}:
 
 all: ${NAME}
 
-bonus: ${LIBFT} ${OBJ} ${CHECKER_OBJ}
+bonus: ${LIBFT} ${OBJ_DIR} ${OBJ} ${CHECKER_OBJ}
 	${CC} ${CCFLAGS} ${OBJ} ${CHECKER_OBJ} ${LIBFT} -o ${CHECKER}
 
 clean:
-	rm -rf ${OBJ} ${PUSH_SWAP_OBJ} ${CHECKER_OBJ}
+	rm -rf ${OBJ_DIR}
 	make clean -C ${LIBFT_DIR}
 
 fclean: clean
@@ -51,4 +54,4 @@ fclean: clean
 
 re: fclean all
 
-PHONY: all clean fclean re push_swap libft.a
+PHONY: all clean fclean re push_swap libft.a dist

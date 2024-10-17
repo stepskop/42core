@@ -78,9 +78,7 @@ int	sort_three(t_stack **stk, t_ops **ops)
 {
 	t_stack	*max;
 	t_stack	*curr;
-	int		success;
 
-	success = 0;
 	curr = *stk;
 	max = *stk;
 	while (curr)
@@ -90,10 +88,15 @@ int	sort_three(t_stack **stk, t_ops **ops)
 		curr = curr->next;
 	}
 	if (max->index == 0)
-		success += !rotate(stk, ops);
+	{
+		if (!rotate(stk, ops))
+			return (0);
+	}
 	else if (max->index == 1)
-		success += !rrotate(stk, ops);
+		if (!rrotate(stk, ops))
+			return (0);
 	if ((*stk)->value > (*stk)->next->value)
-		success += !swap(stk, ops);
-	return (success == 0);
+		if (!swap(stk, ops))
+			return (0);
+	return (1);
 }

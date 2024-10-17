@@ -15,46 +15,42 @@
 static int	push_all(t_stack **a, t_stack **b, t_ops **ops)
 {
 	int	avg;
-	int	success;
 
-	success = 0;
 	avg = get_avg(a);
-	while (set_index(a) > 6 && !is_sorted(*a) && (success == 0))
+	while (set_index(a) >= 5 && !is_sorted(*a))
 	{
 		if ((*a)->value < avg)
 		{
-			success += !push((t_push){a, b}, ops);
+			if (!push((t_push){a, b}, ops))
+				return (0);
 			avg = get_avg(a);
 		}
-		else
-			success += !rotate(a, ops);
+		else if (!rotate(a, ops))
+			return (0);
 	}
-	return (success == 0);
+	return (1);
 }
 
 static int	push_back(t_stack **a, t_stack **b, t_ops **ops)
 {
-	int		success;
 	t_stack	*cheap;
 
-	success = 0;
 	cheap = *b;
-	while (*b && (success == 0))
+	while (*b)
 	{
 		set_props(b, a);
 		cheap = set_cost(b, a);
-		success += !push_node((t_push){b, a}, cheap, ops);
+		if (!push_node((t_push){b, a}, cheap, ops))
+			return (0);
 	}
-	return (success == 0);
+	return (1);
 }
 
 static int	sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
 {
 	t_stack	*min;
 	t_stack	*curr;
-	int		success;
 
-	success = 0;
 	if (size == 3)
 		return (sort_three(stk, ops));
 	curr = *stk;
@@ -66,35 +62,40 @@ static int	sort_base(t_stack **stk, t_stack **swp, t_ops **ops, int size)
 		curr = curr->next;
 	}
 	while (min->index)
-		success += !s_rot(stk, min, ops);
-	success += !push((t_push){stk, swp}, ops);
-	success += !sort_base(stk, swp, ops, size - 1);
-	success += !push((t_push){swp, stk}, ops);
-	return (success == 0);
+		if (!s_rot(stk, min, ops))
+			return (0);
+	if (is_sorted(*stk))
+		return (1);
+	if (!push((t_push){stk, swp}, ops) || \
+	!sort_base(stk, swp, ops, size - 1) || \
+	!push((t_push){swp, stk}, ops))
+		return (0);
+	return (1);
 }
 
 int	sort_n(t_stack **a, t_stack **b, t_ops **ops)
 {
 	int		a_len;
-	int		success;
 	t_stack	*curr;
 
-	success = 0;
 	a_len = set_index(a);
-	if (a_len > 6)
-		success += !push_all(a, b, ops);
-	if (a_len > 6)
-		a_len = 6;
+	if (a_len > 5)
+		if (!push_all(a, b, ops))
+			return (0);
+	if (a_len > 5)
+		a_len = 5;
 	if (!is_sorted(*a))
-		success += !sort_base(a, b, ops, a_len);
-	set_props(b, a);
-	success += !push_back(a, b, ops);
+		if (!sort_base(a, b, ops, a_len))
+			return (0);
+	if (!push_back(a, b, ops))
+		return (0);
 	curr = *a;
 	while (curr && curr->next && (curr->value < curr->next->value))
 		curr = curr->next;
 	while (curr->next)
-		success += !s_rot(a, curr->next, ops);
-	return (success == 0);
+		if (!s_rot(a, curr->next, ops))
+			return (0);
+	return (1);
 }
 
 int	sort(t_stack **a, t_stack **b, t_ops **ops)
