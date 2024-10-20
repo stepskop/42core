@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <your@email.com>                  +#+  +:+       +#+        */
+/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 23:06:53 by username          #+#    #+#             */
-/*   Updated: 2024/10/14 02:23:19 by username         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:58:33 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ int	main(int argc, char **argv)
 
 	a = NULL;
 	b = NULL;
-	if (argc < 2)
-		return (ft_putstr_fd("Error\n", 2), 1);
-	parse_mul(&a, argc, argv);
-	if (!a || !check(&a, &b))
+	if (!parse_mul(&a, argc, argv) || !check(&a, &b))
 		return (ft_putstr_fd("Error\n", 2), free_all(&a, &b, NULL), 1);
 	if (is_sorted(a) && !set_index(&b))
 		return (ft_putstr_fd("OK\n", 1), free_all(&a, &b, NULL), 0);

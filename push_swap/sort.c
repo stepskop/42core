@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <your@email.com>                  +#+  +:+       +#+        */
+/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:11:15 by username          #+#    #+#             */
-/*   Updated: 2024/10/14 02:13:03 by username         ###   ########.fr       */
+/*   Updated: 2024/10/20 19:00:07 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int	sort(t_stack **a, t_stack **b, t_ops **ops)
 {
 	int	stk_len;
 
+	if (!a)
+		return (1);
 	stk_len = set_index(a);
 	if (is_sorted(*a))
 		return (1);

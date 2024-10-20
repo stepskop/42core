@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <your@email.com>                  +#+  +:+       +#+        */
+/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:08:52 by username          #+#    #+#             */
-/*   Updated: 2024/10/11 19:21:42 by username         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:57:54 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ static int	parse_one(t_stack **a, char *str)
 	return (1);
 }
 
-void	parse_mul(t_stack **a, int argc, char **argv)
+int	parse_mul(t_stack **a, int argc, char **argv)
 {
 	int		i;
 
 	i = 1;
 	while (i < argc)
 		if (!parse_one(a, argv[i++]))
-			return ;
+			return (0);
+	return (1);
 }

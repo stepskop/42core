@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <your@email.com>                  +#+  +:+       +#+        */
+/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:04:57 by username          #+#    #+#             */
-/*   Updated: 2024/10/14 01:41:34 by username         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:58:12 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_push
 }	t_push;
 
 // Parse
-void	parse_mul(t_stack **a, int argc, char **argv);
+int		parse_mul(t_stack **a, int argc, char **argv);
 int		add_new(t_stack **a, int value, enum e_stacks stk_e);
 int		is_valid(char *str, int *value);
 

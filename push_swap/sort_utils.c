@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: username <your@email.com>                  +#+  +:+       +#+        */
+/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 22:24:45 by username          #+#    #+#             */
-/*   Updated: 2024/10/11 23:18:05 by username         ###   ########.fr       */
+/*   Updated: 2024/10/20 19:01:21 by sskopek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	is_sorted(t_stack *a)
 {
 	t_stack	*curr;
 
+	if (!a)
+		return (1);
 	curr = a;
 	while (curr->next)
 	{
