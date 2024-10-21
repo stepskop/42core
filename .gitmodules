@@ -1,0 +1,3 @@
+[submodule "FdF/mlx"]
+	path = FdF/mlx
+	url = https://github.com/42Paris/minilibx-linux
