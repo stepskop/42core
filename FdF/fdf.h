@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:07:31 by username          #+#    #+#             */
-/*   Updated: 2024/10/23 15:37:12 by username         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:04:29 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <X11/keysym.h>
 # include "math.h"
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 600
+# define HEIGHT 600
 
 typedef struct	s_data
 {
