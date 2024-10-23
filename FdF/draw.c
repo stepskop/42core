@@ -27,7 +27,6 @@ void	draw_map(t_fdf fdf)
 {
 	int	i;
 	int	j;
-	t_point origin = {500, 500};
 	int	step;
 
 	if ((HEIGHT / fdf.map_h / 2) < (WIDTH / fdf.map_w / 2))
@@ -35,11 +34,12 @@ void	draw_map(t_fdf fdf)
 	else
 		step = (WIDTH / fdf.map_w / 2);
 	step = 50;
+	t_point origin = {300, -100};
 	i = -1;
 	while (fdf.map[++i])
 	{
 		j = -1;
-		origin.x = 100;
+		origin.x = 300;
 		while(fdf.map[i][++j])
 		{
 			if (fdf.map[i][j + 1])
