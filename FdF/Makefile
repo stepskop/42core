@@ -1,4 +1,4 @@
-SRCS = main.c
+SRCS = main.c draw.c
 
 OBJ_DIR = ./dist/
 
