@@ -6,86 +6,49 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:42:41 by username          #+#    #+#             */
-/*   Updated: 2024/10/22 16:36:36 by username         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:55:08 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	swap(t_point *a, t_point *b)
+t_point iso(t_point point, int z)
 {
-	int	tmp;
+	double a = 120;
+	t_point	tmp;
 
-	tmp = a->x;
-	a->x = b->x;
-	b->x = tmp;
-	tmp = a->y;
-	a->y = b->y;
-	b->y = tmp;
+	tmp = point;
+	point.x = point.x * cos(a) + point.y * cos(a + 2) + z * cos(a - 2);
+	point.y = tmp.x * sin(a) + tmp.y * sin(a + 2) + z * sin(a - 2);
+	return (point);
 }
 
-static void	draw_h(t_point from, t_point to, t_fdf fdf)
+void	draw_map(t_fdf fdf)
 {
-	int	dec;
-	int	dir;
-	int	dx;
-	int	dy;
-	int	color = 16777215;
+	int	i;
+	int	j;
+	t_point origin = {0, 0};
+	int	step;
 
-	if (from.x > to.x)
-		swap(&from, &to);
-	dx = to.x - from.x;
-	dy = to.y - from.y;
-	dec = 2 * dy - dx;
-	dir = 1;
-	if (dy < 0)
-		dir = -1;
-	dy *= dir;
-	while (from.x <= to.x)
-	{
-		mlx_pixel_put(fdf.mlx, fdf.win, (from.x)++, from.y, color -= 255);
-		if (dec > 0)
-		{
-			dec = dec - 2 * dx;
-			from.y += dir;
-		}
-		dec = dec + 2 * dy;
-	}
-}
-
-static void	draw_v(t_point from, t_point to, t_fdf fdf)
-{
-	int	dec;
-	int	dir;
-	int	dx;
-	int	dy;
-	int	color = 16777215;
-
-	if (from.y > to.y)
-		swap(&from, &to);
-	dx = to.x - from.x;
-	dy = to.y - from.y;
-	dec = 2 * dx - dy;
-	dir = 1;
-	if (dx < 0)
-		dir = -1;
-	dx *= dir;
-	while (from.y <= to.y)
-	{
-		mlx_pixel_put(fdf.mlx, fdf.win, from.x, (from.y)++, color -= 255);
-		if (dec > 0)
-		{
-			dec = dec - 2 * dy;
-			from.x += dir;
-		}
-		dec = dec + 2 * dx;
-	}
-}
-
-void	draw_line(t_point from, t_point to, t_fdf fdf)
-{
-	if (abs(to.x - from.x) > abs(to.y - from.y))
-		draw_h(from, to, fdf);
+	if ((HEIGHT / fdf.map_h / 2) < (WIDTH / fdf.map_w / 2))
+		step = (HEIGHT / fdf.map_h / 2);
 	else
-		draw_v(from, to, fdf);
+		step = (WIDTH / fdf.map_w / 2);
+	i = -1;
+	while (fdf.map[++i])
+	{
+		j = -1;
+		origin.x = 0;
+		while(fdf.map[i][++j])
+		{
+			if (fdf.map[i][j + 1])
+				draw_line(iso(origin, ft_atoi(fdf.map[i][j])), 
+	      				iso((t_point){origin.x + step, origin.y}, ft_atoi(fdf.map[i][j + 1])), fdf);
+			if (fdf.map[i + 1] && is_inrow(fdf.map[i + 1], j))
+				draw_line(iso(origin, ft_atoi(fdf.map[i][j])), 
+	      				iso((t_point){origin.x, origin.y + step}, ft_atoi(fdf.map[i + 1][j])), fdf);
+			origin.x = origin.x + step;
+		}
+		origin.y = origin.y + step;
+	}
 }
