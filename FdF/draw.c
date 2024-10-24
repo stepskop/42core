@@ -14,12 +14,12 @@
 
 t_point	apply_angle(t_point point, int z, t_fdf fdf)
 {
-	double a = 120;
+	double a = fdf.angle;
 	int	tmp;
 
 	tmp = point.x;
-	point.x = point.x * cos(a) + point.y * cos(a + 2) + z * (fdf.scale * 0.1) * cos(a - 2);
-	point.y = tmp * sin(a) + point.y * sin(a + 2) + z * (fdf.scale * 0.1) * sin(a - 2);
+	point.x = point.x * cos(a) + point.y * cos(a + 2) + z * (fdf.scale * 1) * cos(a - 2);
+	point.y = tmp * sin(a) + point.y * sin(a + 2) + z * (fdf.scale * 1) * sin(a - 2);
 	return (point);
 }
 
@@ -29,7 +29,8 @@ int	get_w_mid(t_fdf fdf)
 	int max_x = 0;
 	int min_x = 0;
 
-	min_x = apply_angle((t_point){fdf.origin.x, fdf.origin.y + ((fdf.map_h - 2) * fdf.scale)}, ft_atoi(fdf.map[fdf.map_h - 1][0]), fdf).x;
+	//WORKS ONLY ON RECTANGULAR MAPS
+	min_x = apply_angle((t_point){fdf.origin.x, fdf.origin.y + ((fdf.map_h - 1) * fdf.scale)}, ft_atoi(fdf.map[fdf.map_h - 1][0]), fdf).x;
 	max_x = apply_angle((t_point){fdf.origin.x + ((fdf.map_w - 1) * fdf.scale), fdf.origin.y}, ft_atoi(fdf.map[0][fdf.map_w - 1]), fdf).x;
 	res = min_x + max_x;
 	return (res / 2);
@@ -60,7 +61,7 @@ void	draw_map(t_fdf fdf)
 		while (fdf.map[++i])
 		{
 			j = -1;
-			origin.x = fdf.origin.x ;
+			origin.x = fdf.origin.x;
 			while(fdf.map[i][++j])
 			{
 				if (fdf.map[i][j + 1])

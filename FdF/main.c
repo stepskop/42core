@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 	fdf.map_h = 0;
 	fdf.map_w = 0;
 	fdf.iso = 0;
+	fdf.angle = M_PI * 0.17;
 	fdf.offset = (t_point){0, 0};
 	if (!parse(argv[1], &fdf))
 		return (1);

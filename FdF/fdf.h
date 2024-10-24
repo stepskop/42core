@@ -45,6 +45,7 @@ typedef struct	s_fdf
 	int		iso;
 	t_point		origin;
 	t_point		offset;
+	double		angle;
 	int		scale;
 	int		map_w;
 	int		map_h;

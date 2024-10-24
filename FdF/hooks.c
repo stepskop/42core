@@ -61,7 +61,13 @@ int	on_press(int k_code, t_fdf *fdf)
 		draw_map(*fdf);
 		mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.ptr, 0, 0);
 	}
-	//ft_printf("ORIGIN: (%i, %i)\n", fdf->origin.x, fdf->origin.y);
+	if (k_code == XK_r)
+	{
+		fdf->angle -= 0.1;
+		draw_map(*fdf);
+		mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.ptr, 0, 0);
+	}
+	// ft_printf("ORIGIN: (%i, %i)\n", fdf->origin.x, fdf->origin.y);
 
 	return (1);
 }
