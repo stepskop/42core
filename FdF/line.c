@@ -84,7 +84,7 @@ static void	draw_v(t_point from, t_point to, t_fdf fdf)
 
 void	draw_line(t_point from, t_point to, t_fdf fdf)
 {
-	ft_printf("FROM: (%i, %i), TO: (%i, %i)\n", from.x, from.y, to.x, to.y);
+	//ft_printf("FROM: (%i, %i), TO: (%i, %i)\n", from.x, from.y, to.x, to.y);
 	if (abs(to.x - from.x) > abs(to.y - from.y))
 		draw_h(from, to, fdf);
 	else

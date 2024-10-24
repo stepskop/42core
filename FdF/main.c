@@ -29,8 +29,15 @@ int	main(int argc, char **argv)
 		return (ft_printf("MONKE\n"), 1);
 	fdf.map_h = 0;
 	fdf.map_w = 0;
+	fdf.iso = 0;
+	fdf.offset = (t_point){0, 0};
 	if (!parse(argv[1], &fdf))
 		return (1);
+	if ((HEIGHT / fdf.map_h / 2) < (WIDTH / fdf.map_w / 2))
+		fdf.scale = (HEIGHT / fdf.map_h / 2);
+	else
+		fdf.scale = (WIDTH / fdf.map_w / 2);
+	fdf.origin = (t_point){(WIDTH / 2) - (fdf.map_w / 2) * fdf.scale, (HEIGHT / 2) - (fdf.map_h / 2) * fdf.scale};
 	if (init(&fdf))
 		draw_map(fdf);
 	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img.ptr, 0, 0);

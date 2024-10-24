@@ -19,8 +19,8 @@
 # include <X11/keysym.h>
 # include "math.h"
 
-# define WIDTH 600
-# define HEIGHT 600
+# define WIDTH 900
+# define HEIGHT 900
 
 typedef struct	s_data
 {
@@ -42,6 +42,10 @@ typedef struct	s_fdf
 	t_xvar		*mlx;
 	t_win_list	*win;
 	t_data		img;
+	int		iso;
+	t_point		origin;
+	t_point		offset;
+	int		scale;
 	int		map_w;
 	int		map_h;
 	char		***map;
