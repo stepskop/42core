@@ -12,6 +12,22 @@
 
 #include "fdf.h"
 
+void	free_map(char ***map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+			free(map[i][j]);
+		free(map[i]);
+	}
+	free(map);
+}
+
 int	graceful_exit(t_fdf *fdf)
 {
 	mlx_destroy_image(fdf->mlx, fdf->img.ptr);

@@ -12,9 +12,9 @@
 
 #include "fdf.h"
 
-void	rotate_x(int *y, int *z, t_fdf fdf)
+static void	rotate_x(int *y, int *z, t_fdf fdf)
 {
-	int	tmp;
+	int		tmp;
 	double	angle;
 
 	angle = fdf.camera.x_angle;
@@ -23,9 +23,9 @@ void	rotate_x(int *y, int *z, t_fdf fdf)
 	*z = tmp * sin(angle) + *z * cos(angle);
 }
 
-void	rotate_y(int *x, int *z, t_fdf fdf)
+static void	rotate_y(int *x, int *z, t_fdf fdf)
 {
-	int	tmp;
+	int		tmp;
 	double	angle;
 
 	angle = fdf.camera.y_angle;
@@ -34,9 +34,9 @@ void	rotate_y(int *x, int *z, t_fdf fdf)
 	*z = *z * cos(angle) - tmp * sin(angle);
 }
 
-void	rotate_z(int *x, int *y, t_fdf fdf)
+static void	rotate_z(int *x, int *y, t_fdf fdf)
 {
-	int	tmp;
+	int		tmp;
 	double	angle;
 
 	angle = fdf.camera.z_angle;
@@ -45,19 +45,17 @@ void	rotate_z(int *x, int *y, t_fdf fdf)
 	*y = tmp * sin(angle) + *y * cos(angle);
 }
 
-t_point	project(t_point point, int z, t_fdf fdf)
+t_point	get_rotation(t_point point, int z, t_fdf fdf)
 {
 	int	mut_z;
 
 	z *= fdf.camera.scale * 0.2;
 	point.x -= (fdf.map_w * fdf.camera.scale) / 2;
 	point.y -= (fdf.map_h * fdf.camera.scale) / 2;
-
 	mut_z = z;
 	rotate_x(&point.y, &mut_z, fdf);
 	rotate_y(&point.x, &mut_z, fdf);
 	rotate_z(&point.x, &point.y, fdf);
-
 	point.y += HEIGHT / 2 + fdf.offset.y;
 	point.x += WIDTH / 2 + fdf.offset.x;
 	return (point);

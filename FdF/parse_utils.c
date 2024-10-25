@@ -17,7 +17,7 @@ int	is_inrow(char **row, int x)
 	int	i;
 
 	i = -1;
-	while(++i <= x)
+	while (++i <= x)
 		if (!row[i])
 			return (0);
 	return (1);

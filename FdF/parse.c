@@ -15,11 +15,11 @@
 static int	add_new(t_fdf *fdf, char *line, size_t *i)
 {
 	char	***tmp;
-	int	len;
-	
+	int		len;
+
 	tmp = fdf->map;
-	fdf->map = ft_realloc(fdf->map, (*i + 1) * sizeof(char **), 
-		   (*i + 3) * sizeof(char **));
+	fdf->map = ft_realloc(fdf->map, (*i + 1) * sizeof(char **),
+			(*i + 3) * sizeof(char **));
 	if (!fdf->map)
 		return (free_map(tmp), 0);
 	(*i)++;
@@ -35,7 +35,7 @@ static int	add_new(t_fdf *fdf, char *line, size_t *i)
 
 int	parse(char *file, t_fdf *fdf)
 {
-	int	fd;
+	int		fd;
 	size_t	i;
 	char	*line;
 

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF
-# define FDF
+#ifndef FDF_H
+# define FDF_H
 
 # include "mlx/mlx.h"
 # include "mlx/mlx_int.h"
@@ -22,66 +22,61 @@
 # define WIDTH 900
 # define HEIGHT 900
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*ptr;
 	char	*addr;
-	int	bbp;
-	int	line_len;
-	int	endian;
+	int		bbp;
+	int		line_len;
+	int		endian;
 }	t_data;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int	x;
 	int	y;
 }	t_point;
 
-typedef struct	s_camera
+typedef struct s_camera
 {
 	double	x_angle;
 	double	y_angle;
 	double	z_angle;
-	int	scale;
+	int		scale;
 }	t_camera;
 
-typedef struct	s_fdf
+typedef struct s_fdf
 {
 	t_xvar		*mlx;
 	t_win_list	*win;
 	t_data		img;
 	t_camera	camera;
-	int		iso;
+	int			iso;
 	t_point		origin;
 	t_point		offset;
-	int		map_w;
-	int		map_h;
+	int			map_w;
+	int			map_h;
 	char		***map;
 }	t_fdf;
 
 void	draw_map(t_fdf fdf);
 
-//TEST
-void	draw_demo(t_fdf fdf);
-
 //Projection
-t_point	project(t_point point, int z, t_fdf fdf);
+t_point	get_rotation(t_point point, int z, t_fdf fdf);
 
 //Draw utils
 void	put_pixel(t_point pix, t_data data, int color);
 void	draw_line(t_point from, t_point to, t_fdf fdf);
 
 //Parse
-int	parse(char *file, t_fdf *fdf);
-int	is_inrow(char **row, int x);
-
-//Memory
-void	free_map(char ***map);
+int		parse(char *file, t_fdf *fdf);
+int		is_inrow(char **row, int x);
 
 //Lifecycle
-int	graceful_exit(t_fdf *fdf);
+int		graceful_exit(t_fdf *fdf);
+void	free_map(char ***map);
 
 //Hooks
-int	on_press(int k_code, t_fdf *fdf);
+int		on_press(int k_code, t_fdf *fdf);
 
 #endif

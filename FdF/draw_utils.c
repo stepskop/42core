@@ -15,6 +15,7 @@
 void	put_pixel(t_point pix, t_data data, int color)
 {
 	char	*dst;
+
 	if (pix.x < 1 || pix.x > WIDTH - 1 || pix.y < 1 || pix.y > HEIGHT - 1)
 		return ;
 	dst = data.addr + (pix.y * data.line_len + pix.x * (data.bbp / 8));
