@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:18:24 by username          #+#    #+#             */
-/*   Updated: 2024/10/23 15:28:42 by username         ###   ########.fr       */
+/*   Updated: 2024/10/25 19:33:36 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,19 @@ int	main(int argc, char **argv)
 	fdf.map_h = 0;
 	fdf.map_w = 0;
 	fdf.iso = 0;
-	fdf.angle = M_PI * 0.17;
+	fdf.camera.x_angle = M_PI * 0.17;
+	fdf.camera.y_angle = M_PI * -0.17;		
+	fdf.camera.z_angle = M_PI * 0;
 	fdf.offset = (t_point){0, 0};
 	if (!parse(argv[1], &fdf))
 		return (1);
 	if ((HEIGHT / fdf.map_h / 2) < (WIDTH / fdf.map_w / 2))
-		fdf.scale = (HEIGHT / fdf.map_h / 2);
+		fdf.camera.scale = (HEIGHT / fdf.map_h / 2);
 	else
-		fdf.scale = (WIDTH / fdf.map_w / 2);
-	fdf.origin = (t_point){(WIDTH / 2) - (fdf.map_w / 2) * fdf.scale, (HEIGHT / 2) - (fdf.map_h / 2) * fdf.scale};
+		fdf.camera.scale = (WIDTH / fdf.map_w / 2);
+	//fdf.camera.scale = 1;
+	//fdf.origin = (t_point){(WIDTH / 2) - (fdf.map_w / 2) * fdf.camera.scale, (HEIGHT / 2) - (fdf.map_h / 2) * fdf.camera.scale};
+	fdf.origin = (t_point){0, 0};
 	if (init(&fdf))
 		draw_map(fdf);
 	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img.ptr, 0, 0);

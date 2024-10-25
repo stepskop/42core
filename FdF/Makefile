@@ -1,6 +1,6 @@
 SRCS =	main.c draw.c demo.c parse.c draw_utils.c \
 	parse_utils.c memory.c lifecycle.c hooks.c \
-	line.c
+	line.c matrix.c
 
 OBJ_DIR = ./dist/
 

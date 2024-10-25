@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:07:31 by username          #+#    #+#             */
-/*   Updated: 2024/10/23 16:04:29 by username         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:35:17 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,23 @@ typedef struct	s_point
 	int	y;
 }	t_point;
 
+typedef struct	s_camera
+{
+	double	x_angle;
+	double	y_angle;
+	double	z_angle;
+	int	scale;
+}	t_camera;
+
 typedef struct	s_fdf
 {
 	t_xvar		*mlx;
 	t_win_list	*win;
 	t_data		img;
+	t_camera	camera;
 	int		iso;
 	t_point		origin;
 	t_point		offset;
-	double		angle;
-	int		scale;
 	int		map_w;
 	int		map_h;
 	char		***map;
@@ -57,7 +64,8 @@ void	draw_map(t_fdf fdf);
 //TEST
 void	draw_demo(t_fdf fdf);
 
-
+//Projection
+t_point	project(t_point point, int z, t_fdf fdf);
 
 //Draw utils
 void	put_pixel(t_point pix, t_data data, int color);
