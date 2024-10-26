@@ -22,18 +22,20 @@ static void	swap(t_point *a, t_point *b)
 	tmp = a->y;
 	a->y = b->y;
 	b->y = tmp;
+	tmp = a->color;
+	a->color = b->color;
+	b->color = tmp;
 }
 
 static void	draw_h(t_point from, t_point to, t_fdf fdf)
 {
-	int	dec;
-	int	dir;
-	int	dx;
-	int	dy;
-	int	color = 16777215;
+	int		dec;
+	int		dir;
+	int		dx;
+	int		dy;
+	t_point start;
 
-	if (from.x > to.x)
-		swap(&from, &to);
+	start = (t_point){from.x, from.y, from.color};
 	dx = to.x - from.x;
 	dy = to.y - from.y;
 	dec = 2 * dy - dx;
@@ -43,7 +45,7 @@ static void	draw_h(t_point from, t_point to, t_fdf fdf)
 	dy *= dir;
 	while (from.x <= to.x)
 	{
-		put_pixel((t_point){(from.x)++, from.y}, fdf.img, color -= 255);
+		put_pixel((t_point){(from.x)++, from.y, get_color(start, to, from)}, fdf.img);
 		if (dec > 0)
 		{
 			dec = dec - 2 * dx;
@@ -55,14 +57,13 @@ static void	draw_h(t_point from, t_point to, t_fdf fdf)
 
 static void	draw_v(t_point from, t_point to, t_fdf fdf)
 {
-	int	dec;
-	int	dir;
-	int	dx;
-	int	dy;
-	int	color = 16777215;
+	int		dec;
+	int		dir;
+	int		dx;
+	int		dy;
+	t_point	start;
 
-	if (from.y > to.y)
-		swap(&from, &to);
+	start = (t_point){from.x, from.y, from.color};
 	dx = to.x - from.x;
 	dy = to.y - from.y;
 	dec = 2 * dx - dy;
@@ -72,7 +73,7 @@ static void	draw_v(t_point from, t_point to, t_fdf fdf)
 	dx *= dir;
 	while (from.y <= to.y)
 	{
-		put_pixel((t_point){from.x, (from.y)++}, fdf.img, color -= 255);
+		put_pixel((t_point){from.x, (from.y)++, get_color(start, to, from)}, fdf.img);
 		if (dec > 0)
 		{
 			dec = dec - 2 * dy;
@@ -84,8 +85,17 @@ static void	draw_v(t_point from, t_point to, t_fdf fdf)
 
 void	draw_line(t_point from, t_point to, t_fdf fdf)
 {
+	//ft_printf("FROM: [%i, %i, %#x], TO: [%i, %i, %#x]\n", from.x, from.y, from.color, to.x, to.y, to.color);
 	if (abs(to.x - from.x) > abs(to.y - from.y))
+	{
+		if (from.x > to.x)
+			swap(&from, &to);
 		draw_h(from, to, fdf);
+	}
 	else
+	{
+		if (from.y > to.y)
+			swap(&from, &to);
 		draw_v(from, to, fdf);
+	}
 }
