@@ -1,6 +1,6 @@
 SRC_FILES =	main.c draw.c parse.c draw_utils.c \
 		parse_utils.c lifecycle.c hooks.c \
-		line.c matrix.c math_utils.c
+		line.c matrix.c math_utils.c colors.c
 
 OBJ_DIR = ./dist/
 

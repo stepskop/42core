@@ -3,99 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
+/*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 14:16:21 by username          #+#    #+#             */
-/*   Updated: 2024/10/30 01:36:27 by username         ###   ########.fr       */
+/*   Created: 2024/10/30 15:20:16 by username          #+#    #+#             */
+/*   Updated: 2024/10/30 22:45:56 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	swap(t_point *a, t_point *b)
+int	draw_h(t_point from, t_point to, t_data img)
 {
-	int	tmp;
+	int		dec;
+	int		dir;
+	t_point	delt;
+	t_point	curr;
 
-	tmp = a->x;
-	a->x = b->x;
-	b->x = tmp;
-	tmp = a->y;
-	a->y = b->y;
-	b->y = tmp;
-	tmp = a->z;
-	a->z = b->z;
-	b->z = tmp;
-	tmp = a->color;
-	a->color = b->color;
-	b->color = tmp;
+	delt = v_sub(to, from);
+	dir = 1;
+	if (delt.y < 0)
+		dir = -1;
+	delt.y = fabs(delt.y);
+	dec = 2 * delt.y - delt.x;
+	curr = from;
+	while (curr.x < to.x)
+	{
+		put_pixel(curr, img);
+		if (dec > 0)
+			curr.y += dir;
+		if (dec > 0)
+			dec = dec + (2 * (delt.y - delt.x));
+		else
+			dec = dec + 2 * delt.y;
+		//curr.color = gradient(from.color, to.color, 10, curr.z);
+		curr.x++;
+	}
+	return (0);
 }
 
-static void	draw_h(t_point from, t_point to, t_fdf fdf)
+int	draw_v(t_point from, t_point to, t_data img)
 {
-	double		dec;
-	double		dir;
-	t_point		d;
-	t_point		start;
+	int		dec;
+	int		dir;
+	t_point	delt;
+	t_point	curr;
 
-	start = (t_point){from.x, from.y, from.z, from.color};
-	d.x = to.x - from.x;
-	d.y = to.y - from.y;
-	dec = 2 * d.y - d.x;
+	delt = v_sub(to, from);
 	dir = 1;
-	if (d.y < 0)
+	if (delt.x < 0)
 		dir = -1;
-	d.y *= dir;
-	while (from.x <= to.x)
+	delt.x = fabs(delt.x);
+	dec = 2 * delt.x - delt.y;
+	curr = from;
+	while (curr.y < to.y)
 	{
-		put_pixel((t_point){(from.x)++, from.y, from.z, 0xFFFFFF}, fdf.img);
+		put_pixel(curr, img);
 		if (dec > 0)
-		{
-			dec = dec - 2 * d.x;
-			from.y += dir;
-		}
-		dec = dec + 2 * d.y;
-	}
-}
-
-static void	draw_v(t_point from, t_point to, t_fdf fdf)
-{
-	double		dec;
-	double		dir;
-	t_point		d;
-	t_point		start;
-
-	start = (t_point){from.x, from.y, from.z, from.color};
-	d.x = to.x - from.x;
-	d.y = to.y - from.y;
-	dec = 2 * d.x - d.y;
-	dir = 1;
-	if (d.x < 0)
-		dir = -1;
-	d.x *= dir;
-	while (from.y <= to.y)
-	{
-		put_pixel((t_point){from.x, (from.y)++, from.z, 0xFFFFFF}, fdf.img);
+			curr.x += dir;
 		if (dec > 0)
-		{
-			dec = dec - 2 * d.y;
-			from.x += dir;
-		}
-		dec = dec + 2 * d.x;
+			dec = dec + (2 * (delt.x - delt.y));
+		else
+			dec = dec + 2 * delt.x;
+		//curr.color = gradient(from.color, to.color, 10, curr.z);
+		curr.y++;
 	}
+	return (0);
 }
 
 void	draw_line(t_point from, t_point to, t_fdf fdf)
 {
-	if (fabs(to.x - from.x) > fabs(to.y - from.y))
+	int	tmp;
+
+	tmp = from.color;
+	if (fabs(to.y - from.y) < fabs(to.x - from.x))
 	{
 		if (from.x > to.x)
-			swap(&from, &to);
-		draw_h(from, to, fdf);
+		{
+			from.color = to.color;
+			to.color = tmp;
+			draw_h(to, from, fdf.img);
+			return ;
+		}
+		draw_h(from, to, fdf.img);
 	}
 	else
 	{
 		if (from.y > to.y)
-			swap(&from, &to);
-		draw_v(from, to, fdf);
+		{
+			from.color = to.color;
+			to.color = tmp;
+			draw_v(to, from, fdf.img);
+			return ;
+		}
+		draw_v(from, to, fdf.img);
 	}
 }

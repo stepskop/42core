@@ -6,32 +6,11 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:46:47 by username          #+#    #+#             */
-/*   Updated: 2024/10/30 01:34:01 by username         ###   ########.fr       */
+/*   Updated: 2024/10/30 21:18:15 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static int	add_new(t_fdf *fdf, char *line, size_t *i)
-{
-	char	***tmp;
-	int		len;
-
-	tmp = fdf->map.raw;
-	fdf->map.raw = ft_realloc(fdf->map.raw, (*i + 1) * sizeof(char **),
-			(*i + 3) * sizeof(char **));
-	if (!fdf->map.raw)
-		return (free_map(tmp), 0);
-	if (*i == 0)
-		fdf->map.w = line_len(fdf->map.raw[0]);
-	(*i)++;
-	fdf->map.raw[*i] = ft_split(line, ' ');
-	fdf->map.raw[*i + 1] = NULL;
-	len = line_len(fdf->map.raw[*i]);
-	if (len != fdf->map.w)
-		return (free_map(fdf->map.raw), 0);
-	return (1);
-}
 
 static int	to_points(t_fdf *fdf)
 {
@@ -51,11 +30,9 @@ static int	to_points(t_fdf *fdf)
 			return (free_pts(fdf->map.pts), 0);
 		while (fdf->map.raw[i][++j])
 		{
-			fdf->map.pts[i][j] = malloc(sizeof(t_point));
-			if (!fdf->map.pts[i][j])
-				return (free_pts(fdf->map.pts), 0);
-			*(fdf->map.pts[i][j]) = (t_point){j - (double)fdf->map.w / 2,
-				i - (double)fdf->map.h / 2, ft_atoi(fdf->map.raw[i][j]), 0};
+			set_z(ft_atoi(fdf->map.raw[i][j]), fdf);
+			if (!add_pt(fdf, i, j))
+				return (0);
 		}
 		fdf->map.pts[i][j] = NULL;
 	}
@@ -81,7 +58,7 @@ int	parse(char *file, t_fdf *fdf)
 	{
 		free(line);
 		line = get_next_line(fd);
-		if (line && !add_new(fdf, line, &i))
+		if (line && !add_str(fdf, line, &i))
 			return (finish_read(fd), free(line), 0);
 	}
 	fdf->map.h = i + 1;

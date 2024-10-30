@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:07:25 by username          #+#    #+#             */
-/*   Updated: 2024/10/30 01:28:23 by username         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:55:51 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 static void	control_angle(int k_code, t_fdf *fdf)
 {
 	if (k_code == XK_w)
-		rot_x(fdf, 0.1);
-	else if (k_code == XK_s)
 		rot_x(fdf, -0.1);
+	else if (k_code == XK_s)
+		rot_x(fdf, 0.1);
 	else if (k_code == XK_a)
-		rot_y(fdf, -0.1);
-	else if (k_code == XK_d)
 		rot_y(fdf, 0.1);
+	else if (k_code == XK_d)
+		rot_y(fdf, -0.1);
 }
 
 static void	control_scale(int k_code, t_fdf *fdf)
 {
 	if (k_code == XK_minus)
-		zoom(fdf, 0.9);
+		zoom(fdf, 1 / 1.2);
 	else if (k_code == XK_equal)
-		zoom(fdf, 1.1);
+		zoom(fdf, 1.2);
 	else if (k_code == XK_i)
 		elev(fdf, 1.1);
 	else if (k_code == XK_k)

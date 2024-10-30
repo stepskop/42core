@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:09:30 by sskopek           #+#    #+#             */
-/*   Updated: 2024/10/23 12:27:03 by username         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:13:14 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
 int		ft_printf(const char *format, ...);
+int		ft_atoi_base(const char *nptr, unsigned int base);
 
 #endif

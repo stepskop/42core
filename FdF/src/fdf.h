@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:07:31 by username          #+#    #+#             */
-/*   Updated: 2024/10/30 01:20:22 by username         ###   ########.fr       */
+/*   Updated: 2024/10/30 22:48:14 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+# define TOP_COLOR 0xD11F40
+# define BOT_COLOR 0x4637A3
 
 typedef struct s_data
 {
@@ -66,6 +68,9 @@ typedef struct s_map
 	int		h;
 	char	***raw;
 	t_point	***pts;
+	t_point	max;
+	t_point	min;
+	int		cust_c;
 }	t_map;
 
 typedef struct s_fdf
@@ -74,8 +79,7 @@ typedef struct s_fdf
 	t_win_list	*win;
 	t_data		img;
 	t_camera	cam;
-	t_point		(*cam_fn)(int x, int y, struct s_fdf);
-	t_map		map;	
+	t_map		map;
 }	t_fdf;
 
 //Main
@@ -89,7 +93,11 @@ void	draw_line(t_point from, t_point to, t_fdf fdf);
 //Parse
 int		parse(char *file, t_fdf *fdf);
 size_t	line_len(char **line);
-
+int		add_str(t_fdf *fdf, char *line, size_t *i);
+int		add_pt(t_fdf *fdf, int i, int j);
+void	set_z(int curr, t_fdf *fdf);
+int		set_color(int z, t_map map);
+int		gradient(int start, int end, int len, int curr);
 //Lifecycle
 int		graceful_exit(t_fdf *fdf);
 void	free_map(char ***map);

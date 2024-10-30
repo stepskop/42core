@@ -6,7 +6,7 @@
 /*   By: sskopek <sskopek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:42:41 by username          #+#    #+#             */
-/*   Updated: 2024/10/30 01:27:41 by username         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:04:21 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	proj_iso(t_fdf *fdf)
 {
 	rot_x(fdf, -M_PI_2);
 	rot_y(fdf, M_PI_4);
-	rot_x(fdf, 2);
+	rot_x(fdf, 1);
 }
 
 static void	draw_map(t_fdf fdf)
@@ -26,6 +26,7 @@ static void	draw_map(t_fdf fdf)
 	t_point	curr;
 
 	i = -1;
+	curr = v_add(*(fdf.map.pts[0][0]), fdf.cam.offs);
 	while (fdf.map.pts[++i])
 	{
 		j = -1;
