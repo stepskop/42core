@@ -6,19 +6,18 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:08:18 by username          #+#    #+#             */
-/*   Updated: 2024/10/23 14:09:38 by username         ###   ########.fr       */
+/*   Updated: 2024/10/30 01:10:28 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	is_inrow(char **row, int x)
+size_t	line_len(char **line)
 {
-	int	i;
+	size_t	len;
 
-	i = -1;
-	while (++i <= x)
-		if (!row[i])
-			return (0);
-	return (1);
+	len = 0;
+	while (line && line[len])
+		len++;
+	return (len);
 }

@@ -1,31 +1,45 @@
-SRCS =	main.c draw.c parse.c draw_utils.c \
-	parse_utils.c lifecycle.c hooks.c \
-	line.c matrix.c
+SRC_FILES =	main.c draw.c parse.c draw_utils.c \
+		parse_utils.c lifecycle.c hooks.c \
+		line.c matrix.c math_utils.c
 
 OBJ_DIR = ./dist/
 
-OBJ = $(addprefix $(OBJ_DIR), ${SRCS:.c=.o})
+SRC_DIR = ./src/
+
+OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
+
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 NAME = fdf
 
-LIBFT = libft
+LIBFT = libft.a
 
-MLX = mlx
+MLX_DIR = ./mlx/
 
-$(OBJ_DIR)%.o: %.c $(MLX) $(LIBFT) $(OBJ_DIR)
-	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx -Ilibft -O3 -c $< -o $@
+MLX = $(MLX_DIR)/libmlx_Linux.a
 
-$(NAME): $(OBJ) $(MLX) $(LIBFT)
-	$(CC) $(OBJ) -Lmlx -lmlx_Linux -Llibft -lft -L/usr/lib -Imlx -Ilibft -lXext -lX11 -lm -lz -o $(NAME)
+CC = cc
 
-$(MLX):
-	make -C ./mlx/ all
+FLAGS = -Wall -Werror -Wextra
+
+HEADERS = src/fdf.h
+
+$(NAME): $(MLX) $(LIBFT) $(OBJ_DIR) $(OBJ)
+	$(CC) $(FLAGS) $(OBJ) -Lmlx -Llibft -lft -lmlx -Imlx -Ilft -I./src/ -lXext -lX11 -lm -o $(NAME)
 
 $(LIBFT):
 	make -C ./libft/
 
+$(MLX):
+	git submodule init
+	git submodule update
+	make -C $(MLX_DIR)
+
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+	$(CC) $(FLAGS) -I./src/ -c $< -o $@
 
 all: $(NAME)
 
@@ -40,4 +54,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: fdf mlx libft all clean fclean re
+.PHONY: all clean fclean re
