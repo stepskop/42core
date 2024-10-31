@@ -29,11 +29,8 @@ static int	to_points(t_fdf *fdf)
 		if (!fdf->map.pts[i])
 			return (free_pts(fdf->map.pts), 0);
 		while (fdf->map.raw[i][++j])
-		{
-			set_z(ft_atoi(fdf->map.raw[i][j]), fdf);
 			if (!add_pt(fdf, i, j))
 				return (0);
-		}
 		fdf->map.pts[i][j] = NULL;
 	}
 	return (fdf->map.pts[i] = NULL, 1);
@@ -62,6 +59,7 @@ int	parse(char *file, t_fdf *fdf)
 			return (finish_read(fd), free(line), 0);
 	}
 	fdf->map.h = i + 1;
+	set_z(fdf);
 	if (!to_points(fdf))
 		return (free_map(fdf->map.raw), 0);
 	return (1);

@@ -82,10 +82,23 @@ int	add_pt(t_fdf *fdf, int i, int j)
 	return (1);
 }
 
-void	set_z(int curr, t_fdf *fdf)
+void	set_z(t_fdf *fdf)
 {
-	if (curr > fdf->map.max.z)
-		fdf->map.max.z = curr;
-	if (curr < fdf->map.min.z)
-		fdf->map.min.z = curr;
+	int	i;
+	int	j;
+	int	curr;
+
+	i = -1;
+	while (fdf->map.raw[++i])
+	{
+		j = -1;
+		while (fdf->map.raw[i][++j])
+		{
+			curr = ft_atoi(fdf->map.raw[i][j]);
+			if (curr > fdf->map.max.z)
+				fdf->map.max.z = curr;
+			if (curr < fdf->map.min.z)
+				fdf->map.min.z = curr;
+		}
+	}
 }

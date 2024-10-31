@@ -12,51 +12,44 @@
 
 #include "fdf.h"
 
-int	gradient(int start, int end, int len, int curr)
+static int	interpol_color(int start, int end, double f)
 {
-	int		r;
-	int		g;
-	int		b;
-	float	t;
+	int	sta_rgb[3];
+	int	end_rgb[3];
+	int	res_rgb[3];
 
-	t = (float)curr / len;
-	r = ((start >> 16) & 0xFF) + (int)(((end >> 16 & 0xFF) - (start >> 16 & 0xFF)) * t);
-	g = ((start >> 8) & 0xFF) + (int)(((end >> 8 & 0xFF) - (start >> 8 & 0xFF)) * t);
-	b = (start & 0xFF) + (int)(((end & 0xFF) - (start & 0xFF)) * t);
-	return ((r << 16) | (g << 8) | b);
+	sta_rgb[0] = (start >> 16) & 0xFF;
+	sta_rgb[1] = (start >> 8) & 0xFF;
+	sta_rgb[2] = start & 0xFF;
+	end_rgb[0] = (end >> 16) & 0xFF;
+	end_rgb[1] = (end >> 8) & 0xFF;
+	end_rgb[2] = end & 0xFF;
+	res_rgb[0] = sta_rgb[0] + (int)((end_rgb[0] - sta_rgb[0]) * f);
+	res_rgb[1] = sta_rgb[1] + (int)((end_rgb[1] - sta_rgb[1]) * f);
+	res_rgb[2] = sta_rgb[2] + (int)((end_rgb[2] - sta_rgb[2]) * f);
+	return ((res_rgb[0] << 16) | (res_rgb[1] << 8) | res_rgb[2]);
 }
-
-// int	get_clor()
-// {
-//
-// }
 
 int	set_color(int z, t_map map)
 {
-	return (gradient(BOT_COLOR, TOP_COLOR, map.max.z - map.min.z, z));
+	double	f;
+
+	if (map.max.z == map.min.z)
+		return (BOT_COLOR);
+	f = (z - map.min.z) / (map.max.z - map.min.z);
+	return (interpol_color(BOT_COLOR, TOP_COLOR, f));
 }
 
-int interpolate_color(int start_color, int end_color, float t)
+int	get_color(t_point start, t_point end, t_point curr)
 {
-	int start_r = (start_color >> 16) & 0xFF;
-	int start_g = (start_color >> 8) & 0xFF;
-	int start_b = start_color & 0xFF;
-	int end_r = (end_color >> 16) & 0xFF;
-	int end_g = (end_color >> 8) & 0xFF;
-	int end_b = end_color & 0xFF;
-	int r = start_r + (int)((end_r - start_r) * t);
-	int g = start_g + (int)((end_g - start_g) * t);
-	int b = start_b + (int)((end_b - start_b) * t);
-	return (r << 16) | (g << 8) | b;
-}
+	double	f;
+	double	totl_dis;
+	double	curr_dis;
 
-int get_current_color(t_point start, t_point end, t_point current)
-{
-	float total_distance = sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2));
-	float current_distance = sqrt(pow(current.x - start.x, 2) + pow(current.y - start.y, 2));
-	if (total_distance == 0) {
-		return start.color;
-	}
-	float t = current_distance / total_distance;
-	return interpolate_color(start.color, end.color, t);
+	totl_dis = sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2));
+	curr_dis = sqrt(pow(curr.x - start.x, 2) + pow(curr.y - start.y, 2));
+	if (totl_dis == 0)
+		return (start.color);
+	f = curr_dis / totl_dis;
+	return (interpol_color(start.color, end.color, f));
 }

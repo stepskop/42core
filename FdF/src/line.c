@@ -35,7 +35,7 @@ int	draw_h(t_point from, t_point to, t_data img)
 			dec = dec + (2 * (delt.y - delt.x));
 		else
 			dec = dec + 2 * delt.y;
-		curr.color = get_current_color(from, to, curr);
+		curr.color = get_color(from, to, curr);
 		curr.x++;
 	}
 	return (0);
@@ -64,7 +64,7 @@ int	draw_v(t_point from, t_point to, t_data img)
 			dec = dec + (2 * (delt.x - delt.y));
 		else
 			dec = dec + 2 * delt.x;
-		curr.color = get_current_color(from, to, curr);
+		curr.color = get_color(from, to, curr);
 		curr.y++;
 	}
 	return (0);
