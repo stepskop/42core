@@ -90,6 +90,9 @@ void	render(t_fdf *fdf);
 void	put_pixel(t_point pix, t_data data);
 void	draw_line(t_point from, t_point to, t_fdf fdf);
 
+//Coloring
+int	get_current_color(t_point start, t_point end, t_point current);
+
 //Parse
 int		parse(char *file, t_fdf *fdf);
 size_t	line_len(char **line);

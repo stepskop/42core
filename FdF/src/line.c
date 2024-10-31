@@ -35,7 +35,7 @@ int	draw_h(t_point from, t_point to, t_data img)
 			dec = dec + (2 * (delt.y - delt.x));
 		else
 			dec = dec + 2 * delt.y;
-		//curr.color = gradient(from.color, to.color, 10, curr.z);
+		curr.color = get_current_color(from, to, curr);
 		curr.x++;
 	}
 	return (0);
@@ -64,7 +64,7 @@ int	draw_v(t_point from, t_point to, t_data img)
 			dec = dec + (2 * (delt.x - delt.y));
 		else
 			dec = dec + 2 * delt.x;
-		//curr.color = gradient(from.color, to.color, 10, curr.z);
+		curr.color = get_current_color(from, to, curr);
 		curr.y++;
 	}
 	return (0);
@@ -72,15 +72,10 @@ int	draw_v(t_point from, t_point to, t_data img)
 
 void	draw_line(t_point from, t_point to, t_fdf fdf)
 {
-	int	tmp;
-
-	tmp = from.color;
 	if (fabs(to.y - from.y) < fabs(to.x - from.x))
 	{
 		if (from.x > to.x)
 		{
-			from.color = to.color;
-			to.color = tmp;
 			draw_h(to, from, fdf.img);
 			return ;
 		}
@@ -90,8 +85,6 @@ void	draw_line(t_point from, t_point to, t_fdf fdf)
 	{
 		if (from.y > to.y)
 		{
-			from.color = to.color;
-			to.color = tmp;
 			draw_v(to, from, fdf.img);
 			return ;
 		}
