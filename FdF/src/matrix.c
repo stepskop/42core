@@ -34,9 +34,15 @@ void	rot_y(t_fdf *fdf, double angle)
 	apply_mat(fdf, mat);
 }
 
-void	move(t_fdf *fdf, t_point off)
+void	rot_z(t_fdf *fdf, double angle)
 {
-	fdf->cam.offs = v_add(fdf->cam.offs, off);
+	t_matrix	mat;
+
+	mat = (t_matrix){
+		cos(angle), -sin(angle), 0,
+		sin(angle), cos(angle), 0,
+		0, 0, 1};
+	apply_mat(fdf, mat);
 }
 
 void	elev(t_fdf *fdf, double val)
@@ -47,7 +53,9 @@ void	elev(t_fdf *fdf, double val)
 		1, 0, 0,
 		0, 1, 0,
 		0, 0, val};
+	//reset
 	apply_mat(fdf, mat);
+	apply_mat(fdf, fdf->cam.back);
 }
 
 void	zoom(t_fdf *fdf, double val)

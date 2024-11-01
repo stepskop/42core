@@ -12,11 +12,30 @@
 
 #include "fdf.h"
 
-void	proj_iso(t_fdf *fdf)
+static t_point	proj_persp(t_point point, double d) 
 {
-	rot_x(fdf, -M_PI_2);
-	rot_y(fdf, M_PI_4);
-	rot_x(fdf, 1);
+	t_point res;
+	double min_z;
+	double trim_z;
+
+	min_z = -(d - 1);
+	trim_z = point.z;
+	if (point.z < min_z)
+		trim_z = min_z;
+	res.x = point.x / (trim_z / d + 1);
+	res.y = point.y / (trim_z / d + 1);
+	res.z = point.z;
+	res.color = point.color;
+	return (res);
+}
+
+static t_point	proc_point(t_point point, t_fdf fdf)
+{
+	t_point	res;
+	if (fdf.cam.pers)
+		point = proj_persp(point, 120);
+	res = v_add(point, fdf.cam.offs);
+	return (res);
 }
 
 static void	draw_map(t_fdf fdf)
@@ -32,13 +51,13 @@ static void	draw_map(t_fdf fdf)
 		j = -1;
 		while (fdf.map.pts[i][++j])
 		{
-			curr = v_add(*(fdf.map.pts[i][j]), fdf.cam.offs);
+			curr = proc_point(*(fdf.map.pts[i][j]), fdf);
 			if (fdf.map.raw[i][j + 1])
 				draw_line(curr,
-					v_add(*(fdf.map.pts[i][j + 1]), fdf.cam.offs), fdf);
+					proc_point(*(fdf.map.pts[i][j + 1]), fdf), fdf);
 			if (fdf.map.raw[i + 1])
 				draw_line(curr,
-					v_add(*(fdf.map.pts[i + 1][j]), fdf.cam.offs), fdf);
+					proc_point(*(fdf.map.pts[i + 1][j]), fdf), fdf);
 		}
 	}
 }

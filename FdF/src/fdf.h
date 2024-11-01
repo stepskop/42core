@@ -60,6 +60,7 @@ typedef struct s_camera
 	double		elev;
 	t_matrix	back;
 	t_point		offs;
+	int		pers;
 }	t_camera;
 
 typedef struct s_map
@@ -83,7 +84,6 @@ typedef struct s_fdf
 }	t_fdf;
 
 //Main
-void	proj_iso(t_fdf *fdf);
 void	render(t_fdf *fdf);
 
 //Draw utils
@@ -118,6 +118,7 @@ t_point	v_sub(t_point a, t_point b);
 //Matrices
 void	rot_x(t_fdf *fdf, double angle);
 void	rot_y(t_fdf *fdf, double angle);
+void	rot_z(t_fdf *fdf, double angle);
 void	zoom(t_fdf *fdf, double val);
 void	move(t_fdf *fdf, t_point off);
 void	elev(t_fdf *fdf, double val);
