@@ -25,6 +25,10 @@ static void	cam_init(t_fdf *fdf)
 	fdf->cam.elev = 0;
 	fdf->cam.pers = 0;
 	fdf->cam.offs = (t_point){WIDTH / 2, HEIGHT / 2, 0, -1};
+	fdf->cam.back = (t_matrix)
+		{1, 0, 0,
+		0, 1, 0,
+		0, 0, 1};
 }
 
 static void	map_init(t_fdf *fdf)

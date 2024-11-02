@@ -12,9 +12,30 @@
 
 #include "fdf.h"
 
-void	reset_map(*fdf)
+void	reset_map(t_fdf *fdf)
 {
+	int	i;
+	int	j;
 
+
+	i = -1;
+	while (fdf->map.pts[++i])
+	{
+		j = -1;
+		while (fdf->map.pts[i][++j])
+		{
+			fdf->map.pts[i][j]->x = (j - fdf->map.w / 2) * 10;
+			fdf->map.pts[i][j]->y = (i - fdf->map.h / 2) * 10;
+			fdf->map.pts[i][j]->z = -ft_atoi(fdf->map.raw[i][j]);
+		}
+	}
+	// rot_x(fdf, -M_PI_2);
+	// rot_y(fdf, M_PI_4);
+	// rot_x(fdf, 1);
+	fdf->cam.back = (t_matrix)
+		{1, 0, 0,
+		0, 1, 0,
+		0, 0, 1};
 }
 
 static void	control_angle(int k_code, t_fdf *fdf)
@@ -40,9 +61,9 @@ static void	control_scale(int k_code, t_fdf *fdf)
 	else if (k_code == XK_equal)
 		zoom(fdf, 1.2);
 	else if (k_code == XK_i)
-		elev(fdf, 1.1);
+		elev(fdf, 1 / 1.2);
 	else if (k_code == XK_k)
-		elev(fdf, 0.9);
+		elev(fdf, 1.2);
 }
 
 static void	control_position(int k_code, t_fdf *fdf)
@@ -67,6 +88,8 @@ int	on_press(int k_code, t_fdf *fdf)
 		control_scale(k_code, fdf);
 	else if (k_code == XK_p)
 		fdf->cam.pers = !fdf->cam.pers;
+	else if (k_code == XK_r)
+		reset_map(fdf);
 	else
 		control_angle(k_code, fdf);
 	render(fdf);

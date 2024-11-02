@@ -122,5 +122,6 @@ void	rot_z(t_fdf *fdf, double angle);
 void	zoom(t_fdf *fdf, double val);
 void	move(t_fdf *fdf, t_point off);
 void	elev(t_fdf *fdf, double val);
+void	reset_map(t_fdf *fdf);
 
 #endif

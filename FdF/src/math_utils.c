@@ -44,6 +44,42 @@ t_point	v_sub(t_point a, t_point b)
 	return (res);
 }
 
+// static t_matrix	mat_mult(t_matrix a, t_matrix b)
+// {
+// 	t_matrix	res;
+//
+// 	res.r1c1 = a.r1c1 * b.r1c1 + a.r1c2 * b.r2c1 + a.r1c3 * b.r3c1;
+// 	res.r1c2 = a.r2c1 * b.r1c1 + a.r2c2 * b.r2c1 + a.r2c3 * b.r3c1;
+// 	res.r1c3 = a.r3c1 * b.r1c1 + a.r3c2 * b.r2c1 + a.r3c3 * b.r3c1;
+// 	res.r2c1 = a.r1c1 * b.r1c2 + a.r1c2 * b.r2c2 + a.r1c3 * b.r3c2;
+// 	res.r2c2 = a.r2c1 * b.r1c2 + a.r2c2 * b.r2c2 + a.r2c3 * b.r3c2;
+// 	res.r2c3 = a.r3c1 * b.r1c2 + a.r3c2 * b.r2c2 + a.r3c3 * b.r3c2;
+// 	res.r3c1 = a.r1c1 * b.r1c3 + a.r1c3 * b.r2c3 + a.r1c3 * b.r3c3;
+// 	res.r3c2 = a.r2c1 * b.r1c3 + a.r2c3 * b.r2c3 + a.r2c3 * b.r3c3;
+// 	res.r3c3 = a.r3c1 * b.r1c3 + a.r3c3 * b.r2c3 + a.r3c3 * b.r3c3;
+// 	return (res);
+// }
+
+static t_matrix mat_mult(t_matrix a, t_matrix b)
+{
+    t_matrix res;
+
+    res.r1c1 = a.r1c1 * b.r1c1 + a.r1c2 * b.r2c1 + a.r1c3 * b.r3c1;
+    res.r1c2 = a.r1c1 * b.r1c2 + a.r1c2 * b.r2c2 + a.r1c3 * b.r3c2;
+    res.r1c3 = a.r1c1 * b.r1c3 + a.r1c2 * b.r2c3 + a.r1c3 * b.r3c3;
+
+    res.r2c1 = a.r2c1 * b.r1c1 + a.r2c2 * b.r2c1 + a.r2c3 * b.r3c1;
+    res.r2c2 = a.r2c1 * b.r1c2 + a.r2c2 * b.r2c2 + a.r2c3 * b.r3c2;
+    res.r2c3 = a.r2c1 * b.r1c3 + a.r2c2 * b.r2c3 + a.r2c3 * b.r3c3;
+
+    res.r3c1 = a.r3c1 * b.r1c1 + a.r3c2 * b.r2c1 + a.r3c3 * b.r3c1;
+    res.r3c2 = a.r3c1 * b.r1c2 + a.r3c2 * b.r2c2 + a.r3c3 * b.r3c2;
+    res.r3c3 = a.r3c1 * b.r1c3 + a.r3c2 * b.r2c3 + a.r3c3 * b.r3c3;
+
+    return res;
+}
+
+
 void	apply_mat(t_fdf *fdf, t_matrix mat)
 {
 	int		i;
@@ -56,4 +92,5 @@ void	apply_mat(t_fdf *fdf, t_matrix mat)
 		while (fdf->map.pts[i][++j])
 			apply_one(fdf->map.pts[i][j], mat);
 	}
+	fdf->cam.back = mat_mult(fdf->cam.back, mat);
 }

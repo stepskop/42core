@@ -48,14 +48,20 @@ void	rot_z(t_fdf *fdf, double angle)
 void	elev(t_fdf *fdf, double val)
 {
 	t_matrix	mat;
+	t_matrix	bck;
 
 	mat = (t_matrix){
 		1, 0, 0,
 		0, 1, 0,
 		0, 0, val};
-	//reset
+	bck = fdf->cam.back;
+	reset_map(fdf);
 	apply_mat(fdf, mat);
-	apply_mat(fdf, fdf->cam.back);
+	apply_mat(fdf, bck);
+	// rot_x(fdf, -M_PI_2);
+	// rot_y(fdf, M_PI_4);
+	// rot_x(fdf, 1);
+	printf("[%f, %f, %f]\n", fdf->map.pts[2][2]->x, fdf->map.pts[2][2]->y, fdf->map.pts[2][2]->z);
 }
 
 void	zoom(t_fdf *fdf, double val)
