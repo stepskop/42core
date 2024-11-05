@@ -12,7 +12,9 @@ SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 NAME = fdf
 
-LIBFT = libft.a
+LIBFT_DIR = ./libft/
+
+LIBFT = $(LIBFT_DIR)libft.a
 
 MLX_DIR = ./mlx/
 
@@ -28,7 +30,7 @@ $(NAME): $(MLX) $(LIBFT) $(OBJ_DIR) $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -Lmlx -Llibft -lft -lmlx -Imlx -Ilft -I./src/ -lXext -lX11 -lm -o $(NAME)
 
 $(LIBFT):
-	make -C ./libft/
+	make -C $(LIBFT_DIR)
 
 $(MLX):
 	git submodule init
@@ -44,12 +46,12 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
 all: $(NAME)
 
 clean:
-	make -C ./mlx/ clean
-	make -C ./libft/ clean
+	make -C $(MLX_DIR) clean
+	make -C $(LIBFT_DIR) clean
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	make -C ./libft/ fclean
+	make -C $(LIBFT_DIR) fclean
 	rm -rf fdf
 
 re: fclean all

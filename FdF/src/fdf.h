@@ -20,8 +20,8 @@
 # include "math.h"
 # include <stdio.h>
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1000
+# define HEIGHT 1000
 # define TOP_COLOR 0xD11F40
 # define BOT_COLOR 0x4637A3
 
@@ -60,7 +60,7 @@ typedef struct s_camera
 	double		elev;
 	t_matrix	back;
 	t_point		offs;
-	int		pers;
+	int			pers;
 }	t_camera;
 
 typedef struct s_map
@@ -99,10 +99,10 @@ int		parse(char *file, t_fdf *fdf);
 size_t	line_len(char **line);
 int		add_str(t_fdf *fdf, char *line, size_t *i);
 int		add_pt(t_fdf *fdf, int i, int j);
-void	set_z(t_fdf *fdf);
+int		set_z(t_fdf *fdf);
 
 //Lifecycle
-int		graceful_exit(t_fdf *fdf);
+int		graceful_exit(t_fdf *fdf, int exit_code);
 void	free_map(char ***map);
 void	free_pts(t_point ***arr);
 void	finish_read(int fd);

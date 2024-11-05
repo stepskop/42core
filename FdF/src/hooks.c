@@ -17,7 +17,6 @@ void	reset_map(t_fdf *fdf)
 	int	i;
 	int	j;
 
-
 	i = -1;
 	while (fdf->map.pts[++i])
 	{
@@ -26,16 +25,11 @@ void	reset_map(t_fdf *fdf)
 		{
 			fdf->map.pts[i][j]->x = (j - fdf->map.w / 2) * 10;
 			fdf->map.pts[i][j]->y = (i - fdf->map.h / 2) * 10;
-			fdf->map.pts[i][j]->z = -ft_atoi(fdf->map.raw[i][j]);
+			fdf->map.pts[i][j]->z = ft_atoi(fdf->map.raw[i][j]);
 		}
 	}
-	// rot_x(fdf, -M_PI_2);
-	// rot_y(fdf, M_PI_4);
-	// rot_x(fdf, 1);
 	fdf->cam.back = (t_matrix)
-		{1, 0, 0,
-		0, 1, 0,
-		0, 0, 1};
+	{1, 0, 0, 0, 1, 0, 0, 0, 1};
 }
 
 static void	control_angle(int k_code, t_fdf *fdf)
@@ -48,9 +42,9 @@ static void	control_angle(int k_code, t_fdf *fdf)
 		rot_y(fdf, 0.1);
 	else if (k_code == XK_d)
 		rot_y(fdf, -0.1);
-	else if (k_code == XK_e)
-		rot_z(fdf, 0.1);
 	else if (k_code == XK_q)
+		rot_z(fdf, 0.1);
+	else if (k_code == XK_e)
 		rot_z(fdf, -0.1);
 }
 
@@ -60,9 +54,9 @@ static void	control_scale(int k_code, t_fdf *fdf)
 		zoom(fdf, 1 / 1.2);
 	else if (k_code == XK_equal)
 		zoom(fdf, 1.2);
-	else if (k_code == XK_i)
-		elev(fdf, 1 / 1.2);
 	else if (k_code == XK_k)
+		elev(fdf, 1 / 1.2);
+	else if (k_code == XK_i)
 		elev(fdf, 1.2);
 }
 
@@ -81,7 +75,7 @@ static void	control_position(int k_code, t_fdf *fdf)
 int	on_press(int k_code, t_fdf *fdf)
 {
 	if (k_code == XK_Escape)
-		graceful_exit(fdf);
+		graceful_exit(fdf, 0);
 	else if (k_code >= 65361 && k_code <= 65364)
 		control_position(k_code, fdf);
 	else if (k_code == 45 || k_code == 61 || k_code == XK_i || k_code == XK_k)
@@ -89,7 +83,12 @@ int	on_press(int k_code, t_fdf *fdf)
 	else if (k_code == XK_p)
 		fdf->cam.pers = !fdf->cam.pers;
 	else if (k_code == XK_r)
+	{
 		reset_map(fdf);
+		rot_x(fdf, -M_PI_2);
+		rot_y(fdf, M_PI_4);
+		rot_x(fdf, 0.6);
+	}
 	else
 		control_angle(k_code, fdf);
 	render(fdf);

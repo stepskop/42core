@@ -27,13 +27,21 @@ static int	to_points(t_fdf *fdf)
 		fdf->map.pts[i] = malloc(sizeof(t_point *) * (line_len(
 						fdf->map.raw[i]) + 1));
 		if (!fdf->map.pts[i])
-			return (free_pts(fdf->map.pts), 0);
+			return (0);
 		while (fdf->map.raw[i][++j])
 			if (!add_pt(fdf, i, j))
-				return (0);
+				return (fdf->map.pts[i + 1] = NULL, 0);
 		fdf->map.pts[i][j] = NULL;
 	}
 	return (fdf->map.pts[i] = NULL, 1);
+}
+
+static int	pre_free(char ****map_raw, char **line)
+{
+	free(*map_raw);
+	*map_raw = NULL;
+	free(*line);
+	return (1);
 }
 
 int	parse(char *file, t_fdf *fdf)
@@ -42,14 +50,15 @@ int	parse(char *file, t_fdf *fdf)
 	size_t	i;
 	char	*line;
 
-	fdf->map.raw = NULL;
 	i = 0;
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
 	fdf->map.raw = malloc(sizeof(char **) * 2);
 	if (!line || !fdf->map.raw)
-		return (free(fdf->map.raw), 0);
+		return (finish_read(fd), pre_free(&fdf->map.raw, &line), 0);
 	fdf->map.raw[i] = ft_split(line, ' ');
+	if (!fdf->map.raw[i])
+		return (0);
 	fdf->map.raw[i + 1] = NULL;
 	while (line)
 	{
@@ -59,8 +68,7 @@ int	parse(char *file, t_fdf *fdf)
 			return (finish_read(fd), free(line), 0);
 	}
 	fdf->map.h = i + 1;
-	set_z(fdf);
-	if (!to_points(fdf))
-		return (free_map(fdf->map.raw), 0);
+	if (set_z(fdf) && !to_points(fdf))
+		return (0);
 	return (1);
 }

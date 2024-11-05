@@ -58,10 +58,6 @@ void	elev(t_fdf *fdf, double val)
 	reset_map(fdf);
 	apply_mat(fdf, mat);
 	apply_mat(fdf, bck);
-	// rot_x(fdf, -M_PI_2);
-	// rot_y(fdf, M_PI_4);
-	// rot_x(fdf, 1);
-	printf("[%f, %f, %f]\n", fdf->map.pts[2][2]->x, fdf->map.pts[2][2]->y, fdf->map.pts[2][2]->z);
 }
 
 void	zoom(t_fdf *fdf, double val)

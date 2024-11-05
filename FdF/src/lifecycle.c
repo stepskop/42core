@@ -56,13 +56,18 @@ void	finish_read(int fd)
 	}
 }
 
-int	graceful_exit(t_fdf *fdf)
+int	graceful_exit(t_fdf *fdf, int exit_code)
 {
-	mlx_destroy_image(fdf->mlx, fdf->img.ptr);
-	mlx_destroy_window(fdf->mlx, fdf->win);
-	mlx_destroy_display(fdf->mlx);
-	free_map(fdf->map.raw);
-	free_pts(fdf->map.pts);
+	if (fdf->img.ptr)
+		mlx_destroy_image(fdf->mlx, fdf->img.ptr);
+	if (fdf->win)
+		mlx_destroy_window(fdf->mlx, fdf->win);
+	if (fdf->mlx)
+		mlx_destroy_display(fdf->mlx);
+	if (fdf->map.raw)
+		free_map(fdf->map.raw);
+	if (fdf->map.pts)
+		free_pts(fdf->map.pts);
 	free(fdf->mlx);
-	exit (0);
+	exit (exit_code);
 }
