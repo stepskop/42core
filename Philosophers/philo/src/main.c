@@ -15,17 +15,9 @@
 static void	env_init(t_env *env)
 {
 	env->philo_count = 0;
+	env->sim = 0;
 }
-
-void	*routine(void *arg)
-{
-	t_philo	*p_arg;
-
-	p_arg = (t_philo *)arg;
-	printf("MIREK JE FRAJER %i\n", p_arg->id);
-	return (NULL);
-}
-
+//TODO: Implement reaper
 int	main(int argc, char **argv)
 {
 	t_env	env;
@@ -41,8 +33,13 @@ int	main(int argc, char **argv)
 	{
 		if (pthread_create(env.philo_arr[i]->thread, NULL, &routine, env.philo_arr[i]) != 0)
 			return (free_env(&env), printf("RIP BOZO\n"), 1);
-		pthread_detach(*(env.philo_arr[i]->thread));
 	}
-	pthread_exit(0);
-	return (0);
+	env.sim = 1;
+	i = -1;
+	while (++i < env.philo_count)
+	{
+		if (pthread_join(*(env.philo_arr[i]->thread), NULL) != 0)
+			return (free_env(&env), printf("RIP BOZO - JOIN\n"), 1);
+	}
+	return (free_env(&env), 0);
 }

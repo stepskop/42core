@@ -19,8 +19,9 @@ static void	free_phil(t_philo **arr, int p_count)
 	i = 0;
 	while (i < p_count && arr[i])
 	{
-		pthread_mutex_destroy(arr[i]->fork_l);
-		free(arr[i]->fork_l);
+		pthread_mutex_destroy(arr[i]->forks[L].mutx);
+		free(arr[i]->forks[L].mutx);
+		free(arr[i]->forks[L].stat);
 		free(arr[i]->thread);
 		free(arr[i]);
 		i++;

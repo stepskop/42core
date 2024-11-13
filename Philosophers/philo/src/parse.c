@@ -41,21 +41,32 @@ static void	set_forks(t_philo **arr, int p_count)
 {
 	int	i;
 
-	arr[p_count - 1]->fork_r = arr[0]->fork_l;
+	arr[p_count - 1]->forks[R].mutx = arr[0]->forks[L].mutx;
+	arr[p_count - 1]->forks[R].stat = arr[0]->forks[L].stat;
 	i = -1;
 	while (++i < (p_count - 1))
-		arr[i]->fork_r = arr[i + 1]->fork_l;
+	{
+		arr[i]->forks[R].mutx = arr[i + 1]->forks[L].mutx;
+		arr[i]->forks[R].stat = arr[i + 1]->forks[L].stat;
+	}
 }
 
 static int	add_fork(t_philo *philo)
 {
 	pthread_mutex_t	*fork;
+	int	*state;
 
 	fork = malloc(sizeof(pthread_mutex_t));
 	if (!fork)
 		return (0);
+	state = malloc(sizeof(int));
+	if (!state)
+		return (free(fork), 0);
 	pthread_mutex_init(fork, NULL);
-	philo->fork_l = fork;
+	philo->forks[L].mutx = fork;
+	philo->forks[L].stat = state;
+	*(philo->forks[L].stat) = 0;
+	philo->hasFirst = 0;
 	return (1);
 }
 
@@ -82,6 +93,7 @@ static int	add_philos(t_attr attr, t_env *env)
 		curr->id = i + 1;
 		curr->state = IDLIN;
 		curr->curr_food = 0;
+		curr->env = env;
 	}
 	set_forks(env->philo_arr, env->philo_count);
 	return (1);
