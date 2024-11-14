@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:22:55 by username          #+#    #+#             */
-/*   Updated: 2024/11/12 20:43:50 by username         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:23:08 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static int	add_fork(t_philo *philo)
 	philo->forks[L].mutx = fork;
 	philo->forks[L].stat = state;
 	*(philo->forks[L].stat) = 0;
-	philo->hasFirst = 0;
 	return (1);
 }
 

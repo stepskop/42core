@@ -2,7 +2,7 @@
 NAME = philo
 
 SRC_FILES = main.c parse.c memory.c \
-	    routine.c actions.c
+	    routine.c actions.c time.c
 
 SRC_DIR = ./src/
 

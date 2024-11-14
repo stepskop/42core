@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:14:29 by username          #+#    #+#             */
-/*   Updated: 2024/11/12 18:54:24 by username         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:21:09 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	place_forks(t_philo *philo)
 
 void	think(t_philo *philo)
 {
+	if (!get_simstate(philo))
+		return ;
 	if (philo->state != THINK)
 		set_state(philo, THINK);
 }
@@ -49,9 +51,11 @@ void	feast(t_philo *philo)
 		fir = R;
 		sec = L;
 	}
-
-	while (1)
+	if (!get_simstate(philo))
+		return ;
+	while (get_simstate(philo))
 	{
+		usleep(1);
 		if ((philo->id % 2 && philo->state != FORK_R) || (!(philo->id % 2) && philo->state != FORK_L))
 		{
 			pthread_mutex_lock(philo->forks[fir].mutx);
@@ -70,15 +74,21 @@ void	feast(t_philo *philo)
 		if ((philo->id % 2 && philo->state == FORK_L) || (!(philo->id % 2) && philo->state == FORK_R))
 			break;
 	}
+	if (!get_simstate(philo))
+		return ;
 	set_state(philo, FEAST);
+	philo->last_fed = get_time();
+	philo->curr_food += 1;
 	usleep(1000 * philo->attr.eat_time);
-	//TODO: SET MEAL TIME
-	philo->last_fed = 1337;
 	place_forks(philo);
+	if (philo->curr_food == philo->attr.max_food)
+		pthread_exit(0);
 }
 
 void	dream(t_philo *philo)
 {
+	if (!get_simstate(philo))
+		return ;
 	set_state(philo, DREAM);
 	usleep(1000 * philo->attr.slp_time);
 }

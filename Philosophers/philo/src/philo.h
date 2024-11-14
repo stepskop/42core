@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:16:26 by username          #+#    #+#             */
-/*   Updated: 2024/11/12 20:33:37 by username         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:24:05 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 typedef enum	e_fork
 {
@@ -31,7 +32,8 @@ typedef enum	e_state
 	FORK_L,
 	FEAST,
 	DREAM,
-	THINK
+	THINK,
+	DEAD,
 }	t_state;
 
 typedef struct	s_attr
@@ -52,10 +54,9 @@ typedef struct	s_philo
 {
 	int	id;
 	t_state	state;
-	int	last_fed;
+	time_t	last_fed;
 	size_t	curr_food;
 	t_attr	attr;
-	int	hasFirst;
 	t_fork_data forks[2];
 	pthread_t	*thread;
 		struct	s_env	*env;
@@ -65,11 +66,20 @@ typedef struct	s_env
 {
 	int	philo_count;
 	int	sim;
+	unsigned long	start_time;
 	t_philo	**philo_arr;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	sim_lock;
 }	t_env;
 
 // Parse
 int	parse(int argc, char **argv, t_env *env);
+
+// Thread utils
+int	get_simstate(t_philo *philo);
+
+// Time
+time_t	get_time();
 
 // Memory
 void	free_env(t_env *env);
