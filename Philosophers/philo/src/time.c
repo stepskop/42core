@@ -12,12 +12,36 @@
 
 #include "philo.h"
 
-time_t	get_time(void)
+time_t	get_time(t_unit unit)
 {
 	struct timeval	time;
 	time_t	res;
 
 	gettimeofday(&time, NULL);
-	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	if (unit == MILI_S)
+		res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	else
+		res = (time.tv_sec * 1000000) + time.tv_usec;
 	return (res);
+}
+
+void	p_sleep(time_t time, t_env env)
+{
+	time_t	start;
+	time_t	elapsed;
+	time_t	remaining;
+
+	start = get_time(MICR_S);
+	while (get_time(MICR_S) - start < time)
+	{
+		if (!get_simstate(env.philo_arr[0]))
+			break ;
+		elapsed = get_time(MICR_S) - start;
+		remaining = time - elapsed;
+		if (remaining > 10000)
+			usleep(remaining / 2);
+		else
+			while (get_time(MICR_S) - start < time)
+				;
+	}
 }

@@ -12,37 +12,45 @@
 
 #include "philo.h"
 
-void	set_state(t_philo *philo, t_state new_state)
+int	health_check(t_philo *philo, time_t timestamp)
 {
 	if (!get_simstate(philo))
-		return ;
-	if (new_state != DEAD)
+		return (0);
+	if (timestamp > (time_t)(philo->last_fed + philo->attr.die_time))
 	{
-		if (get_time() > (time_t)(philo->last_fed + philo->attr.die_time))
-		{
-			set_state(philo, DEAD);
-			pthread_mutex_lock(&philo->env->sim_lock);
-			philo->env->sim = 0;
-			pthread_mutex_unlock(&philo->env->sim_lock);
-			return ;
-		}
+		pthread_mutex_lock(&philo->env->sim_lock);
+		philo->env->sim = 0;
+		pthread_mutex_unlock(&philo->env->sim_lock);
+		pthread_mutex_lock(&(philo->env->print_lock));
+		philo->state = DEAD;
+		printf("%ld %i died\n", timestamp - philo->env->start_time, philo->id);
+		pthread_mutex_unlock(&(philo->env->print_lock));
+		return (0);
 	}
+	return (1);
+}
+
+void	set_state(t_philo *philo, t_state new_state)
+{
+	time_t	timestamp;
+
+	timestamp = get_time(MILI_S);
+	if (!health_check(philo, timestamp))
+		return ;
+	if (new_state == philo->state)
+		return ;
 	pthread_mutex_lock(&(philo->env->print_lock));
 	philo->state = new_state;
 	if (new_state == DREAM)
-		printf("%ld %i is sleeping\n", get_time() - philo->env->start_time, philo->id);
+		printf("%ld %i is sleeping\n", timestamp - philo->env->start_time, philo->id);
 	else if (new_state == FORK_R)
-		printf("%ld %i has taken a fork\n", get_time() - philo->env->start_time, philo->id);
+		printf("%ld %i has taken a fork\n", timestamp - philo->env->start_time, philo->id);
 	else if (new_state == FORK_L)
-		printf("%ld %i has taken a fork\n", get_time() - philo->env->start_time, philo->id);
+		printf("%ld %i has taken a fork\n", timestamp - philo->env->start_time, philo->id);
 	else if (new_state == FEAST)
-		printf("%ld %i is eating\n", get_time() - philo->env->start_time, philo->id);
+		printf("%ld %i is eating\n", timestamp - philo->env->start_time, philo->id);
 	else if (new_state == THINK)
-		printf("%ld %i is thinking\n", get_time() - philo->env->start_time, philo->id);
-	else if (new_state == DEAD)
-	{
-		printf("%ld %i died\n", get_time() - philo->env->start_time, philo->id);
-	}
+		printf("%ld %i is thinking\n", timestamp - philo->env->start_time, philo->id);
 	pthread_mutex_unlock(&(philo->env->print_lock));
 }
 
@@ -64,8 +72,8 @@ void	*routine(void *arg)
 
 	p_arg = (t_philo *)arg;
 	while (!get_simstate(p_arg))
-		usleep(1); // HELGRIND
-	p_arg->last_fed = get_time();
+		usleep(50);
+	p_arg->last_fed = get_time(MILI_S);
 	while (get_simstate(p_arg))
 	{
 		feast(p_arg);

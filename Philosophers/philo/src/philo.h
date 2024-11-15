@@ -19,6 +19,12 @@
 # include <unistd.h>
 # include <sys/time.h>
 
+typedef enum	e_unit
+{
+	MICR_S,
+	MILI_S
+}	t_unit;
+
 typedef enum	e_fork
 {
 	L,
@@ -79,7 +85,8 @@ int	parse(int argc, char **argv, t_env *env);
 int	get_simstate(t_philo *philo);
 
 // Time
-time_t	get_time();
+time_t	get_time(t_unit unit);
+void	p_sleep(time_t time, t_env env);
 
 // Memory
 void	free_env(t_env *env);
@@ -89,6 +96,5 @@ void	*routine(void *arg);
 void	set_state(t_philo *philo, t_state new_state);
 void	feast(t_philo *philo);
 void	dream(t_philo *philo);
-void	think(t_philo *philo);
 
 #endif

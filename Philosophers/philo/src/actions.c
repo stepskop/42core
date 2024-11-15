@@ -55,7 +55,7 @@ void	feast(t_philo *philo)
 		return ;
 	while (get_simstate(philo))
 	{
-		usleep(1);
+		//usleep(5, *philo->env);
 		if ((philo->id % 2 && philo->state != FORK_R) || (!(philo->id % 2) && philo->state != FORK_L))
 		{
 			pthread_mutex_lock(philo->forks[fir].mutx);
@@ -77,9 +77,9 @@ void	feast(t_philo *philo)
 	if (!get_simstate(philo))
 		return ;
 	set_state(philo, FEAST);
-	philo->last_fed = get_time();
+	philo->last_fed = get_time(MILI_S);
 	philo->curr_food += 1;
-	usleep(1000 * philo->attr.eat_time);
+	usleep(philo->attr.eat_time * 1000);
 	place_forks(philo);
 	if (philo->curr_food == philo->attr.max_food)
 		pthread_exit(0);
@@ -90,5 +90,5 @@ void	dream(t_philo *philo)
 	if (!get_simstate(philo))
 		return ;
 	set_state(philo, DREAM);
-	usleep(1000 * philo->attr.slp_time);
+	usleep(philo->attr.slp_time * 1000);
 }

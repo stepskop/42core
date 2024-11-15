@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	if (!parse(argc, argv, &env))
 		return (printf("Invalid parameters\n"), 1);
 	i = -1;
-	env.start_time = get_time();
+	env.start_time = get_time(MILI_S);
 	while (++i < env.philo_count)
 	{
 		if (pthread_create(env.philo_arr[i]->thread, NULL, &routine, env.philo_arr[i]) != 0)
