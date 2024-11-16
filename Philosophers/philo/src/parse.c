@@ -12,29 +12,29 @@
 
 #include "philo.h"
 
-static int     ft_atoi(const char *nptr)
+static int	ft_atoi(const char *nptr)
 {
-        int     sign;
-        int     res;
-        int     i;
+	int	sign;
+	int	res;
+	int	i;
 
-        res = 0;
-        sign = 1;
-        i = 0;
-        while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
-                i++;
-        if (nptr[i] == '+' || nptr[i] == '-')
-        {
-                if (nptr[i] == '-')
-                        sign = -1;
-                i++;
-        }
-        while (nptr[i] >= '0' && nptr[i] <= '9')
-        {
-                res = (res * 10) + nptr[i] - 48;
-                i++;
-        }
-        return (sign * res);
+	res = 0;
+	sign = 1;
+	i = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		res = (res * 10) + nptr[i] - 48;
+		i++;
+	}
+	return (sign * res);
 }
 
 static void	set_forks(t_philo **arr, int p_count)
@@ -54,7 +54,7 @@ static void	set_forks(t_philo **arr, int p_count)
 static int	add_fork(t_philo *philo)
 {
 	pthread_mutex_t	*fork;
-	int	*state;
+	int				*state;
 
 	fork = malloc(sizeof(pthread_mutex_t));
 	if (!fork)
@@ -71,7 +71,7 @@ static int	add_fork(t_philo *philo)
 
 static int	add_philos(t_attr attr, t_env *env)
 {
-	int	i;
+	int		i;
 	t_philo	*curr;
 
 	i = -1;
@@ -84,10 +84,10 @@ static int	add_philos(t_attr attr, t_env *env)
 		curr->thread = malloc(sizeof(pthread_t));
 		if (!curr->thread)
 			return (free(curr),
-			env->philo_arr[i] = NULL, free_env(env), 0);
+				env->philo_arr[i] = NULL, free_env(env), 0);
 		if (!add_fork(curr))
-			return (free(curr), free(curr->thread),
-			env->philo_arr[i] = NULL, free_env(env), 0);
+			return (free(curr->thread), free(curr),
+				env->philo_arr[i] = NULL, free_env(env), 0);
 		curr->attr = attr;
 		curr->id = i + 1;
 		curr->state = IDLIN;
@@ -105,7 +105,7 @@ int	parse(int argc, char **argv, t_env *env)
 	env->philo_count = ft_atoi(argv[1]);
 	attr = (t_attr){ft_atoi(argv[2]),
 		ft_atoi(argv[3]), ft_atoi(argv[4]), -1};
-	if (env->philo_count < 2 || attr.die_time < 1 ||
+	if (env->philo_count < 2 || attr.die_time < 1 || \
 		attr.eat_time < 1 || attr.slp_time < 1)
 		return (0);
 	if (argc == 6)

@@ -15,7 +15,7 @@
 time_t	get_time(t_unit unit)
 {
 	struct timeval	time;
-	time_t	res;
+	time_t			res;
 
 	gettimeofday(&time, NULL);
 	if (unit == MILI_S)
@@ -25,23 +25,23 @@ time_t	get_time(t_unit unit)
 	return (res);
 }
 
-void	p_sleep(time_t time, t_env env)
+void	p_sleep(time_t usec, t_env env)
 {
 	time_t	start;
 	time_t	elapsed;
 	time_t	remaining;
 
 	start = get_time(MICR_S);
-	while (get_time(MICR_S) - start < time)
+	while (get_time(MICR_S) - start < usec)
 	{
 		if (!get_simstate(env.philo_arr[0]))
 			break ;
 		elapsed = get_time(MICR_S) - start;
-		remaining = time - elapsed;
-		if (remaining > 10000)
+		remaining = usec - elapsed;
+		if (remaining > 1e3)
 			usleep(remaining / 2);
 		else
-			while (get_time(MICR_S) - start < time)
+			while (get_time(MICR_S) - start < usec)
 				;
 	}
 }

@@ -23,7 +23,7 @@ static void	env_init(t_env *env)
 int	main(int argc, char **argv)
 {
 	t_env	env;
-	int	i;
+	int		i;
 
 	if (argc < 5 || argc > 6)
 		return (printf("Invalid parameters\n"), 1);
@@ -33,10 +33,9 @@ int	main(int argc, char **argv)
 	i = -1;
 	env.start_time = get_time(MILI_S);
 	while (++i < env.philo_count)
-	{
-		if (pthread_create(env.philo_arr[i]->thread, NULL, &routine, env.philo_arr[i]) != 0)
+		if (pthread_create(env.philo_arr[i]->thread, NULL,
+				&routine, env.philo_arr[i]) != 0)
 			return (free_env(&env), printf("RIP BOZO\n"), 1);
-	}
 	pthread_mutex_lock(&env.sim_lock);
 	env.sim = 1;
 	pthread_mutex_unlock(&env.sim_lock);

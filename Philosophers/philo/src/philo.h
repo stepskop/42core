@@ -19,19 +19,19 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef enum	e_unit
+typedef enum e_unit
 {
 	MICR_S,
 	MILI_S
 }	t_unit;
 
-typedef enum	e_fork
+typedef enum e_fork
 {
 	L,
 	R
 }	t_fork;
 
-typedef enum	e_state
+typedef enum e_state
 {
 	IDLIN,
 	FORK_R,
@@ -42,7 +42,7 @@ typedef enum	e_state
 	DEAD,
 }	t_state;
 
-typedef struct	s_attr
+typedef struct s_attr
 {
 	size_t	die_time;
 	size_t	eat_time;
@@ -50,43 +50,43 @@ typedef struct	s_attr
 	size_t	max_food;
 }	t_attr;
 
-typedef struct	s_fork_data
+typedef struct s_fork_data
 {
-	pthread_mutex_t *mutx;
-	int	*stat;
+	pthread_mutex_t	*mutx;
+	int				*stat;
 }	t_fork_data;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
-	int	id;
-	t_state	state;
-	time_t	last_fed;
-	size_t	curr_food;
-	t_attr	attr;
-	t_fork_data forks[2];
-	pthread_t	*thread;
-		struct	s_env	*env;
+	int				id;
+	t_state			state;
+	time_t			last_fed;
+	size_t			curr_food;
+	t_attr			attr;
+	t_fork_data		forks[2];
+	pthread_t		*thread;
+	struct s_env	*env;
 }	t_philo;
 
-typedef struct	s_env
+typedef struct s_env
 {
-	int	philo_count;
-	int	sim;
+	int				philo_count;
+	int				sim;
 	unsigned long	start_time;
-	t_philo	**philo_arr;
+	t_philo			**philo_arr;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	sim_lock;
 }	t_env;
 
 // Parse
-int	parse(int argc, char **argv, t_env *env);
+int		parse(int argc, char **argv, t_env *env);
 
 // Thread utils
-int	get_simstate(t_philo *philo);
+int		get_simstate(t_philo *philo);
 
 // Time
 time_t	get_time(t_unit unit);
-void	p_sleep(time_t time, t_env env);
+void	p_sleep(time_t usec, t_env env);
 
 // Memory
 void	free_env(t_env *env);
@@ -96,5 +96,6 @@ void	*routine(void *arg);
 void	set_state(t_philo *philo, t_state new_state);
 void	feast(t_philo *philo);
 void	dream(t_philo *philo);
+void	think(t_philo *philo);
 
 #endif

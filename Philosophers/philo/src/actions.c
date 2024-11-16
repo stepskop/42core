@@ -21,22 +21,19 @@ static void	pick_fork(t_fork fork_e, t_philo *philo)
 		set_state(philo, FORK_R);
 }
 
-static void	place_forks(t_philo *philo)
-{
-	pthread_mutex_lock(philo->forks[R].mutx);
-	*(philo->forks[R].stat) = 0;
-	pthread_mutex_unlock(philo->forks[R].mutx);
-	pthread_mutex_lock(philo->forks[L].mutx);
-	*(philo->forks[L].stat) = 0;
-	pthread_mutex_unlock(philo->forks[L].mutx);
-}
-
 void	think(t_philo *philo)
 {
+	time_t	think_time;
+	t_attr	attr;
+
 	if (!get_simstate(philo))
 		return ;
-	if (philo->state != THINK)
-		set_state(philo, THINK);
+	set_state(philo, THINK);
+	attr = philo->attr;
+	think_time = attr.eat_time * 2 - attr.slp_time;
+	if (!(philo->env->philo_count % 2))
+		return ;
+	p_sleep(1000 * (think_time * 0.42), *philo->env);
 }
 
 void	feast(t_philo *philo)
@@ -53,34 +50,16 @@ void	feast(t_philo *philo)
 	}
 	if (!get_simstate(philo))
 		return ;
-	while (get_simstate(philo))
-	{
-		//usleep(5, *philo->env);
-		if ((philo->id % 2 && philo->state != FORK_R) || (!(philo->id % 2) && philo->state != FORK_L))
-		{
-			pthread_mutex_lock(philo->forks[fir].mutx);
-			if (!*(philo->forks[fir].stat))
-				pick_fork(fir, philo);
-			else
-				think(philo);
-			pthread_mutex_unlock(philo->forks[fir].mutx);
-		}
-		if (philo->state == THINK)
-			continue;
-		pthread_mutex_lock(philo->forks[sec].mutx);
-		if (!*(philo->forks[sec].stat))
-			pick_fork(sec, philo);
-		pthread_mutex_unlock(philo->forks[sec].mutx);
-		if ((philo->id % 2 && philo->state == FORK_L) || (!(philo->id % 2) && philo->state == FORK_R))
-			break;
-	}
-	if (!get_simstate(philo))
-		return ;
-	set_state(philo, FEAST);
+	pthread_mutex_lock(philo->forks[fir].mutx);
+	pick_fork(fir, philo);
+	pthread_mutex_lock(philo->forks[sec].mutx);
+	pick_fork(sec, philo);
 	philo->last_fed = get_time(MILI_S);
+	set_state(philo, FEAST);
 	philo->curr_food += 1;
-	usleep(philo->attr.eat_time * 1000);
-	place_forks(philo);
+	p_sleep((philo->attr.eat_time * 1000), *philo->env);
+	pthread_mutex_unlock(philo->forks[fir].mutx);
+	pthread_mutex_unlock(philo->forks[sec].mutx);
 	if (philo->curr_food == philo->attr.max_food)
 		pthread_exit(0);
 }
@@ -90,5 +69,5 @@ void	dream(t_philo *philo)
 	if (!get_simstate(philo))
 		return ;
 	set_state(philo, DREAM);
-	usleep(philo->attr.slp_time * 1000);
+	p_sleep((philo->attr.slp_time * 1000), *philo->env);
 }
