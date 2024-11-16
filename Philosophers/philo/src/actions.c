@@ -26,17 +26,15 @@ void	think(t_philo *philo)
 	time_t	think_time;
 	t_attr	attr;
 
-	if (!get_simstate(philo))
-		return ;
 	set_state(philo, THINK);
 	attr = philo->attr;
 	think_time = attr.eat_time * 2 - attr.slp_time;
 	if (!(philo->env->philo_count % 2))
 		return ;
-	p_sleep(1000 * (think_time * 0.42), *philo->env);
+	p_sleep(1000 * (think_time * 0.5), philo);
 }
 
-void	feast(t_philo *philo)
+int	feast(t_philo *philo)
 {
 	t_fork	fir;
 	t_fork	sec;
@@ -48,8 +46,6 @@ void	feast(t_philo *philo)
 		fir = R;
 		sec = L;
 	}
-	if (!get_simstate(philo))
-		return ;
 	pthread_mutex_lock(philo->forks[fir].mutx);
 	pick_fork(fir, philo);
 	pthread_mutex_lock(philo->forks[sec].mutx);
@@ -57,17 +53,16 @@ void	feast(t_philo *philo)
 	philo->last_fed = get_time(MILI_S);
 	set_state(philo, FEAST);
 	philo->curr_food += 1;
-	p_sleep((philo->attr.eat_time * 1000), *philo->env);
+	p_sleep((philo->attr.eat_time * 1000), philo);
 	pthread_mutex_unlock(philo->forks[fir].mutx);
 	pthread_mutex_unlock(philo->forks[sec].mutx);
 	if (philo->curr_food == philo->attr.max_food)
-		pthread_exit(0);
+		return (0);
+	return (1);
 }
 
 void	dream(t_philo *philo)
 {
-	if (!get_simstate(philo))
-		return ;
 	set_state(philo, DREAM);
-	p_sleep((philo->attr.slp_time * 1000), *philo->env);
+	p_sleep((philo->attr.slp_time * 1000), philo);
 }

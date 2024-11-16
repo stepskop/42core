@@ -86,15 +86,15 @@ int		get_simstate(t_philo *philo);
 
 // Time
 time_t	get_time(t_unit unit);
-void	p_sleep(time_t usec, t_env env);
+void	p_sleep(time_t usec, t_philo *philo);
 
 // Memory
 void	free_env(t_env *env);
 
 // Routine
 void	*routine(void *arg);
-void	set_state(t_philo *philo, t_state new_state);
-void	feast(t_philo *philo);
+int		set_state(t_philo *philo, t_state new_state);
+int		feast(t_philo *philo);
 void	dream(t_philo *philo);
 void	think(t_philo *philo);
 
