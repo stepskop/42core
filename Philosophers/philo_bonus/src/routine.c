@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:22:41 by username          #+#    #+#             */
-/*   Updated: 2024/11/19 14:55:14 by username         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:29:36 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	do_routine(t_philo *philo)
 		handle_single(philo);
 	if (philo->id % 2)
 		think(philo);
+	else
+		p_sleep(15000, philo);
 	while (1)
 	{
 		if (!feast(philo))

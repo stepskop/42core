@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:39:07 by username          #+#    #+#             */
-/*   Updated: 2024/11/19 14:02:34 by username         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:33:30 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ time_t	get_time(t_unit unit)
 	return (res);
 }
 
-void	p_sleep(time_t usec)
+void	p_sleep(time_t usec, t_philo *philo)
 {
 	time_t	start;
 	time_t	elapsed;

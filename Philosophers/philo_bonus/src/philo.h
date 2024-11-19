@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 12:03:15 by username          #+#    #+#             */
-/*   Updated: 2024/11/19 14:20:40 by username         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:23:39 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,13 @@ void	dream(t_philo *philo);
 int		feast(t_philo *philo);
 
 // Time
-void	p_sleep(time_t usec);
+void	p_sleep(time_t usec, t_philo *philo);
 time_t	get_time(t_unit unit);
 
 // Routine
 void	do_routine(t_philo *philo);
 int		set_state(t_philo *philo, t_state new_state);
+
+// Healthcheck
+int		health_check(t_philo *philo, time_t time_st);
 #endif
