@@ -44,10 +44,10 @@ typedef enum e_state
 
 typedef struct s_attr
 {
-	size_t	die_time;
-	size_t	eat_time;
-	size_t	slp_time;
-	size_t	max_food;
+	int	die_time;
+	int	eat_time;
+	int	slp_time;
+	int	max_food;
 }	t_attr;
 
 typedef struct s_fork_data
@@ -61,7 +61,7 @@ typedef struct s_philo
 	int				id;
 	t_state			state;
 	time_t			last_fed;
-	size_t			curr_food;
+	int				curr_food;
 	t_attr			attr;
 	t_fork_data		forks[2];
 	pthread_t		*thread;

@@ -50,7 +50,7 @@ int	feast(t_philo *philo)
 	pick_fork(fir, philo);
 	pthread_mutex_lock(philo->forks[sec].mutx);
 	pick_fork(sec, philo);
-	philo->last_fed = get_time(MILI_S);
+	philo->last_fed = get_time(MICR_S);
 	set_state(philo, FEAST);
 	philo->curr_food += 1;
 	p_sleep((philo->attr.eat_time * 1000), philo);

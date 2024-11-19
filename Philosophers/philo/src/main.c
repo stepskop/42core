@@ -12,12 +12,13 @@
 
 #include "philo.h"
 
-static void	env_init(t_env *env)
+static int	env_init(t_env *env)
 {
 	env->philo_count = 0;
 	env->sim = 0;
-	pthread_mutex_init(&env->print_lock, NULL);
-	pthread_mutex_init(&env->sim_lock, NULL);
+	if (pthread_mutex_init(&env->sim_lock, NULL) != 0)
+		return (0);
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -26,24 +27,23 @@ int	main(int argc, char **argv)
 	int		i;
 
 	if (argc < 5 || argc > 6)
-		return (printf("Invalid parameters\n"), 1);
-	env_init(&env);
+		return (printf("Number of arguments\n"), 1);
+	if (!env_init(&env))
+		return (printf("Init failed"), 1);
 	if (!parse(argc, argv, &env))
 		return (printf("Invalid parameters\n"), 1);
 	i = -1;
-	env.start_time = get_time(MILI_S);
+	env.start_time = get_time(MICR_S);
 	while (++i < env.philo_count)
 		if (pthread_create(env.philo_arr[i]->thread, NULL,
 				&routine, env.philo_arr[i]) != 0)
-			return (free_env(&env), printf("RIP BOZO\n"), 1);
+			return (free_env(&env), printf("Couldn't create thread\n"), 1);
 	pthread_mutex_lock(&env.sim_lock);
 	env.sim = 1;
 	pthread_mutex_unlock(&env.sim_lock);
 	i = -1;
 	while (++i < env.philo_count)
-	{
 		if (pthread_join(*(env.philo_arr[i]->thread), NULL) != 0)
-			return (free_env(&env), printf("RIP BOZO - JOIN\n"), 1);
-	}
+			return (free_env(&env), printf("Couldn't join the thread\n"), 1);
 	return (free_env(&env), 0);
 }

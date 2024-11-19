@@ -62,7 +62,8 @@ static int	add_fork(t_philo *philo)
 	state = malloc(sizeof(int));
 	if (!state)
 		return (free(fork), 0);
-	pthread_mutex_init(fork, NULL);
+	if (pthread_mutex_init(fork, NULL) != 0)
+		return (free(fork), free(state), 0);
 	philo->forks[L].mutx = fork;
 	philo->forks[L].stat = state;
 	*(philo->forks[L].stat) = 0;
@@ -105,7 +106,7 @@ int	parse(int argc, char **argv, t_env *env)
 	env->philo_count = ft_atoi(argv[1]);
 	attr = (t_attr){ft_atoi(argv[2]),
 		ft_atoi(argv[3]), ft_atoi(argv[4]), -1};
-	if (env->philo_count < 2 || attr.die_time < 1 || \
+	if (env->philo_count < 1 || attr.die_time < 1 || \
 		attr.eat_time < 1 || attr.slp_time < 1)
 		return (0);
 	if (argc == 6)
