@@ -6,13 +6,13 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:19:02 by username          #+#    #+#             */
-/*   Updated: 2024/11/14 17:23:51 by username         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:46:35 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	health_check(t_philo *philo, time_t time_st)
+static int	health_check(t_philo *philo, time_t time_st)
 {
 	if (time_st > \
 		(time_t)(philo->last_fed + 500 + (philo->attr.die_time * 1000)))
