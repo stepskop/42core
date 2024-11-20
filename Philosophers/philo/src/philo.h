@@ -82,11 +82,11 @@ typedef struct s_env
 int		parse(int argc, char **argv, t_env *env);
 
 // Thread utils
-int		get_simstate(t_philo *philo);
+int		get_simstate(t_env *env);
 
 // Time
 time_t	get_time(t_unit unit);
-void	p_sleep(time_t usec, t_philo *philo);
+void	p_sleep(time_t usec, t_env *env);
 
 // Memory
 void	free_env(t_env *env);
@@ -97,5 +97,8 @@ int		set_state(t_philo *philo, t_state new_state);
 int		feast(t_philo *philo);
 void	dream(t_philo *philo);
 void	think(t_philo *philo);
+
+// Healthcheck
+int		health_check(t_philo *philo, time_t time_st);
 
 #endif

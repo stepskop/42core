@@ -23,14 +23,14 @@ void	think(t_philo *philo)
 	think_time = attr.eat_time * 2 - attr.slp_time;
 	if (!(philo->env->philo_count % 2))
 		return ;
-	p_sleep(1000 * (think_time * 0.5), philo);
+	p_sleep(1000 * (think_time * 0.5));
 }
 
 void	dream(t_philo *philo)
 {
 	if (!set_state(philo, DREAM))
 		exit (0);
-	p_sleep(philo->attr.slp_time * 1000, philo);
+	p_sleep(philo->attr.slp_time * 1000);
 }
 
 int	feast(t_philo *philo)
@@ -42,7 +42,7 @@ int	feast(t_philo *philo)
 	set_state(philo, FEAST);
 	philo->last_fed = get_time(MICR_S);
 	philo->curr_food++;
-	p_sleep(philo->attr.eat_time * 1000, philo);
+	p_sleep(philo->attr.eat_time * 1000);
 	sem_post(philo->env->forks_sem);
 	sem_post(philo->env->forks_sem);
 	if (philo->curr_food == philo->attr.max_food)

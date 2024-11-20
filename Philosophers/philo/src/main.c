@@ -21,16 +21,37 @@ static int	env_init(t_env *env)
 	return (1);
 }
 
+static void	*reaper_routine(void *arg)
+{
+	t_env	*env;
+	int		i;
+
+	env = (t_env *)arg;
+	while (!get_simstate(env))
+		;
+	p_sleep(40000, env);
+	while (get_simstate(env))
+	{
+		i = -1;
+		while (++i < env->philo_count)
+		{
+			if (!health_check(env->philo_arr[i], get_time(MICR_S)))
+				break ;
+		}
+		p_sleep(10, env);
+	}
+	return (NULL);
+}
+
 int	main(int argc, char **argv)
 {
-	t_env	env;
-	int		i;
+	t_env		env;
+	pthread_t	reaper;
+	int			i;
 
 	if (argc < 5 || argc > 6)
 		return (printf("Number of arguments\n"), 1);
-	if (!env_init(&env))
-		return (printf("Init failed"), 1);
-	if (!parse(argc, argv, &env))
+	if (!env_init(&env) || !parse(argc, argv, &env))
 		return (printf("Invalid parameters\n"), 1);
 	i = -1;
 	env.start_time = get_time(MICR_S);
@@ -38,6 +59,8 @@ int	main(int argc, char **argv)
 		if (pthread_create(env.philo_arr[i]->thread, NULL,
 				&routine, env.philo_arr[i]) != 0)
 			return (free_env(&env), printf("Couldn't create thread\n"), 1);
+	if (pthread_create(&reaper, NULL, &reaper_routine, &env) != 0)
+		return (free_env(&env), printf("Couldn't create thread\n"), 1);
 	pthread_mutex_lock(&env.sim_lock);
 	env.sim = 1;
 	pthread_mutex_unlock(&env.sim_lock);

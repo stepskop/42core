@@ -69,10 +69,8 @@ void	do_routine(t_philo *philo)
 	philo->last_fed = get_time(MICR_S);
 	if (philo->env->philo_count == 1)
 		handle_single(philo);
-	if (philo->id % 2)
-		think(philo);
-	else
-		p_sleep(15000, philo);
+	if (philo->id > philo->env->philo_count / 2)
+		p_sleep(15000);
 	while (1)
 	{
 		if (!feast(philo))

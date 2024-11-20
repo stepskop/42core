@@ -25,7 +25,7 @@ time_t	get_time(t_unit unit)
 	return (res);
 }
 
-void	p_sleep(time_t usec, t_philo *philo)
+void	p_sleep(time_t usec, t_env *env)
 {
 	time_t	start;
 	time_t	elapsed;
@@ -34,7 +34,7 @@ void	p_sleep(time_t usec, t_philo *philo)
 	start = get_time(MICR_S);
 	while (get_time(MICR_S) - start < usec)
 	{
-		if (!get_simstate(philo))
+		if (!get_simstate(env))
 			break ;
 		elapsed = get_time(MICR_S) - start;
 		remaining = usec - elapsed;

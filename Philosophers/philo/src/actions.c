@@ -31,7 +31,7 @@ void	think(t_philo *philo)
 	think_time = attr.eat_time * 2 - attr.slp_time;
 	if (!(philo->env->philo_count % 2))
 		return ;
-	p_sleep(1000 * (think_time * 0.5), philo);
+	p_sleep(1000 * (think_time * 0.5), philo->env);
 }
 
 int	feast(t_philo *philo)
@@ -53,7 +53,7 @@ int	feast(t_philo *philo)
 	philo->last_fed = get_time(MICR_S);
 	set_state(philo, FEAST);
 	philo->curr_food += 1;
-	p_sleep((philo->attr.eat_time * 1000), philo);
+	p_sleep((philo->attr.eat_time * 1000), philo->env);
 	pthread_mutex_unlock(philo->forks[fir].mutx);
 	pthread_mutex_unlock(philo->forks[sec].mutx);
 	if (philo->curr_food == philo->attr.max_food)
@@ -64,5 +64,5 @@ int	feast(t_philo *philo)
 void	dream(t_philo *philo)
 {
 	set_state(philo, DREAM);
-	p_sleep((philo->attr.slp_time * 1000), philo);
+	p_sleep((philo->attr.slp_time * 1000), philo->env);
 }

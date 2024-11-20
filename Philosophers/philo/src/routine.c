@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	health_check(t_philo *philo, time_t time_st)
+int	health_check(t_philo *philo, time_t time_st)
 {
 	if (time_st > \
 		(time_t)(philo->last_fed + 500 + (philo->attr.die_time * 1000)))
@@ -59,15 +59,15 @@ int	set_state(t_philo *philo, t_state new_state)
 	return (0);
 }
 
-int	get_simstate(t_philo *philo)
+int	get_simstate(t_env *env)
 {
 	int	res;
 
 	res = 0;
-	pthread_mutex_lock(&philo->env->sim_lock);
-	if (philo->env->sim)
+	pthread_mutex_lock(&env->sim_lock);
+	if (env->sim)
 		res = 1;
-	pthread_mutex_unlock(&philo->env->sim_lock);
+	pthread_mutex_unlock(&env->sim_lock);
 	return (res);
 }
 
@@ -83,7 +83,7 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!get_simstate(philo))
+	while (!get_simstate(philo->env))
 		;
 	philo->last_fed = get_time(MICR_S);
 	if (philo->env->philo_count == 1)
@@ -91,8 +91,8 @@ void	*routine(void *arg)
 	if (philo->id % 2)
 		think(philo);
 	else
-		p_sleep(15000, philo);
-	while (get_simstate(philo))
+		p_sleep(15000, philo->env);
+	while (get_simstate(philo->env))
 	{
 		if (!feast(philo))
 			break ;

@@ -20,6 +20,7 @@
 # include <semaphore.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <pthread.h>
 
 typedef enum e_state
 {
@@ -76,7 +77,7 @@ void	dream(t_philo *philo);
 int		feast(t_philo *philo);
 
 // Time
-void	p_sleep(time_t usec, t_philo *philo);
+void	p_sleep(time_t usec);
 time_t	get_time(t_unit unit);
 
 // Routine

@@ -29,9 +29,28 @@ static int	semaphore_init(t_env *env)
 	return (1);
 }
 
+static void	*reaper_routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	p_sleep(400);
+	while (1)
+	{
+		if (!health_check(philo, get_time(MICR_S)))
+		{
+			set_state(philo, DEAD);
+			break ;
+		}
+		p_sleep(10);
+	}
+	return (NULL);
+}
+
 static int	create_processes(t_env *env)
 {
-	int	i;
+	int			i;
+	pthread_t	reaper;
 
 	i = -1;
 	env->start_time = get_time(MICR_S);
@@ -42,10 +61,12 @@ static int	create_processes(t_env *env)
 			return (0);
 		if (env->philo_arr[i].pid == 0)
 		{
+			if (pthread_create(&reaper, NULL,
+					&reaper_routine, &env->philo_arr[i]) != 0)
+				return (0);
 			do_routine(&env->philo_arr[i]);
 			exit(0);
 		}
-		usleep(100);
 	}
 	return (1);
 }
