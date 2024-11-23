@@ -25,7 +25,7 @@ static char	*path_env(char **env)
 	return (NULL);
 }
 
-static void	free_starr(char **starr)
+void	free_starr(char **starr)
 {
 	int	i;
 
