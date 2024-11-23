@@ -27,8 +27,11 @@ static char	*path_env(char **env)
 
 static void	free_starr(char **starr)
 {
-	while (starr)
-		free(*starr++);
+	int	i;
+
+	i = -1;
+	while (starr[++i])
+		free(starr[i]);
 	free(starr);
 }
 
@@ -38,16 +41,16 @@ char	*get_cmd(char *cmd, char **env)
 	char	*path;
 	char	**bin_dirs;
 	char	*dir_slash;
+	int		i;
 
-	if (access(res, F_OK | X_OK) == 0)
-		return (res);
 	path = path_env(env);
 	if (!path)
 		return (NULL);
 	bin_dirs = ft_split(path, ':');
-	while (bin_dirs)
+	i = -1;
+	while (bin_dirs[++i])
 	{
-		dir_slash = ft_strjoin(*bin_dirs, "/");
+		dir_slash = ft_strjoin(bin_dirs[i], "/");
 		if (!dir_slash)
 			return (free_starr(bin_dirs), NULL);
 		res = ft_strjoin(dir_slash, cmd);
@@ -56,7 +59,7 @@ char	*get_cmd(char *cmd, char **env)
 			return (free_starr(bin_dirs), NULL);
 		if (access(res, F_OK | X_OK) == 0)
 			return (free_starr(bin_dirs), res);
+		free(res);
 	}
-	free_starr(bin_dirs);
-	return (NULL);
+	return (free_starr(bin_dirs), NULL);
 }

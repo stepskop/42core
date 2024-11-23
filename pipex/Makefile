@@ -1,4 +1,4 @@
-SRC_FILES = main.c
+SRC_FILES = main.c utils.c
 SRC_DIR = ./src/
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
@@ -12,7 +12,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 NAME = pipex
 
 CC = cc
-CCFLAGS = -Wall -Werror -Wextra
+CCFLAGS = -Wall -Werror -Wextra -g
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)

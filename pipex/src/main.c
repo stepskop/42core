@@ -14,8 +14,16 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)argc;
-	(void)argv;
-	while (*envp)
-		ft_printf("%s\n", *envp++);
+	char	*parent_cmd;
+	char	*child_cmd;
+	int		parent_pid;
+	int		child_pid;
+
+	if (argc != 5)
+		return (ft_printf("L BOZO\n"), 1);
+	parent_cmd = get_cmd(argv[2], envp);
+	parent_pid = fork();
+	if (parent_pid == 0)
+		execve(parent_cmd, argv + 1, envp);
+	free(parent_cmd);
 }
