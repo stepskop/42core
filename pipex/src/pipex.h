@@ -14,6 +14,7 @@
 # define PIPEX_H
 
 # include "../libft/libft.h"
+# include <sys/wait.h>
 
 typedef struct s_cmd
 {
