@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <sys/wait.h>
+# include <fcntl.h>
 
 typedef struct s_cmd
 {
@@ -22,10 +23,13 @@ typedef struct s_cmd
 	char	**args;
 	int		pid;
 	char	**full_cmd;
+	char	**envp;
 }	t_cmd;
 
 // Utils
 char	*get_cmd(char *cmd, char **env);
 void	free_starr(char **starr);
+int		cmd_init(char *cmd_str, t_cmd *cmd, char **envp);
+void	free_cmd(t_cmd cmd);
 
 #endif
