@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:02:42 by username          #+#    #+#             */
-/*   Updated: 2024/11/26 02:29:28 by username         ###   ########.fr       */
+/*   Updated: 2024/11/26 02:35:45 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	error_exit(t_err err, t_data data)
 {
 	if (err == INVALID_ARGS)
 	{
-		ft_printf("Invalid input\n");
+		ft_putstr_fd("Invalid args\n", 2);
 		exit (1);
 	}
 	else if (err == OPEN_ERR)

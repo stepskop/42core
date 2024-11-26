@@ -6,7 +6,7 @@ OBJ_DIR = ./dist/
 OBJ_FILES = $(SRC_FILES:.c=.o)
 OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-BONUS_SRC_FILES = main.c
+BONUS_SRC_FILES = main.c utils.c init.c
 BONUS_SRC_DIR = ./src_bonus/
 BONUS_SRCS = $(addprefix $(BONUS_SRC_DIR), $(BONUS_SRC_FILES))
 
@@ -27,6 +27,9 @@ CCFLAGS = -Wall -Werror -Wextra -g
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 
+$(BONUS_NAME): $(BONUS_OBJ_DIR) $(BONUS_OBJS) $(LIBFT)
+	$(CC) $(CCFLAGS) $(BONUS_OBJS) -L$(LIBFT_DIR) -lft -o $(BONUS_NAME)
+
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CCFLAGS) -c $< -o $@
 
@@ -44,8 +47,7 @@ $(LIBFT):
 
 all: $(NAME)
 
-bonus: $(BONUS_OBJ_DIR) $(BONUS_OBJS) $(LIBFT)
-	$(CC) $(CCFLAGS) $(BONUS_OBJS) -L$(LIBFT_DIR) -lft -o $(BONUS_NAME)
+bonus: $(BONUS_NAME)
 
 clean:
 	rm -rf $(BONUS_OBJ_DIR)
@@ -59,4 +61,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all bonus clean fclean re
