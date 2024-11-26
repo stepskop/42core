@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:02:42 by username          #+#    #+#             */
-/*   Updated: 2024/11/25 13:31:29 by username         ###   ########.fr       */
+/*   Updated: 2024/11/26 02:29:28 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,21 @@ char	*get_cmd(char *cmd, char **env)
 	return (free_starr(bin_dirs), NULL);
 }
 
-void	error(t_err err)
+void	error_exit(t_err err, t_data data)
 {
-
+	if (err == INVALID_ARGS)
+	{
+		ft_printf("Invalid input\n");
+		exit (1);
+	}
+	else if (err == OPEN_ERR)
+		perror("open");
+	else if (err != OPEN_ERR)
+	{
+		close(data.out_file);
+		if (!data.here_doc)
+			close(data.in_file);
+		perror(NULL);
+		exit (1);
+	}
 }

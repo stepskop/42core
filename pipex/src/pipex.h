@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:35:06 by username          #+#    #+#             */
-/*   Updated: 2024/11/22 15:36:36 by username         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:40:56 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 typedef struct s_cmd
 {

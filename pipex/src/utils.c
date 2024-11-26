@@ -6,7 +6,7 @@
 /*   By: username <your@email.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:02:42 by username          #+#    #+#             */
-/*   Updated: 2024/11/22 15:36:01 by username         ###   ########.fr       */
+/*   Updated: 2024/11/26 02:13:18 by username         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int	cmd_init(char *cmd_str, t_cmd *cmd, char **envp)
 	cmd->full_cmd = ft_split(cmd_str, ' ');
 	if (!cmd->full_cmd)
 		return (0);
-	cmd->path = get_cmd(cmd->full_cmd[0], envp);
+	if (cmd->full_cmd[0][0] == '/')
+		cmd->path = ft_strdup(cmd->full_cmd[0]);
+	else
+		cmd->path = get_cmd(cmd->full_cmd[0], envp);
 	if (!cmd->path)
 		return (free_starr(cmd->full_cmd), 0);
 	cmd->pid = 0;
-	cmd->envp = envp;
 	return (1);
 }
 
