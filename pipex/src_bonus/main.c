@@ -47,13 +47,21 @@ static void	pipeline(t_data data, char *cmd_str)
 static void	read_stdin(int *pipefd, char *limiter)
 {
 	char	*line;
+	char	*delimiter;
 
+	delimiter = ft_strjoin(limiter, "\n");
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
-		if (!ft_strncmp(line, limiter, ft_strlen(limiter)))
+		if (!line)
+		{
+			free(delimiter);
+			exit (0);
+		}
+		if (!ft_strcmp(line, delimiter))
 		{
 			free(line);
+			free(delimiter);
 			exit (0);
 		}
 		ft_putstr_fd(line, pipefd[1]);
