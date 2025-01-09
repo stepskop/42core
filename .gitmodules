@@ -4,3 +4,6 @@
 [submodule "minishell"]
 	path = minishell
 	url = git@github.com:stepskop/minishell.git
+[submodule "Libft"]
+	path = Libft
+	url = git@github.com:stepskop/libft.git
