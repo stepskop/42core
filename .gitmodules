@@ -1,0 +1,3 @@
+[submodule "FdF"]
+	path = FdF
+	url = git@github.com:stepskop/fdf.git
