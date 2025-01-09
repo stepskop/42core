@@ -1,3 +1,6 @@
 [submodule "FdF"]
 	path = FdF
 	url = git@github.com:stepskop/fdf.git
+[submodule "minishell"]
+	path = minishell
+	url = git@github.com:stepskop/minishell.git
