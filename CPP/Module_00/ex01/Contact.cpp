@@ -1,10 +1,7 @@
 #include "Contact.hpp"
 
-Contact::Contact(std::string first_name, std::string last_name, std::string nickname)
+Contact::Contact(void)
 {
-	this->_first_name = first_name;
-	this->_last_name = last_name;
-	this->_nickname = nickname;
 }
 
 Contact::~Contact(void)
@@ -24,4 +21,19 @@ std::string Contact::get_lname(void)
 std::string	Contact::get_nick(void)
 {
 	return (this->_nickname);
+}
+
+void Contact::set_fname(std::string str)
+{
+	this->_first_name = str;
+}
+
+void Contact::set_lname(std::string str)
+{
+	this->_last_name = str;
+}
+
+void Contact::set_nick(std::string str)
+{
+	this->_nickname = str;
 }
