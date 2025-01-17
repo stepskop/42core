@@ -9,11 +9,11 @@ int main(void)
 	{
 		std::cout << "Enter the command (ADD/SEARCH/EXIT): ";
 		std::getline(std::cin, cmd);
-		if (cmd == "ADD")
+		if (cmd == "ADD" || cmd == "add")
 			phone_book.add();
-		else if (cmd == "SEARCH")
+		else if (cmd == "SEARCH" || cmd == "search")
 			phone_book.search();
-		else if (cmd == "EXIT")
+		else if (cmd == "EXIT" || cmd == "exit")
 			break ;
 		else
 			std::cout << "Invalid command" << std::endl;

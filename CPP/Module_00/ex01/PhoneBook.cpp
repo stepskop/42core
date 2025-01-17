@@ -13,7 +13,7 @@ void	PhoneBook::add(void)
 {
 	std::string str = "";
 	if (this->_index > 7)
-		std::cout << "Removing " << this->_contacts[this->_index % 8].get_nick();
+		std::cout << "Removing " << this->_contacts[this->_index % 8].get_nick() << std::endl;
 	while (str == "" && !std::cin.eof())
 	{
 		std::cout << "Enter the first name: ";
@@ -36,7 +36,6 @@ void	PhoneBook::add(void)
 	this->_contacts[this->_index % 8].set_nick(str);
 	this->_index++;
 }
-// ┗ ┓┏ ┛ ┻ ┳ ╋ ┫┣
 
 static std::string	format_field(std::string str)
 {
@@ -74,4 +73,23 @@ void	PhoneBook::search(void)
 		std::cout << "|" << format_field(this->_contacts[i].get_nick()) << "|" << std::endl;
 	}
 	std::cout << "┗----------┻----------┻----------┻----------┛" << std::endl;
+	if (!i)
+	{
+		std::cout << "Phonebook is empty" << std::endl;
+		return ;
+	}
+	std::string str = "";
+
+	std::cout << "Select contact (0 - " << i - 1 << "): ";
+	std::getline(std::cin, str);
+	while (!std::cin.eof() && (str.size() != 1 || (str[0] < '0' || str[0] > (i - 1) + '0')))
+	{
+		std::cout << "Invalid index" << std::endl;
+		std::cout << "Select contact (0 - " << i - 1 << "): ";
+		std::getline(std::cin, str);
+	}
+	std::cout << std::endl << "Viewing contact [" << str << "]:" << std::endl << std::endl; 
+	std::cout << this->_contacts[str[0] - '0'].get_fname() << std::endl;
+	std::cout << this->_contacts[str[0] - '0'].get_lname() << std::endl;
+	std::cout << this->_contacts[str[0] - '0'].get_nick() << std::endl << std::endl;
 }
