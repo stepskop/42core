@@ -34,6 +34,20 @@ void	PhoneBook::add(void)
 		std::getline(std::cin, str);
 	}
 	this->_contacts[this->_index % 8].set_nick(str);
+	str = "";
+	while (str == "" && !std::cin.eof())
+	{
+		std::cout << "Enter the phone number: ";
+		std::getline(std::cin, str);
+	}
+	this->_contacts[this->_index % 8].set_phone(str);
+	str = "";
+	while (str == "" && !std::cin.eof())
+	{
+		std::cout << "Enter your darkest secret: ";
+		std::getline(std::cin, str);
+	}
+	this->_contacts[this->_index % 8].set_secret(str);
 	this->_index++;
 }
 
@@ -91,5 +105,7 @@ void	PhoneBook::search(void)
 	std::cout << std::endl << "Viewing contact [" << str << "]:" << std::endl << std::endl; 
 	std::cout << this->_contacts[str[0] - '0'].get_fname() << std::endl;
 	std::cout << this->_contacts[str[0] - '0'].get_lname() << std::endl;
-	std::cout << this->_contacts[str[0] - '0'].get_nick() << std::endl << std::endl;
+	std::cout << this->_contacts[str[0] - '0'].get_phone() << std::endl;
+	std::cout << this->_contacts[str[0] - '0'].get_nick() << std::endl;
+	std::cout << this->_contacts[str[0] - '0'].get_secret() << std::endl;
 }

@@ -1,18 +1,25 @@
 SRC = megaphone.cpp
-OBJ = $(SRC:.cpp=.o)
+OBJ_DIR = ./build/
+OBJ = $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 CC = c++
-RM = rm -f
+RM = rm -rf
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 
 NAME = megaphone
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
+
+$(OBJ_DIR)%o: %cpp
+	$(CC) $(FLAGS) -c $< -o $@
+
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
