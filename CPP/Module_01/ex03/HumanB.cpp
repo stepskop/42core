@@ -15,5 +15,5 @@ void HumanB::attack(void) {
 	std::string used_weapon = "bare hands";
 	if (this->weapon)
 		used_weapon = this->weapon->getType();
-	std::cout << name << " attack with their " << used_weapon << std::endl;
+	std::cout << name << " attacks with their " << used_weapon << std::endl;
 }
