@@ -33,6 +33,7 @@ int main(int argc, char **argv)
 		std::cout << "Error while opening/creating the output file" << std::endl;
 		return 1;
 	}
+	std::string buf;
 	std::string line;
 	while (std::getline(in_file, line))
 	{
@@ -41,11 +42,13 @@ int main(int argc, char **argv)
 			std::cout << "I/O error" << std::endl;
 			break;
 		}
-		line = replace_line(line, argv[2], argv[3]);
-		out_file << line;
 		if (!in_file.eof())
-			out_file << std::endl;
+			line += "\n";
+		buf += line;
 	}
+	buf = replace_line(buf, argv[2], argv[3]);
+	out_file << buf;
 	in_file.close();
 	out_file.close();
 }
+// cat -e input && echo "" && ./program input $'\nFri' "-" && cat -e input.replace
