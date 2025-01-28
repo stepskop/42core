@@ -30,11 +30,39 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &src) {
 }
 
 void ClapTrap::attack(const std::string& target) {
+	if (this->_hitpoints <= 0)
+	{
+		std::cout << "ClapTrap " << this->_name << " is dead. F" << std::endl;
+		return ;
+	} 
+	if (this->_energy <= 0) {
+		std::cout << "ClapTrap " << this->_name << " is exhausted." << std::endl;
+		return ;
+	}
+	if (this->_energy > 0)
+		this->_energy--;
 	std::cout << "ClapTrap " << this->_name << " attacks " << target << ", causing " << this->_attack << " points of damage!" << std::endl;
 }
 void ClapTrap::takeDamage(unsigned int amount) {
+	if (amount > this->_hitpoints)
+		this->_hitpoints = 0;
+	else
+		this->_hitpoints -= amount;
 	std::cout << "ClapTrap " << this->_name << " is taking " << amount << " points of damage!" << std::endl;
 }
 void ClapTrap::beRepaired(unsigned int amount) {
-		std::cout << "ClapTrap " << this->_name << " is repairing " << amount << " points of hitpoints!" << std::endl;
+	if (this->_hitpoints <= 0)
+	{
+		std::cout << "ClapTrap " << this->_name << " is dead. F" << std::endl;
+		return ;
+	} 
+	if (this->_energy <= 0) {
+		std::cout << "ClapTrap " << this->_name << " is exhausted." << std::endl;
+		return ;
+	}
+	if (this->_energy > 0)
+		this->_energy--;
+	if (this->_hitpoints < UINT_MAX)
+		this->_hitpoints += amount;
+	std::cout << "ClapTrap " << this->_name << " is repairing " << amount << " points of hitpoints!" << std::endl;
 }

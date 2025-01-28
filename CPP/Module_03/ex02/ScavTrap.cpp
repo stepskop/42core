@@ -27,11 +27,6 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &src) {
 }
 
 void ScavTrap::guardGate(void) {
-	if (this->_hitpoints <= 0)
-	{
-		std::cout << "ScavTrap " << this->_name << " is dead. F" << std::endl;
-		return ;
-	}
 	std::cout << "Scavtrap " << this->_name << ": \"You shall not pass!\"" << std::endl;
 }
 

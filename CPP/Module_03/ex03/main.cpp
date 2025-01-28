@@ -1,13 +1,16 @@
-#include "ScavTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main(void) {
 	std::cout << "---- CONSTRUCTORS ----" << std::endl;
-	ScavTrap bulbizar("Bulbizar");
-	ScavTrap pikachu;
+	DiamondTrap bulbizar("Bulbizar");
+	DiamondTrap pikachu;
 
 	std::cout << std::endl << "---- VALID ACTIONS ----" << std::endl;
+	bulbizar.whoAmI();
 	bulbizar.attack("Carapuce");
-	bulbizar.guardGate();
+	pikachu.whoAmI();
+	pikachu.highFivesGuys();
+	pikachu.guardGate();
 
 	std::cout << std::endl << "---- INVALID ACTIONS ----" << std::endl;
 	bulbizar.takeDamage(1000);

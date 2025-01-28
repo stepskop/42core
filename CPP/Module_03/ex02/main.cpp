@@ -1,13 +1,13 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main(void) {
 	std::cout << "---- CONSTRUCTORS ----" << std::endl;
-	ScavTrap bulbizar("Bulbizar");
-	ScavTrap pikachu;
+	FragTrap bulbizar("Bulbizar");
+	FragTrap pikachu;
 
 	std::cout << std::endl << "---- VALID ACTIONS ----" << std::endl;
 	bulbizar.attack("Carapuce");
-	bulbizar.guardGate();
+	bulbizar.highFivesGuys();
 
 	std::cout << std::endl << "---- INVALID ACTIONS ----" << std::endl;
 	bulbizar.takeDamage(1000);

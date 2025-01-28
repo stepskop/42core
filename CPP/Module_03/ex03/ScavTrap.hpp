@@ -3,7 +3,9 @@
 
 # include "ClapTrap.hpp"
 
-class ScavTrap: public ClapTrap {
+class ScavTrap: virtual public ClapTrap {
+	protected:
+		unsigned int	_energy;
 	public:
 		ScavTrap(void);
 		ScavTrap(std::string name);
