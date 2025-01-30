@@ -1,9 +1,9 @@
-SRC = main.cpp
+SRC = main.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp AMateria.cpp Ground.cpp
 OBJ_DIR = ./build/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 CC = c++
 RM = rm -rf
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 NAME = program
 
