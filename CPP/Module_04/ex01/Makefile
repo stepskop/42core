@@ -3,7 +3,7 @@ OBJ_DIR = ./build/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 CC = c++
 RM = rm -rf
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+FLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = program
 
