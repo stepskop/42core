@@ -5,7 +5,7 @@ int main(void) {
 	Bureaucrat *b = NULL;
 
 	try {
-		a = new Bureaucrat("BeanMan", 151);
+		a = new Bureaucrat("BeanMan", 151); // Will throw
 	} catch (Bureaucrat::GradeTooLowException &e) {
 		std::cout << e.what() << ": Instatiating with grade to low." << std::endl;
 	} catch (Bureaucrat::GradeTooHighException &e) {
@@ -20,12 +20,27 @@ int main(void) {
 		std::cout << e.what() << ": Instatiating with grade to high." << std::endl;
 	}
 
-	if (a) {
-		std::cout << a << std::endl;
-	}
 	if (b) {
+		std::cout << b;
+		try {
+			b->incGrade(4);
+		} catch (Bureaucrat::GradeTooHighException &e) {
+			std::cout << e.what() << ": Incremented grade to high." << std::endl;
+		}
+		
+		try {
+			b->decGrade(170);
+		} catch (Bureaucrat::GradeTooLowException &e) {
+			std::cout << e.what() << ": Decremented grade too low." << std::endl;
+		}
+
+		try {
+			b->incGrade();
+		} catch (Bureaucrat::GradeTooHighException &e) {
+			std::cout << e.what() << ": Incremented grade to high." << std::endl;
+		}
+		std::cout << b;
 	}
-	std::cout << b << std::endl;
 
 	delete a;
 	delete b;
