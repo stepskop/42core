@@ -1,4 +1,4 @@
-SRC = main.cpp 
+SRC = main.cpp Bureaucrat.cpp 
 OBJ_DIR = ./build/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 CC = c++
