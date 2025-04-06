@@ -41,11 +41,25 @@ void	Bureaucrat::decGrade(int val) {
 	this->_grade += val;
 }
 
+void	Bureaucrat::signForm(Form *form) {
+	if (form->getIsSigned()) {
+		std::cout << "Form " << form->getName() << "is already signed" << std::endl;
+		return ;
+	}
+	try {
+		form->beSigned(this);
+	} catch (std::exception &e) {
+		std::cout << this->_name << " couldn't sign " << form->getName() << " because " << e.what() << std::endl;
+		return ;
+	}
+	std::cout << this->_name << " signed " << form->getName() << std::endl;
+}
+
 const char *Bureaucrat::GradeTooHighException::what(void) const throw() {
-	return "GradeOverflow";
+	return "Bureaucrat's grade to high";
 }
 const char *Bureaucrat::GradeTooLowException::what(void) const throw() {
-	return "GradeUnderflow";
+	return "Bureaucrat's grade to low";
 }
 
 std::ostream &operator << (std::ostream &stream, const Bureaucrat *obj) {

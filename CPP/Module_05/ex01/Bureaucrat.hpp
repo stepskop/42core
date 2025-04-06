@@ -1,9 +1,11 @@
-#ifndef BUREAUCRAT_HPP
-# define BUREAUCRAT_HPP
+#pragma once
 
 # include <iostream>
 # include <exception>
-# include <ostream>
+# include <iostream>
+# include "Form.hpp"
+
+class Form;
 
 class Bureaucrat {
 private:
@@ -31,8 +33,9 @@ public:
 
 	void	incGrade(int val = 1);
 	void	decGrade(int val = 1);
+
+	void	signForm(Form *form);
 };
 
 std::ostream &operator << (std::ostream &stream, const Bureaucrat *obj); 
 
-#endif
