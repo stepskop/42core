@@ -31,10 +31,13 @@ static AForm	*shrubForm(const std::string &target) {
 AForm	*Intern::makeForm(const std::string &name, const std::string &target) const {
 	const std::string forms[] = { "presidential pardon", "robotomy request", "shrubbery creation" };
 	AForm *(*form_factory[])(const std::string &target) = { &presForm, &robForm, &shrubForm };
-
+	AForm *res;
 	for (int i = 0; i < 3; i++) {
-		if (name == forms[i])
-			return (form_factory[i](target));
+		if (name == forms[i]) {
+			res = form_factory[i](target);
+			std::cout << "Intern creates " << res->getName() << std::endl;
+			return (res);
+		}
 	}
 	std::cout << "Couldn't find suitable form" << std::endl;
 	return (NULL);
