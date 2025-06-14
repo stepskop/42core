@@ -1,0 +1,108 @@
+networks:
+  inception_network:
+    driver: bridge
+
+services:
+  wordpress:
+    build: ./requirements/wordpress
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - maria_db
+      - redis
+    restart: unless-stopped
+    networks:
+      - inception_network
+
+  maria_db:
+    build: ./requirements/mariadb
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - inception_network
+
+  redis:
+    build: ./requirements/bonus/redis
+    restart: unless-stopped
+    networks:
+      - inception_network
+
+  nginx:
+    build: ./requirements/nginx
+    env_file:
+      - .env
+    ports:
+      - 443:443
+    depends_on:
+      - wordpress
+      - site
+      - adminer
+    restart: unless-stopped
+    networks:
+      - inception_network
+    volumes:
+      - wordpress_data:/var/www/html
+
+  ftp:
+    build: ./requirements/bonus/ftp
+    env_file:
+      - .env
+    ports:
+      - 21:21
+      - 21100-21110:21100-21110
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
+    restart: unless-stopped
+    networks:
+      - inception_network
+
+  site:
+    build: ./requirements/bonus/portfolio
+    restart: unless-stopped
+    networks:
+      - inception_network
+
+  adminer:
+    build: ./requirements/bonus/adminer
+    restart: unless-stopped
+    networks:
+      - inception_network
+
+  portainer:
+    build: ./requirements/bonus/portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /:/host
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - portainer_data:/data
+    networks:
+      - inception_network
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/steps/Projects/42core/Inception/data/mariadb
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/steps/Projects/42core/Inception/data/wordpress
+
+  portainer_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/steps/Projects/42core/Inception/data/portainer

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="icon" type="image/png" href="./icon/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="./icon/favicon.svg" />
+	<link rel="shortcut icon" href="./icon/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="./icon/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="Stepan" />
+	<link rel="manifest" href="./icon/site.webmanifest" />
+
+	<title>Stepan | Software Developer</title>
+	<meta name="title" content="Stepan | Software Developer" />
+	<meta name="description" content="Passionate software engineer, with job as his hobby. Back-end and infrastructure. Tech enthusiast." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://stepskop.xyz/" />
+	<meta property="og:title" content="Stepan | Software Developer" />
+	<meta property="og:description" content="Passionate software engineer, with job as his hobby. Back-end and infrastructure. Tech enthusiast." />
+	<meta property="og:image" content="https://stepskop.xyz/icon/meta.png" />
+
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://stepskop.xyz/" />
+	<meta property="twitter:title" content="Stepan | Software Developer" />
+	<meta property="twitter:description" content="Passionate software engineer, with job as his hobby. Back-end and infrastructure. Tech enthusiast." />
+	<meta property="twitter:image" content="https://stepskop.xyz/icon/meta.png" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Fira+Code:wght@300..700&family=Lalezar&display=swap" rel="stylesheet">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="app.css">
+	<script>
+		tailwind.config = {
+		  theme: {
+			fontFamily: {
+				lalezar: ["Lalezar", "serif"],
+				epilogue: ["Epilogue", "serif"],
+				firaCode: ["Fira Code", "serif"],
+				primary: ["Fira Code", "serif"]
+			},
+			extend: {
+				fontSize: {
+					xxs: "0.7rem"
+				},
+				colors: {
+					primary: '#0B0B0B',
+					secondary: "#080808",
+					highlight: "#2B2B2B",
+					text: "#FFFFFF",
+					lightText: "#A1A1A1",
+					accent: "#9C40EB",
+				},
+				gridTemplateColumns: {
+					'14': 'repeat(14, minmax(0, 1fr))'
+				},
+				screens: {
+					'xs': '360px',
+				},
+			}
+		  }
+		}
+	  </script>
+</head>
+<body class="flex bg-primary w-screen items-center justify-center">
+	<main class="relative flex flex-col items-center max-w-[1280px] border-highlight border-x">
+		<!-- HERO -->
+		<section class="flex w-full min-h-[100dvh] justify-center items-center px-4 sm:px-8 md:px-20">
+			<div class="flex w-full h-full flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-24 justify-center items-center text-center lg:text-left py-8">
+				<div class="flex flex-col w-full lg:w-2/3">
+					<p class="text-accent font-firaCode text-lg md:text-xl">Hello, I'm</p>
+					<p class="text-text text-8xl md:text-9xl font-lalezar">Stepan</p>
+					<p class="text-lightText text-sm sm:text-md md:text-lg font-epilogue">I am <span class="text-text font-bold text-md sm:text-lg md:text-xl">a passionate software developer</span>. One may say I am lucky that I found my job hobby. Strongest point of mine is desire to solve the problems. It is even stronger if I know there is a solution somewhere. I am very nerdy about new technologies, so if I read or watch something, it is probably about some new thing coming to the computer world. Talking about specifics, I am more into networking and data flow in terms of programming, so all the backend stuff is a thing for me, but I also like areas of DevOps and infrastructure.<br>Overall, delivering a whole working system is what I enjoy the most!</p>
+					<div class="flex flex-row h-6 md:h-10 lg:h-full w-full gap-8 mt-4 sm:mt-8 justify-center lg:justify-start">
+						<a href="https://github.com/stepskop" target="_blank"><img class="h-full hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/github.svg" alt=""></a>
+						<a href="https://linkedin.com/in/stepskop" target="_blank"><img class="h-full hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/linkedin.svg" alt=""></a>
+						<a href="https://profile.intra.42.fr/users/sskopek" target="_blank"><img class="h-full hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/intra.svg" alt=""></a>
+						<a href="mailto:skopek.stepan@gmail.com" target="_blank"><img class="h-full hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/email.svg" alt=""></a>
+					</div>
+				</div>
+				<img src="./assets/images/pfp.svg" class="w-2/5 lg:w-1/3 h-full flex" alt="">
+			</div>
+		</section>
+		<!-- SKILLSET -->
+		<hr class="w-full border-highlight">
+		<div class="h-24 w-[1px] bg-highlight"></div>
+		<section class="flex flex-col justify-center items-center min-h-fit text-text font-primary px-4 sm:px-8 md:px-20">
+			<div id="primary-skillset" class="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-7 bg-secondary xl:grid-cols-none grid-rows-3 xl:grid-rows-7 rounded-2xl border border-highlight w-fit xl:w-full xl:divide-y">
+				<div class="flex justify-center items-center col-start-1 col-end-4 xs:col-end-5 sm:col-end-8 xl:col-end-[15] row-start-1 row-end-2 xl:row-end-4 border-b border-highlight xl:border-none">
+					<h1 class="text-md md:text-base">Primary skillset</h1>
+				</div>
+				<div class="hidden xl:flex justify-center items-center col-start-[1] col-end-[7] row-start-4 row-end-5 border-b border-r border-highlight text-sm">
+					<p>Backend</p>
+				</div>
+				<div class="hidden xl:flex justify-center items-center col-start-[7] col-end-[8] row-start-4 row-end-5 border-b border-r border-highlight text-sm">
+					<p>OS</p>
+				</div>
+				<div class="hidden xl:flex justify-center items-center col-start-[8] col-end-[10] row-start-4 row-end-5 border-b border-r border-highlight text-sm">
+					<p>Language</p>
+				</div>
+				<div class="hidden xl:flex justify-center items-center col-start-[10] col-end-[12] row-start-4 row-end-5 border-b border-r border-highlight text-sm">
+					<p>Frontend</p>
+				</div>
+				<div class="hidden xl:flex justify-center items-center col-start-[12] col-end-[15] row-start-4 row-end-5 border-b border-highlight text-sm">
+					<p>DevOps</p>
+				</div>
+			</div>
+			<div class="h-24 w-[1px] bg-highlight"></div>
+			<div id="secondary-skillset" class="grid grid-cols-3 xs:grid-cols-4 bg-secondary xl:grid-cols-none grid-rows-2 xl:grid-rows-6 rounded-2xl border border-highlight xl:divide-y">
+				<div class="flex justify-center items-center col-start-1 col-end-4 xs:col-end-5 xl:col-end-[9] row-start-1 row-end-1 sm:row-end-2 xl:row-end-4 border-b border-highlight xl:border-none">
+					<h1 class="text-md md:text-base">Familiar with</h1>
+				</div>
+			</div>
+		</section>
+		<div class="h-24 w-[1px] bg-highlight"></div>
+		<!-- EXPERIENCES -->
+		<section class="flex flex-col items-center text-text font-primary px-4 sm:px-8 md:px-20">
+			<div class="w-full h-fit rounded-2xl border border-highlight">
+				<div class="flex w-full justify-center items-center h-[79px] border-b border-accent rounded-t-2xl bg-secondary">
+					<h1 class="text-md md:text-base">Experiences</h1>
+				</div>
+				<div id="experiences" class="flex flex-col items-center px-4 md:px-8 xl:px-32">
+					<div class="h-4 sm:h-8 w-[1px] bg-highlight"></div>
+				</div>
+			</div>
+		</section>
+		<div class="h-24 w-[1px] bg-highlight"></div>
+		<!-- STUDIES -->
+		<section class="w-full flex justify-center px-4 sm:px-8 md:px-20">
+			<div class="w-fit xl:w-full flex flex-col bg-secondary border border-highlight rounded-2xl text-text font-primary overflow-x-hidden">
+				<div class="flex w-full justify-center items-center h-[79px] border-b border-[#2C41FF] rounded-t-2xl bg-secondary">
+					<h1 class="text-md md:text-base">Studies</h1>
+				</div>
+				<div id="studies" class="flex flex-col xl:flex-row items-center w-full">
+					<div class="flex-col h-52 w-full p-4 border-b xl:border-r xl:border-b-0 border-highlight group">
+						<div class="flex flex-row gap-4 h-1/2">
+							<img class="h-full" src="./assets/images/studies/42.svg" alt="">
+							<div class="flex flex-col h-full">
+								<div class="flex flex-row text-xxs sm:text-xs gap-2">
+									<p class="text-lightText">Sep 2024</p>
+									<p class="text-lightText">-</p>
+									<p class="text-lightText">Present</p>
+								</div>
+								<h1 class="text-md sm:text-lg md:text-2xl">Computer science</h1>
+								<a class="flex" href="https://42network.org/" target="_blank">
+									<h2 class="text-xs sm:text-lg text-[#2469CF]">42network</h2>
+								</a>
+							</div>
+						</div>
+						<div class="flex flex-col justify-end h-1/2">
+							<div class="flex flex-row w-full">
+								<div class="flex flex-row items-center gap-2 sm:gap-4 w-full">
+									<div class="text-xxs sm:text-xs md:text-sm">University</div>
+									<div class="bg-[#2469CF] w-[5px] h-[5px] rounded-full"></div>
+									<div class="text-xxs sm:text-xs md:text-sm">Prague</div>
+								</div>
+								<a href="https://42network.org/" target="blank_" class="lg:hidden lg:group-hover:flex h-full justify-end items-center hover:opacity-70 ease-in-out duration-300">
+									<img class="flex h-full" src="./assets/images/link.svg">
+								</a>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="flex-col h-52 w-full p-4 border-b xl:border-r xl:border-b-0 border-highlight group">
+						<div class="flex flex-row gap-4 h-1/2">
+							<img class="h-full" src="./assets/images/studies/cisco.svg" alt="">
+							<div class="flex flex-col h-full">
+								<div class="flex flex-row text-xxs sm:text-xs gap-2">
+									<p class="text-lightText">Jan 2021</p>
+									<p class="text-lightText">-</p>
+									<p class="text-lightText">3 months</p>
+								</div>
+								<h1 class="text-md sm:text-lg md:text-2xl">CyberOps</h1>
+								<a class="flex" href="https://cisco.com/" target="_blank">
+									<h2 class="text-xs sm:text-lg text-[#0CA2DA]">Cisco</h2>
+								</a>
+							</div>
+						</div>
+						<div class="flex flex-col justify-end h-1/2">
+							<div class="flex flex-row w-full">
+								<div class="flex flex-row items-center gap-2 sm:gap-4 w-full">
+									<div class="text-xxs sm:text-xs md:text-sm">Course</div>
+									<div class="bg-[#0CA2DA] w-[5px] h-[5px] rounded-full"></div>
+									<div class="text-xxs sm:text-xs md:text-sm">Remote</div>
+								</div>
+								<a href="https://cisco.com/" target="blank_" class="lg:hidden lg:group-hover:flex h-full justify-end items-center hover:opacity-70 ease-in-out duration-300">
+									<img class="flex h-full" src="./assets/images/link.svg">
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					<div class="flex-col h-52 w-full p-4 group">
+						<div class="flex flex-row gap-4 h-1/2">
+							<img class="h-full" src="./assets/images/studies/ssps.svg" alt="">
+							<div class="flex flex-col h-full">
+								<div class="flex flex-row text-xxs sm:text-xs gap-2">
+									<p class="text-lightText">Sep 2020</p>
+									<p class="text-lightText">-</p>
+									<p class="text-lightText">4 years</p>
+								</div>
+								<h1 class="text-md sm:text-lg md:text-2xl">Cybersecurity</h1>
+								<a class="flex" href="https://ssps.cz/" target="_blank">
+									<h2 class="text-xs sm:text-lg text-[#4A8ABD]">SSPS</h2>
+								</a>
+							</div>
+						</div>
+						<div class="flex flex-col justify-end h-1/2">
+							<div class="flex flex-row w-full">
+								<div class="flex flex-row items-center gap-2 sm:gap-4 w-full">
+									<div class="text-xxs sm:text-xs md:text-sm">High school</div>
+									<div class="bg-[#4A8ABD] w-[5px] h-[5px] rounded-full"></div>
+									<div class="text-xxs sm:text-xs md:text-sm">Prague</div>
+								</div>
+								<a href="https://ssps.cz/" target="blank_" class="lg:hidden lg:group-hover:flex h-full justify-end items-center hover:opacity-70 ease-in-out duration-300">
+									<img class="flex h-full" src="./assets/images/link.svg">
+								</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+		<div class="h-24 w-[1px] bg-highlight"></div>
+		<!-- PROJECTS -->
+		<section class="px-4 sm:px-8 md:px-20">
+			<div class="rounded-2xl border border-highlight flex flex-col h-fit overflow-hidden font-primary max-w-[960px]">
+				<div class="flex justify-center items-center h-[79px] border-b border-[#BC1164] bg-secondary">
+					<h1 class="text-md md:text-base text-text">Projects</h1>
+				</div>
+				<div class="flex flex-row flex-wrap p-4 gap-4 justify-center">
+					<div class="w-min group flex rounded-2xl border border-highlight flex-col h-64 overflow-hidden aspect-square">
+						<div class="relative">
+							<img class="group-hover:blur group-hover:grayscale group-hover:brightness-50 ease-in-out duration-300" src="./assets/images/projects/fdf.webp" alt="">
+							<p class="hidden group-hover:flex text-text absolute max-w-64 top-0 p-4 text-xs ease-in-out duration-300">3D heatmap rasterizer written in C.<br>Both of the rendered projections can be manipulated - rotated, resized, including variable height scale.</p>
+						</div>
+						<a href="https://github.com/stepskop/fdf" target="_blank" class="h-full w-full flex gap-2 bg-secondary justify-center items-center border-t border-highlight">
+							<p class="text-text text-xs">Fdf</p>
+							<img class="hidden group-hover:flex" src="./assets/images/link.svg" alt="">
+						</a>
+					</div>
+					<div class="group flex rounded-2xl border border-highlight flex-col h-64 overflow-hidden aspect-square">
+						<div class="relative">
+							<img class="group-hover:blur group-hover:grayscale group-hover:brightness-50 ease-in-out duration-300" src="./assets/images/projects/minishell.webp" alt="">
+							<p class="hidden group-hover:flex text-text absolute max-w-64 top-0 p-4 text-xs ease-in-out duration-300">Small Bash inspired implementation of UNIX shell.<br>Including builtins, pipe and redirection management, environment variable and wildcard expansion. Last but not least support of flow control operators.</p>
+						</div>
+						<a href="https://github.com/stepskop/minishell" target="_blank" class="h-full w-full flex gap-2 bg-secondary justify-center items-center border-t border-highlight">
+							<p class="text-text text-xs">minishell</p>
+							<img class="hidden group-hover:flex" src="./assets/images/link.svg" alt="">
+						</a>
+					</div>
+					<div class="group flex rounded-2xl border border-highlight flex-col h-64 overflow-hidden aspect-square">
+						<div class="relative">
+							<img class="group-hover:blur group-hover:grayscale group-hover:brightness-50 ease-in-out duration-300" src="./assets/images/projects/delidock.webp" alt="">
+							<p class="hidden group-hover:flex text-text absolute max-w-64 top-0 p-4 text-xs ease-in-out duration-300">Smart delivery box ecosystem including frontend mobile client deisgned in Figma, running on Capacitor and backend powered by Express, providing ACL, utilizing WebSocket and WebRTC.</p>
+						</div>
+						<a href="https://github.com/Delidock/delidock" target="_blank" class="h-full w-full flex gap-2 bg-secondary justify-center items-center border-t border-highlight">
+							<p class="text-text text-xs">Delidock</p>
+							<img class="hidden group-hover:flex" src="./assets/images/link.svg" alt="">
+						</a>
+					</div>
+					<div class="group flex rounded-2xl border border-highlight flex-col h-64 overflow-hidden aspect-square">
+						<div class="relative">
+							<img class="group-hover:blur group-hover:grayscale group-hover:brightness-[0.3] ease-in-out duration-300" src="./assets/images/projects/gamers-helper.webp" alt="">
+							<p class="hidden group-hover:flex text-text absolute max-w-64 top-0 p-4 text-xs ease-in-out duration-300">My first project ever.<br>Discord bot written in Javacript - running in Nodejs.<br>Built with Discord.js, MongoDB and Distube. Capable of playing music in voice channels, fetching external API for free game giveaways, controling my PC and Minecraft servers that I host.<br>Deployed using Docker on my home server.</p>
+						</div>
+						<a href="https://github.com/stepskop/discord-bot-gv" target="_blank" class="h-full w-full flex gap-2 bg-secondary justify-center items-center border-t border-highlight">
+							<p class="text-text text-xs">Gamer's Helper</p>
+							<img class="hidden group-hover:flex" src="./assets/images/link.svg" alt="">
+						</a>
+					</div>
+					<div class="group flex rounded-2xl border border-highlight flex-col h-64 overflow-hidden aspect-square">
+						<div class="relative">
+							<img class="group-hover:blur group-hover:grayscale group-hover:brightness-[0.3] ease-in-out duration-300" src="./assets/images/projects/blendade.webp" alt="">
+							<p class="hidden group-hover:flex text-text absolute max-w-64 top-0 p-4 text-xs ease-in-out duration-300">E-shop mock to learn React and Next. Using Daisy UI. Powered by Sanity, the external CMS.</p>
+						</div>
+						<a href="https://github.com/stepskop/react-eshop-mock" target="_blank" class="h-full w-full flex gap-2 bg-secondary justify-center items-center border-t border-highlight">
+							<p class="text-text text-xs">Blendade</p>
+							<img class="hidden group-hover:flex" src="./assets/images/link.svg" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="h-24 w-[1px] bg-highlight"></div>
+		<hr class="w-full border-highlight">
+		<footer class="w-full h-24 sm:h-16 flex flex-col sm:flex-row px-8 items-center justify-center gap-1 text-primary">
+			<div class="w-full flex flex-row gap-4 justify-center sm:justify-start items-center grayscale brightness-[100] h-1/3">
+				<a href="https://github.com/stepskop" target="_blank"><img class="h-6 hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/github.svg" alt=""></a>
+				<a href="https://linkedin.com/in/stepskop" target="_blank"><img class="h-6 hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/linkedin.svg" alt=""></a>
+				<a href="mailto:skopek.stepan@gmail.com" target="_blank"><img class="h-6 hover:opacity-60 ease-in-out duration-200 hover:scale-105" src="./assets/images/links/email.svg" alt=""></a>
+			</div>
+			<p class="text-lightText w-full flex justify-center text-xs">2025</p>
+			<p class="text-text text-xs w-full flex justify-center sm:justify-end">Štěpán Škopek</p>
+		</footer>
+	</main>
+	<script src="./js/skillset.js"></script>
+	<script src="./js/experience.js"></script>
+</body>
+</html>
