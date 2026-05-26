@@ -11,6 +11,7 @@ RPN::RPN(const RPN &src)
 
 RPN &RPN::operator = (const RPN &src)
 {
+    (void)src; // No member variables to copy
     return *this;
 }
 
