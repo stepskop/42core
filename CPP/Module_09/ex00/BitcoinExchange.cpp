@@ -1,7 +1,20 @@
 #include "BitcoinExchange.hpp"
 
+double stringToDouble(const std::string& s)
+{
+    std::stringstream ss(s);
+    double value;
+
+    ss >> value;
+
+    if (ss.fail() || !ss.eof())
+        throw std::runtime_error("invalid number");
+
+    return value;
+}
+
 // Validates the first part of the line (date and separator).
-// The rest (value) is validated by calling std::stof in getPrices.
+// The rest (value) is validated by calling stringToDouble in getPrices.
 bool validateLine(std::string line) {
     size_t year = 4, month = 2, day = 2;
     size_t pos = 0;
@@ -89,7 +102,7 @@ BitcoinExchange::BitcoinExchange(void)
             }
 
             std::string	date = line.substr(0, commaPos);
-            double price = std::stof(line.substr(commaPos + 1));
+            double price = stringToDouble(line.substr(commaPos + 1));
 
             _database[date] = price;
         } catch (const std::exception &e) {
@@ -154,7 +167,7 @@ void BitcoinExchange::getPrices(std::string input) const
 
         // Try to parse the price as a double. If it fails, the input format is invalid.
         try {
-            price = std::stof(line.substr(pipePos + 1));
+            price = stringToDouble(line.substr(pipePos + 1));
         } catch (const std::exception &e) {
             std::cerr << "Error: bad input, cannot parse price => " << price << std::endl;
             continue;

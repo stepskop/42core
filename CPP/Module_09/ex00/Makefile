@@ -15,7 +15,7 @@ $(NAME): $(OBJ_DIR) $(OBJ)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%o: %cpp
+$(OBJ_DIR)%.o: %.cpp
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:

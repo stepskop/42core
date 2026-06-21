@@ -18,6 +18,22 @@ ForwardIt2 swapRanges(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2) {
     return first2;
 }
 
+// No upper_bound in C++98 :(, creating my own.
+std::vector<int>::iterator upper_bound(std::vector<int>::iterator first, std::vector<int>::iterator last, int value)
+{
+    while (first != last)
+    {
+        std::vector<int>::iterator mid = first;
+        std::advance(mid, std::distance(first, last) / 2);
+
+        if (value < *mid)
+            last = mid;
+        else
+            first = mid + 1;
+    }
+    return first;
+}
+
 PmergeMe::PmergeMe(void)
 {
 }
@@ -155,7 +171,7 @@ void PmergeMe::fordJohnsonMergeInsertionSort(Container &input) {
             }
 
             // Search for the position in the range of main_keys
-            std::vector<int>::iterator pos = std::upper_bound(main_keys.begin(), main_keys.end(), key);
+            std::vector<int>::iterator pos = upper_bound(main_keys.begin(), main_keys.end(), key);
 
             // Get the index of main where we want to insert the b element
             // This only works because 'main' and 'a_keys' are parallel

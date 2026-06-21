@@ -5,6 +5,9 @@
 # include <fstream>
 # include <map>
 # include <string>
+# include <cstdlib>
+# include <sstream>
+
 
 class BitcoinExchange
 {
