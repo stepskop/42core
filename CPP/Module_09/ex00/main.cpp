@@ -1,18 +1,20 @@
 #include "BitcoinExchange.hpp"
 
-int main() {
+int main(int argc, char **argv) {
 
-    BitcoinExchange btc_exchange;
-
-    try {
-        btc_exchange = BitcoinExchange();
-    }
-    catch (const std::exception &e) {
-        std::cerr << "Error: Exception when initializing BitcoinExchange: " << e.what() << std::endl;
+    if (argc < 2) {
+        std::cerr << "Error: could not open file." << std::endl;
         return 1;
     }
 
-    btc_exchange.getPrices("input.txt");
+    try {
+        BitcoinExchange btc_exchange;
+        btc_exchange.getPrices(argv[1]);
+    }
+    catch (const std::exception &e) {
+        std::cerr << "Error: Exception using BitcoinExchange: " << e.what() << std::endl;
+        return 1;
+    }
 
     return 0;
 }

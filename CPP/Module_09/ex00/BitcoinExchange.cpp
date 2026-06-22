@@ -84,8 +84,7 @@ BitcoinExchange::BitcoinExchange(void)
 
     if (!file.is_open())
     {
-        std::cerr << "Error: could not open data.csv file" << std::endl;
-        return ;
+        throw std::runtime_error("Error: could not open data.csv file.");
     }
 
     // Skip the header line
@@ -139,7 +138,7 @@ void BitcoinExchange::getPrices(std::string input) const
 
     if (!file.is_open())
     {
-        std::cerr << "Error: could not open " << input << " file" << std::endl;
+        std::cerr << "Error: could not open " << input << " file." << std::endl;
         return ;
     }
 
@@ -187,6 +186,11 @@ void BitcoinExchange::getPrices(std::string input) const
 
         // Find the first item in the database whose key is greater than the input date.
         std::map<std::string, float>::const_iterator it = _database.upper_bound(date);
+
+        if (it == _database.begin()) {
+            std::cerr << "Error: no price entry for this data." << std::endl;
+            continue;
+        }
 
         // We pick one item back, because we want the last item whose key is less than or equal to the input date.
         // If there is no such item, then the highest date in the database is the one we will pick.
