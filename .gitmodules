@@ -7,3 +7,6 @@
 [submodule "Libft"]
 	path = Libft
 	url = git@github.com:stepskop/libft.git
+[submodule "webserv"]
+	path = webserv
+	url = git@github.com:stepskop/servant.git
