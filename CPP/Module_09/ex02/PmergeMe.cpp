@@ -18,19 +18,47 @@ ForwardIt2 swapRanges(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2) {
     return first2;
 }
 
-// No upper_bound in C++98 :(, creating my own.
-std::vector<int>::iterator upper_bound(std::vector<int>::iterator first, std::vector<int>::iterator last, int value)
+// No std::upper_bound in C++98 :(, creating my own.
+//
+// upper_bound = binary search returning an iterator to the FIRST element
+// strictly GREATER than 'value'. (i.e. where 'value' should be inserted to
+// keep the range sorted, placed AFTER any elements equal to it.)
+// Range [first, last) MUST already be sorted ascending.
+//
+// Templated on the iterator type so it works for any container's iterator
+// (vector, deque, ...). value_type / difference_type are read from the
+// iterator via std::iterator_traits, so we never hardcode 'int'.
+template <typename It>
+It c_upper_bound(It first, It last, const typename std::iterator_traits<It>::value_type &value)
 {
-    while (first != last)
+    // 'count' = number of elements still in the search window.
+    // We shrink a window by halves instead of walking two iterators toward
+    // each other, so this stays O(log n) and uses only std::advance / ++
+    // (never 'it + n') -> works even for non-random-access iterators.
+    typename std::iterator_traits<It>::difference_type count = std::distance(first, last);
+
+    while (count > 0)
     {
-        std::vector<int>::iterator mid = first;
-        std::advance(mid, std::distance(first, last) / 2);
+        It mid = first;
+        typename std::iterator_traits<It>::difference_type step = count / 2;
+        std::advance(mid, step); // mid = first + step  (middle of the window)
 
         if (value < *mid)
-            last = mid;
+        {
+            // 'value' belongs in the LEFT half: mid and everything right of it
+            // are too big. Keep 'first', shrink window to [first, mid).
+            count = step;
+        }
         else
-            first = mid + 1;
+        {
+            // *mid <= value, so the answer is RIGHT of mid.
+            // Skip mid itself: move 'first' past it and drop step+1 elements
+            // (the left half plus mid) from the window.
+            first = ++mid;     // ++mid then assign -> first = mid + 1
+            count -= step + 1;
+        }
     }
+    // Window empty: 'first' now points at the first element > value.
     return first;
 }
 
@@ -160,25 +188,25 @@ void PmergeMe::fordJohnsonMergeInsertionSort(Container &input) {
             size_t boundIndex = bounds[pendIndex]; // Index of related a element in main (the upper bound for the search)
 
             // Number that we are going to use when comparing during insertion - last element of the bX group
-            int key = *(pend[pendIndex] + groupSize - 1);
+            typename Container::value_type key = *(pend[pendIndex] + groupSize - 1);
 
             // Actual numbers (last elements of groups) from 'main' that we will compare the 'key' with. Needed for upper_bound()
             // This feels like a redundant step, but it is necessary since main is list of iterators not numbers.
-            std::vector<int> main_keys;
+            Container main_keys;
             for (size_t i = 0; i < boundIndex; i++) {
-                int num = *(main[i] + groupSize - 1);
+                typename Container::value_type num = *(main[i] + groupSize - 1);
                 main_keys.push_back(num);
             }
 
             // Search for the position in the range of main_keys
-            std::vector<int>::iterator pos = upper_bound(main_keys.begin(), main_keys.end(), key);
+            typename Container::iterator pos = c_upper_bound(main_keys.begin(), main_keys.end(), key);
 
             // Get the index of main where we want to insert the b element
             // This only works because 'main' and 'a_keys' are parallel
             //
             // main:   [*b1,      *a1,      *a2,      *a3     ]
             // a_keys: [b1[last], a1[last], a2[last], a3[last]]
-            size_t insertAt = pos - main_keys.begin();
+            size_t insertAt = std::distance(main_keys.begin(), pos);
 
             main.insert(main.begin() + insertAt, pend[pendIndex]);
 
@@ -194,7 +222,7 @@ void PmergeMe::fordJohnsonMergeInsertionSort(Container &input) {
         }
 
         // Copy the MAIN back to the original
-        std::vector<int> tmp;
+        Container tmp;
         for (size_t i = 0; i < main.size(); i++) {
             for (size_t j = 0; j < groupSize; j++) {
                 tmp.push_back(*(main[i] + j));
